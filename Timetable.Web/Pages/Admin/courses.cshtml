@@ -1,0 +1,243 @@
+﻿@page
+@model Timetable.RazorWeb.Pages.Admin.coursesModel
+@{
+}
+<style>
+     
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+.container {
+  display: flex;
+  width: 78%;
+  margin-left: 6px;
+  margin-top: 100px;
+   border: 1px solid #4CAF50;
+   border-radius: 5px;
+}
+
+.sidebar {
+  width: 30%;
+  padding: 20px;
+  background-color: #f2f2f2;
+}
+
+.sidebar h2 {
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 10px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.form-group input[type="text"],
+.form-group select,
+.form-group input[type="number"] {
+  width: 100%;
+  padding: 5px;
+  color: #4CAF50;
+}
+
+#practicalCountGroup {
+  display: none;
+}
+
+.main-content {
+  flex-grow: 1;
+  padding: 20px;
+}
+
+#courseTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+#courseTable th,
+#courseTable td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  color: #4CAF50;
+}
+
+#addCourseBtn {
+  padding: 10px 20px;
+  background-color: #4CAF50;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+ button {
+  padding: 6px 12px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  border-radius:5px ;
+  cursor: pointer;
+        }
+         input {
+            color: #4CAF50;
+        }
+  </style>
+
+
+  <div class="container">
+    <div class="main-content">
+        
+        <table id="courseTable">
+          <thead>
+            <tr>
+              <th>العمليات</th>
+              <th>لها عملي</th>
+              <th>الفصل</th>
+              <th>السنة</th>
+              <th>الاسم</th>
+            </tr>
+          </thead>
+          <tbody id="courseTableBody">
+            <!-- البيانات ستتم إضافتها هنا باستخدام JavaScript -->
+          </tbody>
+        </table>
+      </div>
+    <div class="sidebar">
+     
+      <form id="courseForm">
+        <div class="form-group">
+          <label for="courseName">اسم المقرر:</label>
+          <input type="text" id="courseName" name="courseName" required>
+        </div>
+        <div class="form-group">
+          <label for="year">السنة:</label>
+          <select id="year" name="year" required>
+            <option value="الأولى">الأولى</option>
+            <option value="الثانية">الثانية</option>
+            <option value="الثالثة">الثالثة</option>
+            <option value="الرابعة">الرابعة</option>
+            <option value="الخامسة">الخامسة</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="semester">الفصل:</label>
+          <select id="semester" name="semester" required>
+            <option value="الأول">الأول</option>
+            <option value="الثاني">الثاني</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="lectureCount">عدد المحاضرات الأسبوعية:</label>
+          <input type="number" id="lectureCount" name="lectureCount" required>
+        </div>
+        <div class="form-group">
+          <input type="checkbox" id="practical" name="practical">
+          <label for="practical">يوجد له قسم عملي</label>
+        </div>
+        <div class="form-group" id="practicalCountGroup">
+          <label for="practicalCount">عدد المحاضرات الأسبوعية للعملي:</label>
+          <input type="number" id="practicalCount" name="practicalCount">
+        </div>
+        <button type="submit" id="addCourseBtn">إضافة مقرر</button>
+      </form>
+    </div>
+  </div>
+
+
+<script>
+ 
+
+ const courseForm = document.getElementById('courseForm');
+const courseTableBody = document.getElementById('courseTableBody');
+const practicalCheckbox = document.getElementById('practical');
+const practicalCountGroup = document.getElementById('practicalCountGroup');
+let editRowIndex = -1; 
+
+courseForm.addEventListener('submit', function (e) {
+  e.preventDefault();
+  const courseName = document.getElementById('courseName').value;
+  const year = document.getElementById('year').value;
+  const semester = document.getElementById('semester').value;
+  const lectureCount = document.getElementById('lectureCount').value;
+  const hasPractical = practicalCheckbox.checked;
+  const practicalCount = document.getElementById('practicalCount').value || '';
+
+  if (editRowIndex === -1) {
+    
+    const newRow = document.createElement('tr');
+    newRow.innerHTML = `
+      <td>
+        <button class="editBtn">تعديل</button>
+        <button class="deleteBtn">حذف</button>
+      </td>
+      <td>${hasPractical ? 'نعم' : 'لا'}</td>
+      <td>${semester}</td>
+      <td>${year}</td>
+      <td>${courseName}</td>
+    `;
+    courseTableBody.appendChild(newRow);
+  } else {
+    
+    const row = courseTableBody.rows[editRowIndex];
+    row.cells[1].textContent = hasPractical ? 'نعم' : 'لا';
+    row.cells[2].textContent = semester;
+    row.cells[3].textContent = year;
+    row.cells[4].textContent = courseName;
+  }
+
+  
+  courseForm.reset();
+  practicalCheckbox.checked = false;
+  practicalCountGroup.style.display = 'none';
+  editRowIndex = -1;
+});
+
+practicalCheckbox.addEventListener('change', function () {
+  practicalCountGroup.style.display = this.checked ? 'block' : 'none';
+});
+
+courseTableBody.addEventListener('click', function (e) {
+  const target = e.target;
+  if (target.classList.contains('editBtn')) {
+    
+    const row = target.parentNode.parentNode;
+    const cells = row.cells;
+    const hasPractical = cells[1].textContent === 'نعم';
+    const semester = cells[2].textContent;
+    const year = cells[3].textContent;
+    const courseName = cells[4].textContent;
+
+    const updatedCourseName = prompt('يرجى إدخال اسم المقرر', courseName);
+    if (updatedCourseName !== null) {
+      const updatedYear = prompt('يرجى إدخال السنة', year);
+      if (updatedYear !== null) {
+        const updatedSemester = prompt('يرجى إدخال الفصل', semester);
+        if (updatedSemester !== null) {
+          const updatedHasPractical = confirm('هل لها قسم عملي؟');
+          
+
+          cells[1].textContent = updatedHasPractical ? 'نعم' : 'لا';
+          cells[2].textContent = updatedSemester;
+          cells[3].textContent = updatedYear;
+          cells[4].textContent = updatedCourseName;
+        }
+      }
+    }
+
+    editRowIndex = -1;
+  } else if (target.classList.contains('deleteBtn')) {
+    
+    const row = target.parentNode.parentNode;
+    courseTableBody.removeChild(row);
+    editRowIndex = -1;
+  }
+});
+
+</script>
+

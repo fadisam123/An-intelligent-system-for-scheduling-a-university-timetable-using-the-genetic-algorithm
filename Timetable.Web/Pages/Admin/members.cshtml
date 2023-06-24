@@ -1,0 +1,134 @@
+﻿@page
+@model Timetable.RazorWeb.Pages.Admin.membersModel
+@{
+}
+ <style>
+        
+        body {
+            padding: 10px;
+            margin: 0;
+            text-align: center;
+
+        }
+        
+        .container {
+            display: flex;
+            justify-content: space-between;
+            text-align: center;
+            margin-top: 100px;
+            margin-left: -4px;
+            width: 80%;
+            padding: 40px;
+            border: 1px solid #4CAF50;
+            border-radius: 5px;
+        }
+        
+        .form-container {
+            width: 45%;
+            padding: 20px;
+        }
+        
+        .table-container {
+            border: 1px solid #4CAF50;
+            border-radius: 5px;
+            width: 45%;
+            padding: 20px;
+        }
+        
+        label, select, input, button {
+            margin-bottom: 15px;
+        }
+        
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        button {
+            padding: 6px 12px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius:5px ;
+            cursor: pointer;
+        }
+    </style>
+
+
+    <div class="container">
+        <div class="table-container">
+            <table id="teachers-table">
+                <tr>
+                    <th>العمليات</th>
+                    <th>الاسم</th>
+                    <th>الصفة</th>
+                </tr>
+            </table>
+        </div>
+        <div class="form-container">
+            <label for="teacher-name" class="field">: الاسم</label>
+            <br>
+            <input type="text" id="teacher-name">
+            <br>
+            <label for="teacher-type">: الصفة</label>
+            <br>
+            <select id="teacher-type">
+                <option value="رئيس قسم">رئيس قسم</option>
+                <option value="مدرس عملي">مدرس عملي</option>
+                <option value="عضو هيئة">عضو هيئة</option>
+            </select>
+            <br>
+            <label for="teacher-name" class="field">: كلمة المرور</label>
+            <br>
+            <input type="password" id="password">
+            <br>
+            <button onclick="addteacher()">إضافة مدرس</button>
+        </div>
+        
+    </div>
+
+    <script>
+        function addteacher() {
+            var teacherName = document.getElementById("teacher-name").value;
+            var teacherType = document.getElementById("teacher-type").value;
+            
+            var table = document.getElementById("teachers-table");
+            var row = table.insertRow();
+            var cell1 = row.insertCell(0);
+            var cell2 = row.insertCell(1);
+            var cell3 = row.insertCell(2);
+            
+            cell1.innerHTML = '<button onclick="editteacher(this)">تعديل</button> <button onclick="deleteteacher(this)">حذف</button>';
+            cell2.innerHTML = teacherName;
+            cell3.innerHTML = teacherType;
+        }
+        
+        function editteacher(button) {
+            var row = button.parentNode.parentNode;
+            var rowCells = row.getElementsByTagName("td");
+            
+            var teacherType = rowCells[2].innerHTML;
+            var teacherName = rowCells[1].innerHTML;
+        
+            var newteacherType = prompt("يرجى إدخال الصفة الجديدة:", teacherType);
+            var newteacherName = prompt("يرجى إدخال اسم القاعة الجديدة:", teacherName);
+            
+            rowCells[2].innerHTML = newteacherType;
+            rowCells[1].innerHTML = newteacherName;
+        }
+        
+        function deleteteacher(button) {
+            var row = button.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+        }
+    </script>
+
+
+
+

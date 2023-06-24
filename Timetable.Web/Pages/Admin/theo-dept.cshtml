@@ -1,0 +1,131 @@
+﻿@page
+@model Timetable.RazorWeb.Pages.Admin.theoreticalModel
+@{
+}
+<style>
+        
+        body {
+            padding: 10px;
+            margin: 0;
+            text-align: center;
+
+        }
+        
+        .container {
+            width: 80%;
+            display: flex;
+            margin-left: -4px;
+            justify-content: space-between;
+            text-align: center;
+            margin-top: 100px;
+            padding: 40px;
+            border: 1px solid #4CAF50;
+            border-radius: 5px;
+        }
+        
+        .form-container {
+            width: 45%;
+            padding: 20px;
+        }
+        
+        .table-container {
+            border: 1px solid #4CAF50;
+            border-radius: 5px;
+            width: 45%;
+            padding: 20px;
+        }
+        
+        label, select, input, button {
+            margin-bottom: 15px;
+        }
+        
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        button {
+            padding: 6px 12px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius:5px ;
+            cursor: pointer;
+        }
+    </style>
+
+ <div class="container">
+        <div class="table-container">
+            <table id="rooms-table">
+                <tr>
+                    <th>العمليات</th>
+                    <th>المقرر</th>
+                    <th>المدرس</th>
+                </tr>
+            </table>
+        </div>
+        <div class="form-container">
+            <label for="teacher-name">: المدرس</label>
+            <br>
+            <select id="teacher-name">
+                <option value="أحمد">أحمد</option>
+                <option value="خالد">خالد</option>
+            </select>
+            <br>
+            <label for="lecture"> : المقرر</label>
+            <br>
+            <select id="lecture">
+                <option value="ذكاء">ذكاء</option>
+                <option value="دارات">دارات</option>
+            </select>
+            <br>
+            <button onclick="addRoom()">إسناد</button>
+        </div>
+        
+    </div>
+
+     <script>
+        function addRoom() {
+            var teacherName = document.getElementById("teacher-name").value;
+            var lecture = document.getElementById("lecture").value;
+            
+            var table = document.getElementById("rooms-table");
+            var row = table.insertRow();
+            
+            var cell1 = row.insertCell(0);
+            var cell2 = row.insertCell(1);
+            var cell3 = row.insertCell(2);
+            
+            cell1.innerHTML = '<button onclick="editName(this)">تعديل</button> <button onclick="deleteName(this)">حذف</button>';
+            cell2.innerHTML = teacherName;
+            cell3.innerHTML = lecture;
+        }
+        
+        function editName(button) {
+            var row = button.parentNode.parentNode;
+            var rowCells = row.getElementsByTagName("td");
+            
+            var lecture = rowCells[2].innerHTML;
+            var teacherName = rowCells[1].innerHTML;
+            
+            var newlecture = prompt("يرجى إدخال الصفة :", lecture);
+            var newteacherName = prompt("يرجى إدخال اسم المقرر :", teacherName);
+            
+            rowCells[2].innerHTML = newlecture;
+            rowCells[1].innerHTML = newteacherName;
+        }
+        
+        function deleteName(button) {
+            var row = button.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+        }
+    </script>
+
+
+

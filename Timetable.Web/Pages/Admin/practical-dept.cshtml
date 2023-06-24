@@ -1,0 +1,152 @@
+﻿@page
+@model Timetable.RazorWeb.Pages.Admin.practicalModel
+@{
+}
+<style>
+        
+        body {
+            padding: 10px;
+            margin: 0;
+            text-align: center;
+
+        }
+        
+        .container {
+            display: flex;
+            justify-content: space-between;
+            text-align: center;
+            margin-top: 100px;
+            margin-left: -4px;
+            width: 80%;
+            padding: 40px;
+            border: 1px solid #0E2954;
+            border-radius: 5px;
+            background-color: #2E8A99; 
+        }
+        
+        .form-container {
+            width: 45%;
+            padding: 20px;
+        }
+        
+        .table-container {
+            border: 1px solid #0E2954;
+            border-radius: 5px;
+            width: 45%;
+            padding: 20px;
+        }
+        
+        label, select, input, button {
+            margin-bottom: 15px;
+        }
+
+        label {
+            color: #fff;
+        }
+        
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        
+        th, td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            color: #fff;
+        }
+        
+        button {
+            padding: 6px 12px;
+            background-color: #1F6E8C;
+            color: white;
+            border: none;
+            border-radius:5px ;
+            cursor: pointer;
+        }
+    </style>
+
+    <div class="container">
+        <div class="table-container">
+            <table id="rooms-table">
+                <tr>
+                    <th>العمليات</th>
+                    <th>المخبر</th>
+                    <th>المقرر</th>
+                    <th>المدرس</th>
+                </tr>
+            </table>
+        </div>
+        <div class="form-container">
+            <label for="teacher-name">: المدرس</label>
+            <br>
+            <select id="teacher-name">
+                <option value="أحمد">أحمد</option>
+                <option value="خالد">خالد</option>
+            </select>
+            <br>
+            <label for="lecture"> : المقرر</label>
+            <br>
+            <select id="lecture">
+                <option value="ذكاء">ذكاء</option>
+                <option value="دارات">دارات</option>
+            </select>
+            <br>
+            <label for="lab"> : المخبر</label>
+            <br>
+            <select id="lab">
+                <option value="مخبر البرمجة">مخبر البرمجة</option>
+                <option value="مخبر الذكاء">مخبر الذكاء</option>
+            </select>
+            <br>
+          
+            <button onclick="addRoom()">إسناد</button>
+        </div>
+        
+    </div>
+
+
+    <script>
+        function addRoom() {
+            var teacherName = document.getElementById("teacher-name").value;
+            var lecture = document.getElementById("lecture").value;
+            var lab = document.getElementById("lab").value;
+            var table = document.getElementById("rooms-table");
+            var row = table.insertRow();
+            
+            var cell1 = row.insertCell(0);
+            var cell2 = row.insertCell(1);
+            var cell3 = row.insertCell(2);
+            var cell4 = row.insertCell(3);
+
+            cell1.innerHTML = '<button onclick="editName(this)">تعديل</button> <button onclick="deleteName(this)">حذف</button>';
+            cell2.innerHTML = lab;
+            cell3.innerHTML = lecture;
+            cell4.innerHTML = teacherName;
+        }
+        
+        function editName(button) {
+            var row = button.parentNode.parentNode;
+            var rowCells = row.getElementsByTagName("td");
+            
+            var lecture = rowCells[2].innerHTML;
+            var teacherName = rowCells[3].innerHTML;
+            var lab = rowCells[1].innerHTML;
+            var newteacherName = prompt("يرجى إدخال اسم المدرس :", teacherName);
+            var newlecture = prompt("يرجى إدخال اسم المقرر :", lecture);
+            var newlab = prompt("يرجى إدخال اسم المخبر :", lab);
+
+            rowCells[3].innerHTML = newlecture;
+            rowCells[2].innerHTML = newteacherName;
+            rowCells[1].innerHTML = newlab;
+        }
+        
+        function deleteName(button) {
+            var row = button.parentNode.parentNode;
+            row.parentNode.removeChild(row);
+        }
+    </script>
+
+
+
+
