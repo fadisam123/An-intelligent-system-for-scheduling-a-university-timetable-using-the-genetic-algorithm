@@ -5,12 +5,12 @@
 }
 
 .container {
+    width: 80%;
     display: flex;
+    margin-left: -4px;
     justify-content: space-between;
     text-align: center;
     margin-top: 100px;
-    margin-left: -4px;
-    width: 80%;
     padding: 40px;
     border: 1px solid #1F6E8C;
     border-radius: 5px;

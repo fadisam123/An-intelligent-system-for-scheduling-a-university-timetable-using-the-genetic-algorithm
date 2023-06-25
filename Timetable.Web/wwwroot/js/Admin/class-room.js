@@ -9,7 +9,7 @@
     var cell2 = row.insertCell(1);
     var cell3 = row.insertCell(2);
 
-    cell1.innerHTML = '<button onclick="editRoom(this)">تعديل</button> <button onclick="deleteRoom(this)">حذف</button>';
+    cell1.innerHTML = '<button style="background-color: #1F6E8C; border: none; color: #fff; border-radius: 5px;" onclick="editName(this)">تعديل</button> <button style="background-color: #1F6E8C; border: none; color: #fff; border-radius: 5px; margin-top: 5px;" onclick="deleteName(this)">حذف</button>';
     cell2.innerHTML = roomName;
     cell3.innerHTML = roomType;
 }

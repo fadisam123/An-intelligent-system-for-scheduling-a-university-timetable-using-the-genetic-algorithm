@@ -2,53 +2,7 @@
 @model Timetable.RazorWeb.Pages.Admin.scheduleModel
 @{
 }
- <style>
-   
-   *{
-  padding: 0;
-  margin: 0;
-  scroll-behavior: smooth;
-  transition: all .4s ease-in-out;
-  text-align: center;
-  color: #4CAF50;
-}
-
-    table {
-      border-collapse: collapse;
-      width: 50%;
-      margin: 3% 0 0 20%;
-    }
-    
-    th, td {
-      border: 1px solid #4CAF50;
-      padding: 2px;
-      width: 8px;
-      max-width: 8px;
-      height: 75px;
-      
-    }
-
-    td:hover,:focus,:active {
-      background-color: #f2f2f2;
-    }
-    
-    th {
-      background-color: #f2f2f2;
-    }
-    
-    .edit-save-button {
-      padding: 10px 20px;
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      cursor: pointer;
-      margin:2% 0 0 25%;
-      border-radius: 5px;
-    }
-    
-
-
-  </style>
+ 
 
   <button id="editSaveButton" class="edit-save-button" onclick="toggleEditSave()">تعديل</button>
   
@@ -123,40 +77,6 @@
   
  
   
-  
-  <script>
-    var isEditing = false; 
-    
-    function toggleEditSave() {
-      var button = document.getElementById("editSaveButton");
-      var table = document.getElementById("myTable");
-      var rows = table.getElementsByTagName("tr");
-      
-      if (isEditing) {
-        
-        for (var i = 0; i < rows.length; i++) {
-          var cells = rows[i].getElementsByTagName("td");
-          
-          for (var j = 0; j < cells.length; j++) {
-            cells[j].setAttribute("contenteditable", "false");
-          }
-        }
-        
-        button.innerHTML = "تعديل";
-        isEditing = false; 
-      } else {
-       
-        for (var i = 0; i < rows.length; i++) {
-          var cells = rows[i].getElementsByTagName("td");
-          
-          for (var j = 0; j < cells.length; j++) {
-            cells[j].setAttribute("contenteditable", "true");           }
-        }
-        
-        button.innerHTML = "حفظ"; 
-        isEditing = true; 
-      }
-    }
-  </script>
-
-
+    @section Scripts {
+    <script type="text/javascript" src="~/js/Admin/schedule.js"></script>
+}
