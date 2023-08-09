@@ -48,7 +48,7 @@ namespace Timetable.RazorWeb.Pages.Admin
             }
         }
 
-        public async Task OnPost(string teacherId)
+        public async Task<IActionResult> OnPost(string teacherId)
         {
             Guid TeacherId;
             if (!Guid.TryParse(teacherId, out TeacherId))
@@ -56,7 +56,7 @@ namespace Timetable.RazorWeb.Pages.Admin
                 throw new NotImplementedException(message: teacherId + " is not a valid guid");
             }
 
-            
+            return RedirectToPage("./teachers");
         }
     }
 }
