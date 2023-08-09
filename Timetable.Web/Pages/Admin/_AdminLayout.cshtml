@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Timetable.RazorWeb.styles.css" asp-append-version="true" />
+
 </head>
 <body>
    <div>
@@ -22,17 +23,17 @@
         <a href="#" class="sidebar-icon"><i class="bi bi-gear"></i></a>
       </div>
       <h3>بوابة الإدارة</h3>
-      <a href="#" class="sidebar-link">وضع إعلان</a>
-      <a href="#" class="sidebar-link">فتح باب الاستبيان</a>
-      <a href="#" class="sidebar-link">برنامج الدوام العملي</a>
-      <a href="/Admin/schedule" class="sidebar-link">برنامج الدوام النظري</a>
-      <a href="/Admin/members" class="sidebar-link" >اعضاء الهيئة التدريسية</a>
-      <a href="/Admin/practical-dept" class="sidebar-link">القسم العملي</a>
-      <a href="/Admin/theo-dept" class="sidebar-link">القسم النظري</a>
-      <a href="/Admin/class-room" class="sidebar-link">القاعات الدراسية</a>
-      <a href="/Admin/courses" class="sidebar-link">المواد الدراسية</a>
-      <a href="#" class="sidebar-link">اوقات المحاضرات</a>
-      <a href="#" class="sidebar-link">الطلاب</a>
+      <a asp-page="" class="sidebar-link">وضع إعلان</a>
+      <a asp-page="" class="sidebar-link">فتح باب الاستبيان</a>
+      <a asp-page="" class="sidebar-link">برنامج الدوام العملي</a>
+      <a asp-page="./schedule" class="sidebar-link">برنامج الدوام النظري</a>
+      <a asp-page="./teachers" class="sidebar-link" >اعضاء الهيئة التدريسية</a>
+      <a asp-page="./practical-dept" class="sidebar-link">القسم العملي</a>
+      <a asp-page="./theo-dept" class="sidebar-link">القسم النظري</a>
+      <a asp-page="./class-room" class="sidebar-link">القاعات الدراسية</a>
+      <a asp-page="./courses" class="sidebar-link">المواد الدراسية</a>
+      <a asp-page="" class="sidebar-link">اوقات المحاضرات</a>
+      <a asp-page="" class="sidebar-link">الطلاب</a>
    </div>
   </div>
     
@@ -40,7 +41,9 @@
     <script src="~/lib/jquery/jquery.min.js"></script>
     <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

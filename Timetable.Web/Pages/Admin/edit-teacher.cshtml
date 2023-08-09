@@ -1,0 +1,69 @@
+﻿@page "{teacherId}"
+@using System.ComponentModel.DataAnnotations;
+@model Timetable.RazorWeb.Pages.Admin.edit_teacherModel
+@{
+    ViewData["Title"] = "Edit Teacher";
+}
+
+<h1>تعديل بيانات مدرس</h1>
+
+<hr />
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <form dir="rtl" method="post">
+
+                <input type="hidden" asp-for="teachersViewModel.ID" />
+
+                <div class="form-group">
+                    <label asp-for="teachersViewModel.Name" class="control-label"></label>
+                    <input asp-for="teachersViewModel.Name" class="form-control" />
+                    <span asp-validation-for="teachersViewModel.Name" class="text-danger"></span>
+                </div>
+
+                <select asp-for="teachersViewModel.SelectedTeacherType" class="form-select">
+                    @foreach (var value in Model?.TeacherTypes)
+                    {
+                        var displayAttribute = value.GetType()
+                        ?.GetField(value.ToString())
+                        ?.GetCustomAttributes(typeof(DisplayAttribute), false)
+                        .SingleOrDefault() as DisplayAttribute;
+
+                        var name = displayAttribute?.Name ?? value.ToString();
+
+                        <option value="@value">@name</option>
+                    }
+                </select>
+
+                <div class="form-group">
+                    <label asp-for="teachersViewModel.UserName" class="control-label"></label>
+                    <input disabled dir="ltr" asp-for="teachersViewModel.UserName" class="form-control" />
+                    <span asp-validation-for="teachersViewModel.UserName" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <span onclick="$('#pass').toggleClass('d-none');" class="btn bg-secondary">تغير كلمة السر</span>
+                </div>
+
+                <div id="pass" class="form-group d-none">
+                    <label class="control-label">كلمة السر الجديدة</label>
+                    <input dir="ltr" asp-for="teachersViewModel.password" class="form-control" />
+                    <span asp-validation-for="teachersViewModel.password" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <input type="submit" value="حفظ" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-page="./teachers">رجوع</a>
+    </div>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

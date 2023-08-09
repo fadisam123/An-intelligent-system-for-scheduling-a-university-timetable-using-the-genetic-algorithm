@@ -1,0 +1,89 @@
+﻿@page
+@using System.ComponentModel.DataAnnotations;
+@model Timetable.RazorWeb.Pages.Admin.TeachersModel
+@{
+    ViewData["Title"] = "Teachers";
+}
+
+<div class="container">
+    <div class="table-container">
+        <table id="teachers-table">
+            <tr>
+                <th>العمليات</th>
+                <th>الاسم</th>
+                <th>الصفة</th>
+            </tr>
+            @foreach (var teacher in Model?.Teachers)
+            {
+                <tr>
+                    <td>
+                        <form method="post" asp-page-handler="Delete" class="inline">
+                            <input type="hidden" name="teacherId" value="@teacher.Id">
+
+                            <button onclick="return confirm('هل تريد حذف المدرس فعلاً؟')" type="submit" class="btn btn-sm bg-danger">
+                                Delete
+                            </button>
+                        </form>
+                        <a class="btn btn-sm bg-success" asp-page="./edit-teacher" asp-route-teacherId = "@teacher.Id">Edit</a>
+                    </td>
+                    <td>@teacher.Name</td>
+                    @{
+                        var displayAttribute = teacher.Type.GetType()
+                        ?.GetField(teacher.Type.ToString())
+                        ?.GetCustomAttributes(typeof(DisplayAttribute), false)
+                        .SingleOrDefault() as DisplayAttribute;
+                        var teacherType = displayAttribute?.Name ?? teacher.Type.ToString();
+                        <td>@teacherType</td>
+                    }
+                </tr>
+
+            }
+        </table>
+    </div>
+    <form autocomplete="off" dir="rtl" method="post">
+
+        <div class="form-group">
+            <label asp-for="teachersViewModel.Name" class="control-label"></label>
+            <input asp-for="teachersViewModel.Name" class="form-control" />
+            <span class="text-danger" asp-validation-for="teachersViewModel.Name"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="teachersViewModel.SelectedTeacherType" class="control-label"></label>
+
+            <select asp-for="teachersViewModel.SelectedTeacherType" class="form-select">
+                @foreach (var value in Model?.TeacherTypes)
+                {
+                    var displayAttribute = value.GetType()
+                    ?.GetField(value.ToString())
+                    ?.GetCustomAttributes(typeof(DisplayAttribute), false)
+                    .SingleOrDefault() as DisplayAttribute;
+
+                    var name = displayAttribute?.Name ?? value.ToString();
+
+                    <option value="@value">@name</option>
+                }
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="teachersViewModel.UserName" class="control-label"></label>
+            <input dir="ltr" asp-for="teachersViewModel.UserName" class="form-control">
+            <span class="text-danger text" asp-validation-for="teachersViewModel.UserName"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="teachersViewModel.password" class="control-label"></label>
+            <input dir="ltr" asp-for="teachersViewModel.password" class="form-control">
+            <span class="text-danger" asp-validation-for="teachersViewModel.password"></span>
+        </div>
+        <button type="submit">إضافة مدرس</button>
+    </form>
+
+</div>
+
+
+@section Scripts {
+    <script type="text/javascript" src="~/js/Admin/teachers.js"></script>
+}
+
