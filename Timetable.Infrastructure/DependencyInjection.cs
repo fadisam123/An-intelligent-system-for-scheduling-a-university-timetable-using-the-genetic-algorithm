@@ -23,7 +23,7 @@ namespace Timetable.Infrastructure
                 .AddIdentity<User, Role>(options =>
                     {
                         options.Password.RequiredLength = 6;
-                        options.Password.RequiredUniqueChars = 2;
+                        options.Password.RequiredUniqueChars = 1;
                         options.Password.RequireNonAlphanumeric = false;
                         options.Password.RequireDigit = false;
                         options.Password.RequireUppercase = false;
@@ -39,7 +39,13 @@ namespace Timetable.Infrastructure
                 ).AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
 
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+
             services.AddScoped<ITeacherRepository, TeacherRepository>();
+            services.AddScoped<ICourseRepository, CourseRepository>();
+            services.AddScoped<IRoomRepository, RoomRepository>();
+            services.AddScoped<IYearRepository, YearRepository>();
+            services.AddScoped<ISemesterRepository, SemesterRepository>();
+
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             SeedDataInDb(services.BuildServiceProvider());

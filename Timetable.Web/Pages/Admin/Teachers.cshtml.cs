@@ -3,21 +3,22 @@ using FluentValidation.AspNetCore;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Xml.Linq;
 using Timetable.Application.Services.DataIO.Teacher;
-using Timetable.RazorWeb.ViewModels;
+using Timetable.RazorWeb.ViewModels.InputModels;
 
 namespace Timetable.RazorWeb.Pages.Admin
 {
     public class TeachersModel : PageModel
     {
         #region Fields
-        private readonly ITeacherService _tuc;
-        private readonly IValidator<TeacherViewModel> _validator; 
+        private readonly ITeacherService _teacherService;
+        private readonly IValidator<TeacherInputModel> _validator; 
         #endregion
 
         #region Input Data
         [BindProperty]
-        public TeacherViewModel teachersViewModel { get; set; } = null!;
+        public TeacherInputModel teachersViewModel { get; set; } = null!;
         #endregion
 
         #region Output Data
@@ -26,20 +27,19 @@ namespace Timetable.RazorWeb.Pages.Admin
         #endregion
 
         #region Constructor
-        public TeachersModel(ITeacherService tuc, IValidator<TeacherViewModel> validator)
+        public TeachersModel(ITeacherService teacherService, IValidator<TeacherInputModel> validator)
         {
             _validator = validator;
-            this._tuc = tuc;
+            this._teacherService = teacherService;
         }
         #endregion
 
         #region Handler methods
         public async Task OnGet()
         {
-            ModelState.Clear();
-            teachersViewModel = new TeacherViewModel();
+            teachersViewModel = new TeacherInputModel();
 
-            Teachers = _tuc.getAllTeachers().ToList();
+            Teachers = _teacherService.getAllTeachers().ToList();
             foreach (UserTypeEnum type in Enum.GetValues(typeof(UserTypeEnum)))
             {
                 if (type != UserTypeEnum.Admin)
@@ -56,10 +56,16 @@ namespace Timetable.RazorWeb.Pages.Admin
             if (!ValidationResult.IsValid)
             {
                 ValidationResult.AddToModelState(this.ModelState, "teachersViewModel");
-                return RedirectToPage();
+                await OnGet();
+                return Page();
             }
 
-            var userResult = await _tuc.createTeacherAsync(teachersViewModel.Name, teachersViewModel.SelectedTeacherType, teachersViewModel.UserName, teachersViewModel.password);
+            User user = new User { Name = teachersViewModel.Name,
+                Type = teachersViewModel.SelectedTeacherType,
+                UserName = teachersViewModel.UserName,
+                Email = teachersViewModel.UserName + "@users.com" };
+
+            await _teacherService.createTeacherAsync(user, teachersViewModel.password);
             return RedirectToPage();
 
         }

@@ -1,0 +1,49 @@
+﻿@page "{roomId}"
+@using System.ComponentModel.DataAnnotations;
+@model Timetable.RazorWeb.Pages.Admin.edit_roomModel
+@{
+    ViewData["Title"] = "Edit room";
+}
+
+<h1>تعديل بيانات قاعة</h1>
+
+<hr />
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <form dir="rtl" method="post">
+
+                <input type="hidden" asp-for="@Model.roomID" />
+
+                <div class="form-group">
+                    <label asp-for="@Model.RoomName" class="control-label"></label>
+                    <input asp-for="@Model.RoomName" class="form-control" />
+                    <span asp-validation-for="@Model.RoomName" class="text-danger"></span>
+                </div>
+
+                <label asp-for="@Model.selectedRoomType" class="control-label"></label>
+                <select asp-for="@Model.selectedRoomType" class="form-select">
+                    @foreach (var value in @Model?.RoomTypes)
+                    {
+                        var displayAttribute = value.GetType()
+                        ?.GetField(value.ToString())
+                        ?.GetCustomAttributes(typeof(DisplayAttribute), false)
+                        .SingleOrDefault() as DisplayAttribute;
+
+                        var name = displayAttribute?.Name ?? value.ToString();
+
+                        <option value="@value">@name</option>
+                    }
+                </select>
+
+                <div class="form-group">
+                    <input type="submit" value="حفظ" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-page="./class-room">رجوع</a>
+    </div>
+</div>

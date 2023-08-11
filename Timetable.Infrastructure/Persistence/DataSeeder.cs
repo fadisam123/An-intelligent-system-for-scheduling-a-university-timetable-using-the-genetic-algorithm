@@ -17,19 +17,19 @@ namespace Timetable.Infrastructure.Persistence
                 await dbContext.Database.MigrateAsync();
             }
 
-            await SeedRoles(roleManager);
-            await SeedUsers(userManager);
+            await SeedRolesAsync(roleManager);
+            await SeedUsersAsync(userManager);
 
-            await SeedYears(dbContext);
-            await SeedSemesters(dbContext);
-            await SeedDays(dbContext);
-            await SeedRooms(dbContext);
-            await SeedTime(dbContext);
-            await SeedTheoryCourses(dbContext);
-            await SeedLapCourses(dbContext);
+            await SeedYearsAsync(dbContext);
+            await SeedSemestersAsync(dbContext);
+            await SeedDaysAsync(dbContext);
+            await SeedRoomsAsync(dbContext);
+            await SeedTimeAsync(dbContext);
+            await SeedTheoryCoursesAsync(dbContext);
+            await SeedLapCoursesAsync(dbContext);
         }
 
-        private static async Task SeedRoles(RoleManager<Role> roleManager)
+        private static async Task SeedRolesAsync(RoleManager<Role> roleManager)
         {
             string[] roles = Enum.GetNames(typeof(RoleEnum));
 
@@ -42,7 +42,7 @@ namespace Timetable.Infrastructure.Persistence
             }
         }
 
-        private static async Task SeedUsers(UserManager<User> userManager)
+        private static async Task SeedUsersAsync(UserManager<User> userManager)
         {
             // seed admin user
             var adminUser = new User { Name = "المدير", UserName = "admin", Email = "admin@admin.com", Type = UserTypeEnum.Admin };
@@ -119,7 +119,7 @@ namespace Timetable.Infrastructure.Persistence
             }
         }
 
-        private static async Task SeedYears(AppDbContext dbContext)
+        private static async Task SeedYearsAsync(AppDbContext dbContext)
         {
             if (!dbContext.Years.Any())
             {
@@ -136,7 +136,7 @@ namespace Timetable.Infrastructure.Persistence
             }
         }
 
-        private static async Task SeedSemesters(AppDbContext dbContext)
+        private static async Task SeedSemestersAsync(AppDbContext dbContext)
         {
             if (!dbContext.Semesters.Any())
             {
@@ -150,7 +150,7 @@ namespace Timetable.Infrastructure.Persistence
             }
         }
 
-        private static async Task SeedDays(AppDbContext dbContext)
+        private static async Task SeedDaysAsync(AppDbContext dbContext)
         {
             if (!dbContext.Semesters.Any())
             {
@@ -167,7 +167,7 @@ namespace Timetable.Infrastructure.Persistence
             }
         }
 
-        private static async Task SeedRooms(AppDbContext dbContext)
+        private static async Task SeedRoomsAsync(AppDbContext dbContext)
         {
             if (!dbContext.Rooms.Any())
             {
@@ -196,7 +196,7 @@ namespace Timetable.Infrastructure.Persistence
             }
         }
 
-        private static async Task SeedTime(AppDbContext dbContext)
+        private static async Task SeedTimeAsync(AppDbContext dbContext)
         {
             if (!dbContext.Times.Any())
             {
@@ -213,7 +213,7 @@ namespace Timetable.Infrastructure.Persistence
             }
         }
 
-        private static async Task SeedTheoryCourses(AppDbContext dbContext)
+        private static async Task SeedTheoryCoursesAsync(AppDbContext dbContext)
         {
             if (!dbContext.Courses.Any(c => c.Type == CourseTypeEnum.TheoryCourse))
             {
@@ -826,7 +826,7 @@ namespace Timetable.Infrastructure.Persistence
             }
         }
 
-        private static async Task SeedLapCourses(AppDbContext dbContext)
+        private static async Task SeedLapCoursesAsync(AppDbContext dbContext)
         {
             if (!dbContext.Courses.Any(c => c.Type == CourseTypeEnum.LapCourse))
             {

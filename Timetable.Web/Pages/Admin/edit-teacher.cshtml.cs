@@ -2,20 +2,20 @@ using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Timetable.Application.Services.DataIO.Teacher;
-using Timetable.RazorWeb.ViewModels;
+using Timetable.RazorWeb.ViewModels.InputModels;
 
 namespace Timetable.RazorWeb.Pages.Admin
 {
     public class edit_teacherModel : PageModel
     {
         #region Fields
-        private readonly ITeacherService _teacherServices;
-        private readonly IValidator<TeacherViewModel> _validator;
+        private readonly ITeacherService _teacherService;
+        private readonly IValidator<TeacherInputModel> _validator;
         #endregion
 
         #region Input Data
         [BindProperty]
-        public TeacherViewModel teachersViewModel { get; set; } = null!;
+        public TeacherInputModel teachersViewModel { get; set; } = null!;
         #endregion
 
         #region Output Data
@@ -23,10 +23,10 @@ namespace Timetable.RazorWeb.Pages.Admin
         #endregion
 
         #region Constructor
-        public edit_teacherModel(ITeacherService teacherServices, IValidator<TeacherViewModel> validator)
+        public edit_teacherModel(ITeacherService teacherService, IValidator<TeacherInputModel> validator)
         {
             _validator = validator;
-            _teacherServices = teacherServices;
+            _teacherService = teacherService;
         }
         #endregion
         public async Task OnGet(string teacherId)
@@ -36,8 +36,8 @@ namespace Timetable.RazorWeb.Pages.Admin
             {
                 throw new NotImplementedException(message: teacherId + " is not a valid guid");
             }
-            var Teacher = _teacherServices.getTeacherById(TeacherId);
-            teachersViewModel = new TeacherViewModel { ID = teacherId, Name = Teacher.Name, SelectedTeacherType = Teacher.Type, UserName = Teacher.UserName };
+            var Teacher = _teacherService.getTeacherById(TeacherId);
+            teachersViewModel = new TeacherInputModel { ID = teacherId, Name = Teacher.Name, SelectedTeacherType = Teacher.Type, UserName = Teacher.UserName };
 
             foreach (UserTypeEnum type in Enum.GetValues(typeof(UserTypeEnum)))
             {

@@ -2,13 +2,14 @@ using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
-using Timetable.Application.Services.DataIO.Course;
+using System.Xml.Linq;
 using Timetable.Application.Services.DataIO.Room;
+using Timetable.Application.Services.DataIO.Teacher;
 using Timetable.RazorWeb.ViewModels.InputModels;
 
 namespace Timetable.RazorWeb.Pages.Admin
 {
-    public class class_roomModel : PageModel
+    public class edit_roomModel : PageModel
     {
         #region Fields
         private readonly IRoomService _roomService;
@@ -16,55 +17,57 @@ namespace Timetable.RazorWeb.Pages.Admin
         #endregion
 
         #region Input Data
+        public string roomID = null!;
+
         [Display(Name = "اسم القاعة")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "اسم القاعة مطلوب")]
-        [Remote(action: "IsRoomNameInUse", controller: "RemoteValidators")]
         [BindProperty]
+
         public string RoomName { get; set; } = string.Empty;
         [Display(Name = "نوع القاعة")]
         [BindProperty]
+
         public RoomTypeEnum selectedRoomType { get; set; } = RoomTypeEnum.TheoryRoom;
         #endregion
 
         #region Output Data
-        public List<Room> Rooms { get; private set; } = new List<Room>();
         public List<RoomTypeEnum> RoomTypes { get; private set; } = new List<RoomTypeEnum>();
         #endregion
 
-        public class_roomModel(IRoomService roomService, IValidator<TeacherInputModel> validator)
+        #region Constructor
+        public edit_roomModel(IRoomService roomService, IValidator<TeacherInputModel> validator)
         {
-            _roomService = roomService;
             _validator = validator;
+            _roomService = roomService;
         }
-
-        #region Handler Methods
-        public void OnGet()
+        #endregion
+        public async Task OnGet(string roomId)
         {
-            Rooms = _roomService.getAllRooms().ToList();
+            Guid RoomId;
+            if (!Guid.TryParse(roomId, out RoomId))
+            {
+                throw new NotImplementedException(message: roomId + " is not a valid guid");
+            }
+            var room = _roomService.getRoomById(RoomId);
+            roomID = roomId;
+            RoomName = room.Name;
+            selectedRoomType = room.type;
 
             foreach (RoomTypeEnum type in Enum.GetValues(typeof(RoomTypeEnum)))
             {
                 RoomTypes.Add(type);
             }
         }
-        public async Task<IActionResult> OnPost()
+
+        public async Task<IActionResult> OnPost(string roomId)
         {
-            if (!ModelState.IsValid)
+            Guid TeacherId;
+            if (!Guid.TryParse(roomId, out TeacherId))
             {
-                OnGet();
-                return Page();
+                throw new NotImplementedException(message: roomId + " is not a valid guid");
             }
 
-            Room room = new Room { Name = RoomName, type = selectedRoomType };
-            await _roomService.createRoomAsync(room);
-            return RedirectToPage();
+            return RedirectToPage("./class-room");
         }
-
-        public async Task<IActionResult> OnPostDeleteAsync(string roomId)
-        {
-
-            return RedirectToPage();
-        }
-        #endregion
     }
 }

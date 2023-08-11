@@ -2,7 +2,9 @@
 {
     public enum RoomTypeEnum
     {
+        [Display(Name = "قاعة نظري")]
         TheoryRoom,
+        [Display(Name = "قاعة عملي")]
         LapRoom
     }
 }

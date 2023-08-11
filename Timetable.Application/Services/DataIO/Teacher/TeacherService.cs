@@ -8,39 +8,36 @@ namespace Timetable.Application.Services.DataIO.Teacher
     {
         private IUnitOfWork Uow { get; }
         private UserManager<User> UserManager { get; }
-        private RoleManager<Role> RoleManager { get; }
         public TeacherService(IUnitOfWork uow, UserManager<User> userManager, RoleManager<Role> roleManager)
         {
             Uow = uow;
             UserManager = userManager;
-            RoleManager = roleManager;
         }
 
-        public async Task<User> createTeacherAsync(string name, UserTypeEnum teacherType, string userName, string password)
+        public async Task createTeacherAsync(User user, string password)
         {
-            if (await UserManager.FindByNameAsync(userName) is null)
+            if (await UserManager.FindByNameAsync(user.UserName) is null)
             {
-                User user = new User { Name = name, Type = teacherType, UserName = userName, Email = userName + "@users.com" };
                 var userResult = await UserManager.CreateAsync(user, password);
                 if (userResult.Succeeded)
                 {
-                    await UserManager.AddToRoleAsync(user, teacherType.ToString());
-                    return user;
+                    await UserManager.AddToRoleAsync(user, user.Type.ToString());
+                    return;
                 }
                 else
                 {
                     throw new NotImplementedException(message: "error in creating the teacher");
                 }
             }
-            throw new NotImplementedException(message: "teacher " + userName + " already exist");
+            throw new NotImplementedException(message: "teacher " + user.UserName + " already exist");
         }
         public User getTeacherById(Guid teacherId)
         {
-            return Uow.Teachers.GetById(teacherId) ?? throw new NotImplementedException(message: "teacher with id " + teacherId + " not found!");
+            return Uow.TeacherRepository.GetById(teacherId) ?? throw new NotImplementedException(message: "teacher with id " + teacherId + " not found!");
         }
         public IEnumerable<User> getAllTeachers()
         {
-            return Uow.Teachers.GetAll().Where(t => t.Type != UserTypeEnum.Admin);
+            return Uow.TeacherRepository.GetAll().Where(t => t.Type != UserTypeEnum.Admin);
         }
     }
 }

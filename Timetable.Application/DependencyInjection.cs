@@ -1,4 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Timetable.Application.Services.DataIO.Course;
+using Timetable.Application.Services.DataIO.Room;
 using Timetable.Application.Services.DataIO.Teacher;
 
 namespace Timetable.Infrastructure
@@ -8,6 +10,8 @@ namespace Timetable.Infrastructure
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)
         {
             services.AddScoped<ITeacherService, TeacherService>();
+            services.AddScoped<ICourseService, CourseService>();
+            services.AddScoped<IRoomService, RoomService>();
 
             return services;
         }

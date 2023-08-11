@@ -1,6 +1,8 @@
 ﻿@page
+@using System.ComponentModel.DataAnnotations;
 @model Timetable.RazorWeb.Pages.Admin.class_roomModel
 @{
+    ViewData["Title"] = "rooms";
 }
 
 <div class="container">
@@ -11,22 +13,63 @@
                 <th>اسم القاعة</th>
                 <th>الصفة</th>
             </tr>
+            @foreach (var room in @Model?.Rooms)
+            {
+                <tr>
+                    <td>
+                        <form method="post" asp-page-handler="Delete" class="inline">
+                            <input type="hidden" name="roomId" value="@room.Id">
+
+                            <button onclick="return confirm('هل تريد حذف القاعة فعلاً؟')" type="submit" class="btn btn-sm bg-danger">
+                                حذف
+                            </button>
+                        </form>
+                        <a class="btn btn-sm bg-success" asp-page="./edit-room" asp-route-roomId="@room.Id">تعديل</a>
+                    </td>
+                    <td>@room.Name</td>
+                    @{
+                        var displayAttribute = room.type.GetType()
+                        ?.GetField(room.type.ToString())
+                        ?.GetCustomAttributes(typeof(DisplayAttribute), false)
+                        .SingleOrDefault() as DisplayAttribute;
+                        var roomType = displayAttribute?.Name ?? room.type.ToString();
+                        <td>@roomType</td>
+                    }
+                </tr>
+            }
         </table>
     </div>
-    <div class="form-container">
-        <label for="room-name" class="field">: اسم القاعة الدراسية</label>
-        <br>
-        <input type="text" id="room-name">
-        <br>
-        <label for="room-type">: الصفة</label>
-        <br>
-        <select id="room-type">
-            <option value="قاعة نظري">قاعة نظري</option>
-            <option value="مخبر عملي">مخبر عملي</option>
-        </select>
-        <br>
-        <button onclick="addRoom()">إضافة قاعة</button>
-    </div>
+
+    <form autocomplete="off" dir="rtl" method="post">
+
+        <div class="form-group">
+            <label asp-for="@Model.RoomName" class="control-label"></label>
+            <input asp-for="@Model.RoomName" class="form-control" />
+            <span class="text-danger" asp-validation-for="@Model.RoomName"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="@Model.selectedRoomType" class="control-label"></label>
+
+            <select asp-for="@Model.selectedRoomType" class="form-select">
+                @foreach (var value in @Model?.RoomTypes)
+                {
+                    var displayAttribute = value.GetType()
+                    ?.GetField(value.ToString())
+                    ?.GetCustomAttributes(typeof(DisplayAttribute), false)
+                    .SingleOrDefault() as DisplayAttribute;
+
+                    var name = displayAttribute?.Name ?? value.ToString();
+
+                    <option value="@value">@name</option>
+                }
+            </select>
+        </div>
+
+        <button type="submit">إضافة القاعة</button>
+    </form>
+
+
 
 </div>
 

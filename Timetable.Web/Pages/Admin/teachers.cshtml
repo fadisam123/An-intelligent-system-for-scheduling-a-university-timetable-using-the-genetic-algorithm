@@ -13,7 +13,7 @@
                 <th>الاسم</th>
                 <th>الصفة</th>
             </tr>
-            @foreach (var teacher in Model?.Teachers)
+            @foreach (var teacher in @Model?.Teachers)
             {
                 <tr>
                     <td>
@@ -21,10 +21,10 @@
                             <input type="hidden" name="teacherId" value="@teacher.Id">
 
                             <button onclick="return confirm('هل تريد حذف المدرس فعلاً؟')" type="submit" class="btn btn-sm bg-danger">
-                                Delete
+                                حذف
                             </button>
                         </form>
-                        <a class="btn btn-sm bg-success" asp-page="./edit-teacher" asp-route-teacherId = "@teacher.Id">Edit</a>
+                        <a class="btn btn-sm bg-success" asp-page="./edit-teacher" asp-route-teacherId = "@teacher.Id">تعديل</a>
                     </td>
                     <td>@teacher.Name</td>
                     @{
@@ -43,15 +43,15 @@
     <form autocomplete="off" dir="rtl" method="post">
 
         <div class="form-group">
-            <label asp-for="teachersViewModel.Name" class="control-label"></label>
-            <input asp-for="teachersViewModel.Name" class="form-control" />
-            <span class="text-danger" asp-validation-for="teachersViewModel.Name"></span>
+            <label asp-for="@Model.teachersViewModel.Name" class="control-label"></label>
+            <input asp-for="@Model.teachersViewModel.Name" class="form-control" />
+            <span class="text-danger" asp-validation-for="@Model.teachersViewModel.Name"></span>
         </div>
 
         <div class="form-group">
-            <label asp-for="teachersViewModel.SelectedTeacherType" class="control-label"></label>
+            <label asp-for="@Model.teachersViewModel.SelectedTeacherType" class="control-label"></label>
 
-            <select asp-for="teachersViewModel.SelectedTeacherType" class="form-select">
+            <select asp-for="@Model.teachersViewModel.SelectedTeacherType" class="form-select">
                 @foreach (var value in Model?.TeacherTypes)
                 {
                     var displayAttribute = value.GetType()
@@ -67,15 +67,15 @@
         </div>
 
         <div class="form-group">
-            <label asp-for="teachersViewModel.UserName" class="control-label"></label>
-            <input dir="ltr" asp-for="teachersViewModel.UserName" class="form-control">
-            <span class="text-danger text" asp-validation-for="teachersViewModel.UserName"></span>
+            <label asp-for="@Model.teachersViewModel.UserName" class="control-label"></label>
+            <input dir="ltr" asp-for="@Model.teachersViewModel.UserName" class="form-control">
+            <span class="text-danger text" asp-validation-for="@Model.teachersViewModel.UserName"></span>
         </div>
 
         <div class="form-group">
-            <label asp-for="teachersViewModel.password" class="control-label"></label>
-            <input dir="ltr" asp-for="teachersViewModel.password" class="form-control">
-            <span class="text-danger" asp-validation-for="teachersViewModel.password"></span>
+            <label asp-for="@Model.teachersViewModel.password" class="control-label"></label>
+            <input dir="ltr" asp-for="@Model.teachersViewModel.password" class="form-control">
+            <span class="text-danger" asp-validation-for="@Model.teachersViewModel.password"></span>
         </div>
         <button type="submit">إضافة مدرس</button>
     </form>

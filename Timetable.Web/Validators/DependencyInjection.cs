@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using FluentValidation.AspNetCore;
 using Timetable.RazorWeb.Validators;
-using Timetable.RazorWeb.ViewModels;
+using Timetable.RazorWeb.ViewModels.InputModels;
 
 namespace Timetable.Infrastructure
 {
@@ -10,7 +10,8 @@ namespace Timetable.Infrastructure
         public static IServiceCollection AddValidatorServices(this IServiceCollection services)
         {
             services.AddFluentValidationClientsideAdapters();
-            services.AddScoped<IValidator<TeacherViewModel>, TeacherViewModelValidator>();
+            services.AddScoped<IValidator<TeacherInputModel>, TeacherInputModelValidator>();
+            services.AddScoped<IValidator<CourseInputModel>, CourseInputModelValidator>();
             return services;
         }
 

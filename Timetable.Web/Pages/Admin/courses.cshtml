@@ -1,66 +1,125 @@
 ﻿@page
 @model Timetable.RazorWeb.Pages.Admin.coursesModel
 @{
+    ViewData["Title"] = "courses";
 }
 
 
-  <div class="container">
+<div class="container">
     <div class="main-content">
-        
+
         <table id="courseTable">
-          <thead>
-            <tr>
-              <th>العمليات</th>
-              <th>لها عملي</th>
-              <th>الفصل</th>
-              <th>السنة</th>
-              <th>الاسم</th>
-            </tr>
-          </thead>
-          <tbody id="courseTableBody">
-          </tbody>
+            <thead>
+                <tr>
+                    <th>العمليات</th>
+                    <th>لها عملي</th>
+                    <th>أختيارية</th>
+                    <th>الفصل</th>
+                    <th>السنة</th>
+                    <th>المقرر</th>
+                </tr>
+            </thead>
+            <tbody id="courseTableBody">
+                @foreach (var course in @Model?.courseOutputModel.Courses)
+                {
+                    <tr>
+                        <td>
+                            <form method="post" asp-page-handler="Delete" class="inline">
+                                <input type="hidden" name="courseId" value="@course.Id">
+
+                                <button onclick="return confirm('هل تريد حذف المقرر فعلاً؟')" type="submit" class="btn btn-sm bg-danger">
+                                    حذف
+                                </button>
+                            </form>
+                            <a class="btn btn-sm bg-success" asp-page="./edit-course" asp-route-coursId="@course.Id">تعديل</a>
+                        </td>
+                        @if (course.HasPracticalSection)
+                        {
+                            <td>نعم</td>
+                        }
+                        else
+                        {
+                            <td>لا</td>
+                        }
+                        @if (course.IsElective)
+                        {
+                            <td>نعم</td>
+                        }
+                        else
+                        {
+                            <td>لا</td>
+                        }
+                        <td>@course.Semester</td>
+                        <td>@course.Year</td>
+                        <td>@course.Name</td>
+                    </tr>
+
+                }
+            </tbody>
         </table>
-      </div>
-    <div class="sidebar">
-     
-      <form id="courseForm">
-        <div class="form-group">
-          <label for="courseName">اسم المقرر:</label>
-          <input type="text" id="courseName" name="courseName" required>
-        </div>
-        <div class="form-group">
-          <label for="year">السنة:</label>
-          <select id="year" name="year" required>
-            <option value="الأولى">الأولى</option>
-            <option value="الثانية">الثانية</option>
-            <option value="الثالثة">الثالثة</option>
-            <option value="الرابعة">الرابعة</option>
-            <option value="الخامسة">الخامسة</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="semester">الفصل:</label>
-          <select id="semester" name="semester" required>
-            <option value="الأول">الأول</option>
-            <option value="الثاني">الثاني</option>
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="lectureCount">عدد المحاضرات الأسبوعية:</label>
-          <input type="number" id="lectureCount" name="lectureCount" required>
-        </div>
-        <div class="form-group">
-          <input type="checkbox" id="practical" name="practical">
-          <label for="practical">يوجد له قسم عملي</label>
-        </div>
-        <div class="form-group" id="practicalCountGroup">
-          <label for="practicalCount">عدد المحاضرات الأسبوعية للعملي:</label>
-          <input type="number" id="practicalCount" name="practicalCount">
-        </div>
-        <button type="submit" id="addCourseBtn">إضافة مقرر</button>
-      </form>
     </div>
-  </div>
+    <div class="sidebar">
+
+
+        <form dir="rtl" method="post">
+
+            <input type="hidden" asp-for="@Model.courseInputModel.Id" />
+
+            <div class="form-group">
+                <label asp-for="@Model.courseInputModel.Name" class="control-label"></label>
+                <input asp-for="@Model.courseInputModel.Name" class="form-control" />
+                <span asp-validation-for="@Model.courseInputModel.Name" class="text-danger"></span>
+            </div>
+
+            <label asp-for="@Model.courseInputModel.SelectedYear" class="control-label"></label>
+            <select asp-for="@Model.courseInputModel.SelectedYear" class="form-select">
+                @foreach (var item in Model?.courseOutputModel?.Years)
+                {
+                    <option value="@item.YearNo">@item.YearNo</option>
+                }
+            </select>
+
+            <label asp-for="@Model.courseInputModel.SelectedSemester" class="control-label"></label>
+            <select asp-for="@Model.courseInputModel.SelectedSemester" class="form-select">
+                @foreach (var item in Model?.courseOutputModel?.Semesters)
+                {
+                    <option value="@item.SemesterNo">@item.SemesterNo</option>
+                }
+            </select>
+
+            <div class="form-group">
+                <label asp-for="@Model.courseInputModel.LuctureNumPerWeek" class="control-label"></label>
+                <input asp-for="@Model.courseInputModel.LuctureNumPerWeek" min="1" class="form-control" />
+                <span asp-validation-for="@Model.courseInputModel.LuctureNumPerWeek" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="@Model.courseInputModel.IsElective" class="control-label"></label>
+                <input asp-for="@Model.courseInputModel.IsElective" class="form-check-input" />
+            </div>
+
+            <div class="form-group">
+                <label asp-for="@Model.courseInputModel.HasPracticalSection" class="control-label"></label>
+                <input asp-for="@Model.courseInputModel.HasPracticalSection" class="form-check-input" />
+            </div>
+
+            <div class="form-group ">
+                <label asp-for="@Model.courseInputModel.LapLuctureNumPerWeek" class="control-label"></label>
+                <input asp-for="@Model.courseInputModel.LapLuctureNumPerWeek" min="1" class="form-control" />
+                <span asp-validation-for="@Model.courseInputModel.LapLuctureNumPerWeek" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <button class="btn btn-primary" type="submit">إضافة المقرر</button>
+            </div>
+        </form>
+
+
+
+
+
+    </div>
+</div>
 
 
 @section Scripts {

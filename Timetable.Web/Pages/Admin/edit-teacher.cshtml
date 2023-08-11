@@ -21,6 +21,7 @@
                     <span asp-validation-for="teachersViewModel.Name" class="text-danger"></span>
                 </div>
 
+                <label asp-for="teachersViewModel.SelectedTeacherType" class="control-label"></label>
                 <select asp-for="teachersViewModel.SelectedTeacherType" class="form-select">
                     @foreach (var value in Model?.TeacherTypes)
                     {
@@ -62,8 +63,3 @@
         <a asp-page="./teachers">رجوع</a>
     </div>
 </div>
-@section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-}
