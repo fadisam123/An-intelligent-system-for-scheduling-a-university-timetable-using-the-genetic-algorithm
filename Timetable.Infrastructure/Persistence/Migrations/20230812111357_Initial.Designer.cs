@@ -12,7 +12,7 @@ using Timetable.Infrastructure.Persistence;
 namespace Timetable.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20230807110254_Initial")]
+    [Migration("20230812111357_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -159,7 +159,7 @@ namespace Timetable.Infrastructure.Persistence.Migrations
                     b.Property<int>("YearNo")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("userId")
+                    b.Property<Guid?>("userId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -547,9 +547,7 @@ namespace Timetable.Infrastructure.Persistence.Migrations
 
                     b.HasOne("Timetable.Domain.Entities.User", "user")
                         .WithMany("Courses")
-                        .HasForeignKey("userId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("userId");
 
                     b.Navigation("TeacherpreferredRoom");
 

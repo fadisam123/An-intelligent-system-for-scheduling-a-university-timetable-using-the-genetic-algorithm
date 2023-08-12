@@ -9,7 +9,7 @@ namespace Timetable.Infrastructure.Persistence
     public static class DataSeeder
     {
 
-        public static async Task SeedData(AppDbContext dbContext, UserManager<User> userManager, RoleManager<Role> roleManager)
+        public static async Task SeedDataAsync(AppDbContext dbContext, UserManager<User> userManager, RoleManager<Role> roleManager)
         {
             var pendingMigrations = await dbContext.Database.GetPendingMigrationsAsync();
             if (pendingMigrations.Any())
@@ -44,39 +44,39 @@ namespace Timetable.Infrastructure.Persistence
 
         private static async Task SeedUsersAsync(UserManager<User> userManager)
         {
-            // seed admin user
-            var adminUser = new User { Name = "المدير", UserName = "admin", Email = "admin@admin.com", Type = UserTypeEnum.Admin };
-
-            var userPassword = "admin123"; // Replace this with a strong password for the user.
-
-            var existingAdmin = await userManager.FindByNameAsync(adminUser.UserName);
-            if (existingAdmin == null)
+            if (!userManager.Users.Any())
             {
+                // seed admin user
+                var adminUser = new User { Name = "المدير", UserName = "admin", Email = "admin@admin.com", Type = UserTypeEnum.Admin };
+
+                var userPassword = "admin123"; // Replace this with a strong password for the user.
+
+
                 var result = await userManager.CreateAsync(adminUser, userPassword);
                 if (result.Succeeded)
                 {
                     await userManager.AddToRoleAsync(adminUser, RoleEnum.Admin.ToString());
                 }
-            }
 
-            // seed all teachers
-            User[] DepartmentHead = {
+
+                // seed all teachers
+                User[] DepartmentHead = {
                 new User{ Name = "محمد", UserName = "u1", Email = "u1@users.com", Type = UserTypeEnum.DepartmentHead },
                 new User{ Name = "أحمد", UserName = "u2", Email = "u1@users.com", Type = UserTypeEnum.DepartmentHead },
                 new User{ Name = "خالد", UserName = "u3", Email = "u1@users.com", Type = UserTypeEnum.DepartmentHead },
-            };
-            var DepartmentHeadPassword = "user123";
+                };
+                var DepartmentHeadPassword = "user123";
 
-            for (int i = 0; i < DepartmentHead.Length; i++)
-            {
-                var result = await userManager.CreateAsync(DepartmentHead[i], DepartmentHeadPassword);
-                if (result.Succeeded)
+                for (int i = 0; i < DepartmentHead.Length; i++)
                 {
-                    await userManager.AddToRoleAsync(DepartmentHead[i], RoleEnum.DepartmentHead.ToString());
+                    result = await userManager.CreateAsync(DepartmentHead[i], DepartmentHeadPassword);
+                    if (result.Succeeded)
+                    {
+                        await userManager.AddToRoleAsync(DepartmentHead[i], RoleEnum.DepartmentHead.ToString());
+                    }
                 }
-            }
 
-            User[] Professor = {
+                User[] Professor = {
                 new User{ Name = "صالح", UserName = "u4", Email = "u1@users.com", Type = UserTypeEnum.Professor },
                 new User{ Name = "أحمد", UserName = "u5", Email = "u1@users.com", Type = UserTypeEnum.Professor },
                 new User{ Name = "خالد", UserName = "u6", Email = "u1@users.com", Type = UserTypeEnum.Professor },
@@ -84,19 +84,19 @@ namespace Timetable.Infrastructure.Persistence
                 new User{ Name = "ياسين", UserName = "u8", Email = "u1@users.com", Type = UserTypeEnum.Professor },
                 new User{ Name = "محمود", UserName = "u9", Email = "u1@users.com", Type = UserTypeEnum.Professor },
                 new User{ Name = "بشرى", UserName = "u10", Email = "u1@users.com", Type = UserTypeEnum.Professor },
-            };
-            var ProfessorPassword = "user123";
+                };
+                var ProfessorPassword = "user123";
 
-            for (int i = 0; i < Professor.Length; i++)
-            {
-                var result = await userManager.CreateAsync(Professor[i], ProfessorPassword);
-                if (result.Succeeded)
+                for (int i = 0; i < Professor.Length; i++)
                 {
-                    await userManager.AddToRoleAsync(Professor[i], RoleEnum.Professor.ToString());
+                    result = await userManager.CreateAsync(Professor[i], ProfessorPassword);
+                    if (result.Succeeded)
+                    {
+                        await userManager.AddToRoleAsync(Professor[i], RoleEnum.Professor.ToString());
+                    }
                 }
-            }
 
-            User[] Teacher = {
+                User[] Teacher = {
                 new User{ Name = "أيمن", UserName = "u11", Email = "u1@users.com", Type = UserTypeEnum.LapTeacher },
                 new User{ Name = "أحمد", UserName = "u12", Email = "u1@users.com", Type = UserTypeEnum.LapTeacher },
                 new User{ Name = "خالد", UserName = "u13", Email = "u1@users.com", Type = UserTypeEnum.LapTeacher },
@@ -106,15 +106,16 @@ namespace Timetable.Infrastructure.Persistence
                 new User{ Name = "بشرى", UserName = "u17", Email = "u1@users.com", Type = UserTypeEnum.LapTeacher },
                 new User{ Name = "سوسن", UserName = "u18", Email = "u1@users.com", Type = UserTypeEnum.LapTeacher },
                 new User{ Name = "جودت", UserName = "u19", Email = "u1@users.com", Type = UserTypeEnum.LapTeacher },
-            };
-            var TeacherPassword = "user123";
+                };
+                var TeacherPassword = "user123";
 
-            for (int i = 0; i < Teacher.Length; i++)
-            {
-                var result = await userManager.CreateAsync(Teacher[i], TeacherPassword);
-                if (result.Succeeded)
+                for (int i = 0; i < Teacher.Length; i++)
                 {
-                    await userManager.AddToRoleAsync(Teacher[i], RoleEnum.LapTeacher.ToString());
+                    result = await userManager.CreateAsync(Teacher[i], TeacherPassword);
+                    if (result.Succeeded)
+                    {
+                        await userManager.AddToRoleAsync(Teacher[i], RoleEnum.LapTeacher.ToString());
+                    }
                 }
             }
         }

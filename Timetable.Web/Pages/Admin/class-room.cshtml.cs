@@ -18,7 +18,7 @@ namespace Timetable.RazorWeb.Pages.Admin
         #region Input Data
         [Display(Name = "اسم القاعة")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "اسم القاعة مطلوب")]
-        [Remote(action: "IsRoomNameInUse", controller: "RemoteValidators")]
+        //[Remote(action: "IsRoomNameInUse", controller: "RemoteValidators")]
         [BindProperty]
         public string RoomName { get; set; } = string.Empty;
         [Display(Name = "نوع القاعة")]

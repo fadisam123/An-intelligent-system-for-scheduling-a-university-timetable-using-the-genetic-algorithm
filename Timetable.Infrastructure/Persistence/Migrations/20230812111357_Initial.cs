@@ -333,7 +333,7 @@ namespace Timetable.Infrastructure.Persistence.Migrations
                     YearNo = table.Column<int>(type: "int", nullable: false),
                     SemesterNo = table.Column<int>(type: "int", nullable: false),
                     TeacherpreferredRoomId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    userId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    userId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -357,8 +357,7 @@ namespace Timetable.Infrastructure.Persistence.Migrations
                         column: x => x.userId,
                         principalSchema: "Security",
                         principalTable: "User",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Courses_Years_YearNo",
                         column: x => x.YearNo,

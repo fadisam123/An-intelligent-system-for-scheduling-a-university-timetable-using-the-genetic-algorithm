@@ -6,5 +6,7 @@
         public Task createRoomAsync(Room room);
         public Room getRoomById(Guid roomId);
         public IEnumerable<Room> getAllRooms();
+        public IEnumerable<Room> getAllTheoryRooms();
+        public IEnumerable<Room> getAllLabRooms();
     }
 }

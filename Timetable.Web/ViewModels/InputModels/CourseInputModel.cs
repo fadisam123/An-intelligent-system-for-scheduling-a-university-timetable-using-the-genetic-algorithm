@@ -9,7 +9,7 @@ namespace Timetable.RazorWeb.ViewModels.InputModels
         public string? Id { get; set; }
 
         [DisplayName("اسم المقرر")]
-        [Remote(action: "IsCourseNameInUse", controller: "RemoteValidators")]
+        //[Remote(action: "IsCourseNameInUse", controller: "RemoteValidators")]
         public string? Name { get; set; } = string.Empty;
 
         [DisplayName("عدد المحاضرات الأسبوعية النظرية")]
@@ -25,10 +25,10 @@ namespace Timetable.RazorWeb.ViewModels.InputModels
         public bool IsElective { get; set; } = false;
 
         [DisplayName("السنة")]
-        public Year? SelectedYear { get; set; }
+        public int SelectedYear { get; set; } = 1;
 
         [DisplayName("الفصل")]
-        public Semester? SelectedSemester { get; set; }
+        public int SelectedSemester { get; set; } = 1;
 
     }
 }

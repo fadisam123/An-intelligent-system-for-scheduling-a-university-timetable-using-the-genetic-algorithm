@@ -1,0 +1,73 @@
+﻿@page "{courseId}"
+@model Timetable.RazorWeb.Pages.Admin.edit_courseModel
+@{
+    ViewData["Title"] = "Edit course";
+}
+<h1>تعديل بيانات مقرر</h1>
+
+<hr />
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <form dir="rtl" method="post">
+
+                <input type="hidden" asp-for="@Model.courseInputModel.Id" />
+
+                <div class="form-group">
+                    <label asp-for="@Model.courseInputModel.Name" class="control-label"></label>
+                    <input asp-for="@Model.courseInputModel.Name" class="form-control" />
+                    <span asp-validation-for="@Model.courseInputModel.Name" class="text-danger"></span>
+                </div>
+
+                <label asp-for="@Model.courseInputModel.SelectedYear" class="control-label"></label>
+                <select asp-for="@Model.courseInputModel.SelectedYear" class="form-select">
+                    @foreach (var item in Model?.courseOutputModel?.Years)
+                    {
+                        <option value="@item.YearNo">@item.YearNo</option>
+                    }
+                </select>
+
+                <label asp-for="@Model.courseInputModel.SelectedSemester" class="control-label"></label>
+                <select asp-for="@Model.courseInputModel.SelectedSemester" class="form-select">
+                    @foreach (var item in Model?.courseOutputModel?.Semesters)
+                    {
+                        <option value="@item.SemesterNo">@item.SemesterNo</option>
+                    }
+                </select>
+
+                <div class="form-group">
+                    <label asp-for="@Model.courseInputModel.LuctureNumPerWeek" class="control-label"></label>
+                    <input asp-for="@Model.courseInputModel.LuctureNumPerWeek" min="1" class="form-control" />
+                    <span asp-validation-for="@Model.courseInputModel.LuctureNumPerWeek" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="@Model.courseInputModel.IsElective" class="control-label"></label>
+                    <input asp-for="@Model.courseInputModel.IsElective" class="form-check-input" />
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="@Model.courseInputModel.HasPracticalSection" class="control-label"></label>
+                    <input asp-for="@Model.courseInputModel.HasPracticalSection" class="form-check-input" />
+                </div>
+
+                @if (Model.courseInputModel.HasPracticalSection)
+                {
+                    <div class="form-group ">
+                        <label asp-for="@Model.courseInputModel.LapLuctureNumPerWeek" class="control-label"></label>
+                        <input asp-for="@Model.courseInputModel.LapLuctureNumPerWeek" min="1" class="form-control" />
+                        <span asp-validation-for="@Model.courseInputModel.LapLuctureNumPerWeek" class="text-danger"></span>
+                    </div>
+                }
+
+                <div class="form-group">
+                    <button class="btn btn-primary" type="submit">حفظ</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div>
+        <a asp-page="./courses">رجوع</a>
+    </div>
+</div>

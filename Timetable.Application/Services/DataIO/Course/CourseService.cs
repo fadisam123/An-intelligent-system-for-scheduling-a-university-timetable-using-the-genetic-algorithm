@@ -47,5 +47,33 @@ namespace Timetable.Application.Services.DataIO.Course
             return Uow.CourseRepository.Find(c => c.Name == theoryCourse.Name &&
                 c.Type == CourseTypeEnum.LapCourse).Any();
         }
+
+        public Year getYear(int yearNo)
+        {
+            return Uow.YearRepository.Find(y => y.YearNo == yearNo).First();
+        }
+
+        public Semester getSemester(int semesterNo)
+        {
+            return Uow.SemesterRepository.Find(s => s.SemesterNo == semesterNo).First();
+        }
+
+        public Course GetCorrespondingLabCourse(Course theoryCourse)
+        {
+            return Uow.CourseRepository.Find(c => c.Name.ToUpper() == theoryCourse.Name.ToUpper() && c.Type == CourseTypeEnum.LapCourse).First();
+        }
+
+        public IEnumerable<Course> getAllLabCourses()
+        {
+            return Uow.CourseRepository.Find(c => c.Type == CourseTypeEnum.LapCourse);
+        }
+
+        public async Task AssignLabCourseToTeacherAsync(Course LabCourse, User Labteacher, Room room)
+        {
+            LabCourse.user = Labteacher;
+            LabCourse.TeacherpreferredRoom = room;
+            Uow.CourseRepository.Update(LabCourse);
+            Uow.SaveChanges();
+        }
     }
 }

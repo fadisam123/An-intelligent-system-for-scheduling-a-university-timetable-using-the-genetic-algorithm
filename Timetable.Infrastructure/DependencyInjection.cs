@@ -12,7 +12,7 @@ namespace Timetable.Infrastructure
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddInfrastructureServices(this IServiceCollection services,
+        public static async Task<IServiceCollection> AddInfrastructureServicesAsync(this IServiceCollection services,
             IConfiguration configuration)
         {
             services
@@ -48,11 +48,11 @@ namespace Timetable.Infrastructure
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-            SeedDataInDb(services.BuildServiceProvider());
+            await SeedDataInDbAsync(services.BuildServiceProvider());
             return services;
         }
 
-        private static async void SeedDataInDb(IServiceProvider services)
+        private static async Task SeedDataInDbAsync(IServiceProvider services)
         {
             using (IServiceScope serviceScope = services.CreateScope())
             {
@@ -60,7 +60,7 @@ namespace Timetable.Infrastructure
                 var DbContext = serviceProvider.GetRequiredService<AppDbContext>();
                 var userManager = serviceProvider.GetRequiredService<UserManager<User>>();
                 var roleManager = serviceProvider.GetRequiredService<RoleManager<Role>>();
-                await DataSeeder.SeedData(DbContext, userManager, roleManager);
+                await DataSeeder.SeedDataAsync(DbContext, userManager, roleManager);
             }
         }
     }

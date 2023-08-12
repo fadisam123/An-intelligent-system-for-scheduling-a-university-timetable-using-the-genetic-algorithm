@@ -1,4 +1,5 @@
-﻿using System.Linq.Expressions;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 using Timetable.Application.Persistence.Repository;
 
 namespace Timetable.Infrastructure.Persistence.Repository
@@ -44,6 +45,11 @@ namespace Timetable.Infrastructure.Persistence.Repository
         public void RemoveRange(IEnumerable<T> entities)
         {
             _context.Set<T>().RemoveRange(entities);
+        }
+
+        public void Update(T entity)
+        {
+            _context.Entry(entity).State = EntityState.Modified;
         }
     }
 }

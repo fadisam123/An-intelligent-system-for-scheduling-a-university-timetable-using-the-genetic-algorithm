@@ -31,7 +31,7 @@
                                     حذف
                                 </button>
                             </form>
-                            <a class="btn btn-sm bg-success" asp-page="./edit-course" asp-route-coursId="@course.Id">تعديل</a>
+                            <a class="btn btn-sm bg-success" asp-page="./edit-course" asp-route-courseId="@course.Id">تعديل</a>
                         </td>
                         @if (course.HasPracticalSection)
                         {
@@ -122,6 +122,4 @@
 </div>
 
 
-@section Scripts {
-    <script type="text/javascript" src="~/js/Admin/courses.js"></script>
-}
+

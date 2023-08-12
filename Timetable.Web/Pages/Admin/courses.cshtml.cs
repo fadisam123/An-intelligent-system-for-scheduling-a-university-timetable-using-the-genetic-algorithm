@@ -61,6 +61,31 @@ namespace Timetable.RazorWeb.Pages.Admin
                 return Page();
             }
 
+            Year selectedYear = _courseService.getYear(courseInputModel.SelectedYear);
+            Semester selectedSemester = _courseService.getSemester(courseInputModel.SelectedSemester);
+
+            Course course = new Course { Name = courseInputModel.Name,
+                year = selectedYear,
+                semester = selectedSemester,
+                IsElective = courseInputModel.IsElective,
+                Type = CourseTypeEnum.TheoryCourse,
+                LuctureNumPerWeek = courseInputModel.LuctureNumPerWeek,
+            };
+            await _courseService.createCourseAsync(course);
+
+            if (courseInputModel.HasPracticalSection)
+            {
+                Course labcourse = new Course
+                {
+                    Name = courseInputModel.Name,
+                    year = selectedYear,
+                    semester = selectedSemester,
+                    IsElective = courseInputModel.IsElective,
+                    Type = CourseTypeEnum.LapCourse,
+                    LuctureNumPerWeek = courseInputModel.LuctureNumPerWeek
+                };
+                await _courseService.createCourseAsync(labcourse);
+            }
             return RedirectToPage();
         }
 

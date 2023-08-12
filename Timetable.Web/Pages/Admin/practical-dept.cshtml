@@ -4,47 +4,88 @@
 }
 
 
-    <div class="container">
-        <div class="table-container">
-            <table id="rooms-table">
+<div class="container">
+    <div class="table-container">
+        <table id="rooms-table">
+            <tr>
+                <th>العمليات</th>
+                <th>المخبر</th>
+                <th>المقرر</th>
+                <th>المدرس</th>
+            </tr>
+            @foreach (var lapCourse in @Model?.LabCourses)
+            {
                 <tr>
-                    <th>العمليات</th>
-                    <th>المخبر</th>
-                    <th>المقرر</th>
-                    <th>المدرس</th>
+                    <td>
+                        <form method="post" asp-page-handler="Delete" class="inline">
+                            <input type="hidden" name="lapCourseId" value="@lapCourse.Id">
+
+                            <button onclick="return confirm('هل تريد الحذف فعلاً؟')" type="submit" class="btn btn-sm bg-danger">
+                                حذف
+                            </button>
+                        </form>
+                        <a class="btn btn-sm bg-success" asp-page="./edit-practical-dept" asp-route-lapCourseId="@lapCourse.Id">تعديل</a>
+                    </td>
+                    <td>@lapCourse?.TeacherpreferredRoom?.Name</td>
+                    <td>@lapCourse.Name</td>
+                    <td>@lapCourse?.user?.Name</td>
                 </tr>
-            </table>
-        </div>
-        <div class="form-container">
-            <label for="teacher-name">: المدرس</label>
-            <br>
-            <select id="teacher-name">
-                <option value="أحمد">أحمد</option>
-                <option value="خالد">خالد</option>
-            </select>
-            <br>
-            <label for="lecture"> : المقرر</label>
-            <br>
-            <select id="lecture">
-                <option value="ذكاء">ذكاء</option>
-                <option value="دارات">دارات</option>
-            </select>
-            <br>
-            <label for="lab"> : المخبر</label>
-            <br>
-            <select id="lab">
-                <option value="مخبر البرمجة">مخبر البرمجة</option>
-                <option value="مخبر الذكاء">مخبر الذكاء</option>
-            </select>
-            <br>
-          
-            <button onclick="addRoom()">إسناد</button>
-        </div>
-        
+
+            }
+        </table>
+    </div>
+    <div class="form-container">
+        <form dir="rtl" method="post">
+
+            @*<input type="hidden" asp-for="@Model.courseInputModel.Id" />*@
+
+            <div class="form-group">
+                <label asp-for="@Model.TeacherId" class="control-label"></label>
+                <select asp-for="@Model.TeacherId" class="form-select">
+                    <option value="">-- اختر مدرس --</option>
+                    @foreach (var item in Model?.LabTeachers)
+                    {
+                        <option value="@item.Id">@item.Name | @item.UserName</option>
+                    }
+                </select>
+                <span class="text-danger" asp-validation-for="@Model.TeacherId"></span>
+            </div>
+
+
+            <div class="form-group">
+                <label asp-for="@Model.CourseId" class="control-label"></label>
+                <select asp-for="@Model.CourseId" class="form-select">
+                    <option value="">-- اختر مقرر --</option>
+                    @foreach (var item in Model?.LabCourses)
+                    {
+                        <option value="@item.Id">@item.Name</option>
+                    }
+                </select>
+                <span class="text-danger" asp-validation-for="@Model.CourseId"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="@Model.RoomId" class="control-label"></label>
+                <select asp-for="@Model.RoomId" class="form-select">
+                    <option value="">-- اختر مقرر --</option>
+                    @foreach (var item in Model?.LabRooms)
+                    {
+                        <option value="@item.Id">@item.Name</option>
+                    }
+                </select>
+                <span class="text-danger" asp-validation-for="@Model.RoomId"></span>
+            </div>
+
+            <div class="form-group">
+                <button class="btn btn-primary" type="submit">إسناد</button>
+            </div>
+        </form>
     </div>
 
+</div>
 
-   @section Scripts {
+
+@section Scripts {
     <script type="text/javascript" src="~/js/Admin/practical-dept.js"></script>
 }
 

@@ -5,6 +5,8 @@
         [Display(Name = "قاعة نظري")]
         TheoryRoom,
         [Display(Name = "قاعة عملي")]
-        LapRoom
+        LapRoom,
+        [Display(Name = "قاعة نظري وعملي")]
+        MixedRoom
     }
 }

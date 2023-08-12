@@ -157,7 +157,7 @@ namespace Timetable.Infrastructure.Persistence.Migrations
                     b.Property<int>("YearNo")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("userId")
+                    b.Property<Guid?>("userId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
@@ -545,9 +545,7 @@ namespace Timetable.Infrastructure.Persistence.Migrations
 
                     b.HasOne("Timetable.Domain.Entities.User", "user")
                         .WithMany("Courses")
-                        .HasForeignKey("userId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("userId");
 
                     b.Navigation("TeacherpreferredRoom");
 

@@ -15,7 +15,7 @@ namespace Timetable.Domain.Entities
         public virtual Year year { get; set; } = null!;
         public virtual Semester semester { get; set; } = null!;
         public virtual Room? TeacherpreferredRoom { get; set; }
-        public virtual User user { get; set; } = null!;
+        public virtual User? user { get; set; } = null;
         public virtual ICollection<Lecture> Lectures { get; } = new List<Lecture>();
         #endregion
 

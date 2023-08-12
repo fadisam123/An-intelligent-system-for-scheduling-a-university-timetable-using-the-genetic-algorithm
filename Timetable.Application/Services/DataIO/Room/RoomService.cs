@@ -3,6 +3,8 @@
 namespace Timetable.Application.Services.DataIO.Room
 {
     using Timetable.Domain.Entities;
+    using Timetable.Domain.Enums.EntitiesEnums;
+
     public class RoomService : IRoomService
     {
         private IUnitOfWork Uow { get; }
@@ -25,6 +27,16 @@ namespace Timetable.Application.Services.DataIO.Room
         public IEnumerable<Room> getAllRooms()
         {
             return Uow.RoomRepository.GetAll();
+        }
+
+        public IEnumerable<Room> getAllTheoryRooms()
+        {
+            return Uow.RoomRepository.Find(r => r.type == RoomTypeEnum.TheoryRoom || r.type == RoomTypeEnum.MixedRoom);
+        }
+
+        public IEnumerable<Room> getAllLabRooms()
+        {
+            return Uow.RoomRepository.Find(r => r.type == RoomTypeEnum.LapRoom || r.type == RoomTypeEnum.MixedRoom);
         }
     }
 }

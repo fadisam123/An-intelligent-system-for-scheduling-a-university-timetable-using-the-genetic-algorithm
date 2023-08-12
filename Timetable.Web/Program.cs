@@ -3,7 +3,7 @@ using Timetable.Infrastructure;
 var builder = WebApplication.CreateBuilder(args);
 
 // Register my own Dependency for each project
-builder.Services.AddInfrastructureServices(builder.Configuration);
+await builder.Services.AddInfrastructureServicesAsync(builder.Configuration);
 builder.Services.AddApplicationServices();
 
 builder.Services.AddValidatorServices();
