@@ -153,7 +153,7 @@ namespace Timetable.Infrastructure.Persistence
 
         private static async Task SeedDaysAsync(AppDbContext dbContext)
         {
-            if (!dbContext.Semesters.Any())
+            if (!dbContext.Days.Any())
             {
                 var days = new List<Day>
                 {
