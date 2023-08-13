@@ -12,24 +12,60 @@
                     <th>المقرر</th>
                     <th>المدرس</th>
                 </tr>
+            @foreach (var theoryCourse in @Model?.TheoryCourses)
+            {
+                <tr>
+                    <td>
+                        <form method="post" asp-page-handler="Delete" class="inline">
+                            <input type="hidden" name="lapCourseId" value="@theoryCourse.Id">
+
+                            <button onclick="return confirm('هل تريد الحذف فعلاً؟')" type="submit" class="btn btn-sm bg-danger">
+                                حذف
+                            </button>
+                        </form>
+                        <a class="btn btn-sm bg-success" asp-page="./edit-practical-dept" asp-route-lapCourseId="@theoryCourse.Id">تعديل</a>
+                    </td>
+                    <td>@theoryCourse.Name</td>
+                    <td>@theoryCourse?.user?.Name <span class="text-info">(@theoryCourse?.user?.UserName)</span></td>
+                </tr>
+
+            }
             </table>
         </div>
         <div class="form-container">
-            <label for="teacher-name">: المدرس</label>
-            <br>
-            <select id="teacher-name">
-                <option value="أحمد">أحمد</option>
-                <option value="خالد">خالد</option>
-            </select>
-            <br>
-            <label for="lecture"> : المقرر</label>
-            <br>
-            <select id="lecture">
-                <option value="ذكاء">ذكاء</option>
-                <option value="دارات">دارات</option>
-            </select>
-            <br>
-            <button onclick="addRoom()">إسناد</button>
+        <form dir="rtl" method="post">
+
+            @*<input type="hidden" asp-for="@Model.courseInputModel.Id" />*@
+
+            <div class="form-group">
+                <label asp-for="@Model.TeacherId" class="control-label"></label>
+                <select asp-for="@Model.TeacherId" class="form-select">
+                    <option value="">-- اختر مدرس --</option>
+                    @foreach (var item in Model?.TheoryTeachers)
+                    {
+                        <option value="@item.Id">@item.Name | @item.UserName</option>
+                    }
+                </select>
+                <span class="text-danger" asp-validation-for="@Model.TeacherId"></span>
+            </div>
+
+
+            <div class="form-group">
+                <label asp-for="@Model.CourseId" class="control-label"></label>
+                <select asp-for="@Model.CourseId" class="form-select">
+                    <option value="">-- اختر مقرر --</option>
+                    @foreach (var item in Model?.TheoryCourses)
+                    {
+                        <option value="@item.Id">@item.Name</option>
+                    }
+                </select>
+                <span class="text-danger" asp-validation-for="@Model.CourseId"></span>
+            </div>
+
+            <div class="form-group">
+                <button class="btn btn-primary" type="submit">إسناد</button>
+            </div>
+        </form>
         </div>
         
     </div>

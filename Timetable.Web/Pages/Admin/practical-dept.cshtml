@@ -28,7 +28,7 @@
                     </td>
                     <td>@lapCourse?.TeacherpreferredRoom?.Name</td>
                     <td>@lapCourse.Name</td>
-                    <td>@lapCourse?.user?.Name</td>
+                    <td>@lapCourse?.user?.Name <span class="text-info">(@lapCourse?.user?.UserName)</span></td>
                 </tr>
 
             }
@@ -45,7 +45,7 @@
                     <option value="">-- اختر مدرس --</option>
                     @foreach (var item in Model?.LabTeachers)
                     {
-                        <option value="@item.Id">@item.Name | @item.UserName</option>
+                        <option value="@item.Id">@item.Name (@item.UserName)</option>
                     }
                 </select>
                 <span class="text-danger" asp-validation-for="@Model.TeacherId"></span>
@@ -67,7 +67,7 @@
             <div class="form-group">
                 <label asp-for="@Model.RoomId" class="control-label"></label>
                 <select asp-for="@Model.RoomId" class="form-select">
-                    <option value="">-- اختر مقرر --</option>
+                    <option value="">-- اختر مخبر --</option>
                     @foreach (var item in Model?.LabRooms)
                     {
                         <option value="@item.Id">@item.Name</option>

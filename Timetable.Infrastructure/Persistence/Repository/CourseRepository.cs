@@ -10,6 +10,11 @@ namespace Timetable.Infrastructure.Persistence.Repository
         {
         }
 
+        public bool CheckCoursesExistWithAssignedUsers()
+        {
+            return _context.Courses.Any(c => c.user != null);
+        }
+
         public IEnumerable<Course> getAllTheoryCourses()
         {
             return _context.Courses.Where(c => c.Type == CourseTypeEnum.TheoryCourse)

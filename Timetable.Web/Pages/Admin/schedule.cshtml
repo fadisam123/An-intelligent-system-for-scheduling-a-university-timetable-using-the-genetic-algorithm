@@ -2,81 +2,136 @@
 @model Timetable.RazorWeb.Pages.Admin.scheduleModel
 @{
 }
- 
 
-  <button id="editSaveButton" class="edit-save-button" onclick="toggleEditSave()">تعديل</button>
-  
-  <table id="myTable">
+<form method="post">
+
+    <div class="form-group">
+        @if (Model?.Semesters?.Count is null || Model?.Semesters?.Count == 0)
+        {
+            <div class="text-danger">لايوجد بيانات في كافية لتوليد البرنامج الرجاء إدخال المقررات ثم اسنادها إلى المدرسين ثم العودة إلى هنا</div>
+        }
+        else
+        {
+            <label asp-for="@Model.SelectedSemester" class="control-label"></label>
+            <select asp-for="@Model.SelectedSemester" class="form-select">
+                @foreach (var item in Model?.Semesters)
+                {
+                    <option value="@item.SemesterNo">@item.SemesterNo</option>
+                }
+            </select>
+        }
+    </div>
+
+    <button onclick="return confirm('سيتم حذف برنامج الدوام القديم واستبداله بالبرنامج المولد، هل أنت متأكد من المتابعة؟')" class="edit-save-button" type="submit">توليد</button>
+</form>
+
+<form id="yearChangedForm" asp-page-handler="x" method="post">
+
+    <div class="form-group">
+        @if (Model?.Years?.Count is null || Model?.Years?.Count == 0)
+        {
+            
+        }
+        else
+        {
+            <label asp-for="@Model.SelectedYearInput" class="control-label"></label>
+            <select onchange="$('#yearChangedForm').submit()" asp-for="@Model.SelectedYearInput" class="form-select">
+                @foreach (var item in Model?.Years)
+                {
+                    <option value="@item.YearNo">@item.YearNo</option>
+                }
+            </select>
+        }
+        @if (Model?.Semesters?.Count is null || Model?.Semesters?.Count == 0)
+        {
+
+        }
+        else
+        {
+            <label asp-for="@Model.SelectedSemesterInput" class="control-label"></label>
+            <select onchange="$('#yearChangedForm').submit()" asp-for="@Model.SelectedSemesterInput" class="form-select">
+                @foreach (var item in Model?.Semesters)
+                {
+                    <option value="@item.SemesterNo">@item.SemesterNo</option>
+                }
+            </select>
+        }
+    </div>
+
+</form>
+
+<button id="editSaveButton" class="edit-save-button" onclick="toggleEditSave()">تعديل</button>
+<table id="myTable">
     <tr>
-      <th>الخميس</th>
-      <th>الاحد</th>
-      <th>الثلاثاء</th>
-      <th>الاثنين</th>
-      <th>الأحد</th>
-      <th>السبت</th>
-      <th>الوقت</th>
+        <th>الخميس</th>
+        <th>الاحد</th>
+        <th>الثلاثاء</th>
+        <th>الاثنين</th>
+        <th>الأحد</th>
+        <th>السبت</th>
+        <th>الوقت</th>
     </tr>
     <tr>
-      <td ></td>
-      <td ></td>
-      <td ></td>
-      <td ></td>
-      <td ></td>
-      <td ></td>
-      <th>9 - 10:30</th>
-    </tr>
-     <tr>
-      <td ></td>
-      <td ></td>
-      <td ></td>
-      <td ></td>
-      <td ></td>
-      <td ></td>
-      <th>10:45-12:15</th>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <th>9 - 10:30</th>
     </tr>
     <tr>
-      <td ></td>
-      <td ></td>
-      <td ></td>
-      <td ></td>
-      <td ></td>
-      <td ></td>
-      <th>12:30 - 2</th>
-    </tr>
-    
-    <tr>
-      <td ></td>
-      <td ></td>
-      <td ></td>
-      <td ></td>
-      <td ></td>
-      <td ></td>
-      <th>2:15 - 3:45</th>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <th>10:45-12:15</th>
     </tr>
     <tr>
-      <td ></td>
-      <td ></td>
-      <td ></td>
-      <td ></td>
-      <td ></td>
-      <td ></td>
-      <th>4 - 5:30</th>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <th>12:30 - 2</th>
+    </tr>
+
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <th>2:15 - 3:45</th>
     </tr>
     <tr>
-      <td ></td>
-      <td ></td>
-      <td ></td>
-      <td ></td>
-      <td ></td>
-      <td ></td>
-      <th>5:45 - 7:15</th>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <th>4 - 5:30</th>
     </tr>
-  </table>
-  
-  <br>
-  
- 
-  
-    @section Scripts {
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <th>5:45 - 7:15</th>
+    </tr>
+</table>
+
+<br>
+
+
+
+@section Scripts {
     <script type="text/javascript" src="~/js/Admin/schedule.js"></script>
 }

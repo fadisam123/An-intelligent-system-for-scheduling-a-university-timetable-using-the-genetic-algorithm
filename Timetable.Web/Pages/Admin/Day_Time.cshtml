@@ -1,0 +1,61 @@
+﻿@page
+@model Timetable.RazorWeb.Pages.Admin.Day_TimeModel
+@{
+    ViewData["Title"] = "rooms";
+}
+<div class="container">
+    <div class="main-content">
+
+
+    </div>
+    <div class="sidebar">
+
+
+        <form dir="rtl" method="post">
+
+            @{
+                string[] daysNames = { "أحد", "اثنين", "ثلاثاء", "أربعاء", "خميس", "سبت" };
+            }
+            @for (int i = 0; i < Model.dayTimeInputModel.workingDays.Length; i++)
+            {
+                <div class="form-group">
+                    <label asp-for="@daysNames[i]" class="control-label">@daysNames[i]</label>
+                    <input asp-for="@Model.dayTimeInputModel.workingDays[i]" class="form-check-input" />
+                </div>
+            }
+
+            <div class="form-group ">
+                <label asp-for="@Model.dayTimeInputModel.NumOfLecturePerDay" class="control-label"></label>
+                <input asp-for="@Model.dayTimeInputModel.NumOfLecturePerDay" class="form-control" />
+                <span asp-validation-for="@Model.dayTimeInputModel.NumOfLecturePerDay" class="text-danger"></span>
+            </div>
+
+            <div class="form-group ">
+                <label asp-for="@Model.dayTimeInputModel.LectureDuration" class="control-label"></label>
+                <input dir="ltr" value="00:00" asp-for="@Model.dayTimeInputModel.LectureDuration" class="form-control" />
+                <span asp-validation-for="@Model.dayTimeInputModel.LectureDuration" class="text-danger"></span>
+            </div>
+
+            <div class="form-group ">
+                <label asp-for="@Model.dayTimeInputModel.BreakDuration" class="control-label"></label>
+                <input dir="ltr" value="00:00" asp-for="@Model.dayTimeInputModel.BreakDuration" class="form-control" />
+                <span asp-validation-for="@Model.dayTimeInputModel.BreakDuration" class="text-danger"></span>
+            </div>
+
+            <div class="form-group ">
+                <label asp-for="@Model.dayTimeInputModel.FirstLectureTime" class="control-label"></label>
+                <input asp-for="@Model.dayTimeInputModel.FirstLectureTime" class="form-control" />
+                <span asp-validation-for="@Model.dayTimeInputModel.FirstLectureTime" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <button class="btn btn-primary" type="submit">حفظ</button>
+            </div>
+        </form>
+
+
+
+
+
+    </div>
+</div>

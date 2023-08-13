@@ -3,5 +3,6 @@
     public interface ICourseRepository: IGenericRepository<Course>
     {
         IEnumerable<Course> getAllTheoryCourses();
+        bool CheckCoursesExistWithAssignedUsers();
     }
 }

@@ -4,11 +4,11 @@ using Timetable.RazorWeb.ViewModels;
 
 namespace Timetable.RazorWeb.Controllers
 {
-    public class TeachersController : Controller
+    public class RemoteValidatorsController : Controller
     {
         private readonly UserManager<User> userManager;
 
-        public TeachersController(UserManager<User> userManager)
+        public RemoteValidatorsController(UserManager<User> userManager)
         {
             this.userManager = userManager;
         }

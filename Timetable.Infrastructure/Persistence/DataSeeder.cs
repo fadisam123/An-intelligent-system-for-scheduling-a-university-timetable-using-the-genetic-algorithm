@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Spectre.Console;
+using System;
+using System.Linq;
 using Timetable.Domain.Entities;
 using Timetable.Domain.Enums;
 using Timetable.Domain.Enums.EntitiesEnums;
@@ -8,6 +11,7 @@ namespace Timetable.Infrastructure.Persistence
 {
     public static class DataSeeder
     {
+        private static readonly Random _random = new Random();
 
         public static async Task SeedDataAsync(AppDbContext dbContext, UserManager<User> userManager, RoleManager<Role> roleManager)
         {
@@ -27,6 +31,8 @@ namespace Timetable.Infrastructure.Persistence
             await SeedTimeAsync(dbContext);
             await SeedTheoryCoursesAsync(dbContext);
             await SeedLapCoursesAsync(dbContext);
+            await SeedTeacherPreferenceDayTimeAsync(dbContext);
+            await SeedTeacherPreferenceRoomAsync(dbContext);
         }
 
         private static async Task SeedRolesAsync(RoleManager<Role> roleManager)
@@ -1384,5 +1390,66 @@ namespace Timetable.Infrastructure.Persistence
             }
         }
 
+        private static async Task SeedTeacherPreferenceDayTimeAsync(AppDbContext dbContext)
+        {
+            if (!dbContext.TeacherPreferenceDayTimes.Any() && dbContext.Days.Any() && dbContext.Times.Any())
+            {
+                var teachers = dbContext.Users.Where(t => t.Courses.Any()).Include(t => t.Courses).ToList();
+                foreach (var teacher in teachers)
+                {
+                    var courses = teacher.Courses;
+                    foreach (var course in courses)
+                    {
+                        int enterdInctances = 0;
+                        do
+                        {
+                            var Days = dbContext.Days.ToList();
+                            int randomDayIndex = _random.Next(0, Days.Count());
+                            Day randomDay = Days[randomDayIndex];
+                            
+                            var Times = dbContext.Times.ToList();
+                            int randomTimeIndex = _random.Next(0, Times.Count());
+                            Time randomTime = Times[randomTimeIndex];
+
+                            var tpdt = new TeacherPreferenceDayTime
+                            {
+                                user = teacher,
+                                day = randomDay,
+                                time = randomTime
+                            };
+                            if (dbContext.TeacherPreferenceDayTimes.Contains(tpdt))
+                            {
+                                continue;
+                            }
+                            await dbContext.TeacherPreferenceDayTimes.AddAsync(tpdt);
+                            await dbContext.SaveChangesAsync();
+                            enterdInctances++;
+                        } while (enterdInctances >= 3);
+                    }
+                }
+            }
+        }
+
+        private static async Task SeedTeacherPreferenceRoomAsync(AppDbContext dbContext)
+        {
+            if (dbContext.Courses.Any() && dbContext.Rooms.Any())
+            {
+                var courses = dbContext.Courses.Where(c => c.Type == CourseTypeEnum.TheoryCourse && c.user != null).ToList();
+                foreach (var course in courses)
+                {
+                    if (course.TeacherpreferredRoom is null)
+                    {
+                        var Rooms = dbContext.Rooms.ToList();
+                        int randomRoomIndex = _random.Next(0, Rooms.Count());
+                        Room randomRoom = Rooms[randomRoomIndex];
+
+                        course.TeacherpreferredRoom = randomRoom;
+
+                        dbContext.Entry(course).State = EntityState.Modified;
+                        await dbContext.SaveChangesAsync();
+                    }
+                }
+            }
+        }
     }
 }

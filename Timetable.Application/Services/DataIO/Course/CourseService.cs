@@ -75,5 +75,17 @@ namespace Timetable.Application.Services.DataIO.Course
             Uow.CourseRepository.Update(LabCourse);
             Uow.SaveChanges();
         }
+
+        public async Task AssignTheoryCourseToTeacherAsync(Course TheoryCourse, User TheoryTeacher)
+        {
+            TheoryCourse.user = TheoryTeacher;
+            Uow.CourseRepository.Update(TheoryCourse);
+            Uow.SaveChanges();
+        }
+
+        public bool CheckCoursesExistWithAssignedUsers()
+        {
+            return Uow.CourseRepository.CheckCoursesExistWithAssignedUsers();
+        }
     }
 }

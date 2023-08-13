@@ -1,0 +1,83 @@
+﻿
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+.container {
+    display: flex;
+    width: 78%;
+    margin-left: 6px;
+    margin-top: 100px;
+    border: 1px solid #1F6E8C;
+    border-radius: 5px;
+    background-color: #2E8A99;
+}
+
+.sidebar {
+    width: 30%;
+    padding: 20px;
+    background-color: #2E8A99;
+}
+
+.form-group {
+    margin-bottom: 10px;
+}
+
+    .form-group label {
+        display: block;
+        margin-bottom: 5px;
+        color: #fff;
+    }
+
+    .form-group input[type="text"],
+    .form-group select,
+    .form-group input[type="number"] {
+        width: 100%;
+        padding: 5px;
+    }
+
+#practicalCountGroup {
+    display: none;
+}
+
+.main-content {
+    flex-grow: 1;
+    padding: 20px;
+}
+
+#courseTable {
+    width: 100%;
+    border-collapse: collapse;
+    color: #fff;
+}
+
+    #courseTable th,
+    #courseTable td {
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+        color: #fff;
+    }
+
+#addCourseBtn {
+    padding: 10px 20px;
+    background-color: #1F6E8C;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+button {
+    padding: 6px 12px;
+    background-color: #1F6E8C;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+input {
+    color: #4CAF50;
+}

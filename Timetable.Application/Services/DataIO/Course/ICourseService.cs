@@ -17,5 +17,7 @@ namespace Timetable.Application.Services.DataIO.Course
         public Semester getSemester(int SemesterNo);
         public bool HasPracticalSection(Course theoryCourse);
         public Task AssignLabCourseToTeacherAsync(Course LabCourse, User Labteacher, Room room);
+        public Task AssignTheoryCourseToTeacherAsync(Course TheoryCourse, User TheoryTeacher);
+        public bool CheckCoursesExistWithAssignedUsers();
     }
 }

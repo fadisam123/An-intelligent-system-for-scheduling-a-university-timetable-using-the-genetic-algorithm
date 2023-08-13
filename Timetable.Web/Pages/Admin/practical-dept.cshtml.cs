@@ -37,8 +37,6 @@ namespace Timetable.RazorWeb.Pages.Admin
         public List<Course> LabCourses { get; set; } = new List<Course>();
         public List<User> LabTeachers { get; set; } = new List<User>();
         public List<Room> LabRooms { get; set; } = new List<Room>();
-
-        public List<PracticalDeptOutputModel> practicalDeptOutputModels { get; set; } = new List<PracticalDeptOutputModel>();
         #endregion
 
         public practicalModel(ITeacherService teacherService, ICourseService courseService, IRoomService RoomService)

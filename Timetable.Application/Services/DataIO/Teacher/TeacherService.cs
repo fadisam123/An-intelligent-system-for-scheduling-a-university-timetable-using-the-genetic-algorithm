@@ -47,7 +47,7 @@ namespace Timetable.Application.Services.DataIO.Teacher
 
         public IEnumerable<User> getAllTheoryTeachers()
         {
-            return Uow.TeacherRepository.Find(t => t.Type == UserTypeEnum.LapTeacher);
+            return Uow.TeacherRepository.Find(t => t.Type == UserTypeEnum.Professor || t.Type == UserTypeEnum.DepartmentHead);
         }
     }
 }

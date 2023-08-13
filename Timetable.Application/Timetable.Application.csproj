@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Spectre.Console" Version="0.47.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Timetable.Domain\Timetable.Domain.csproj" />
   </ItemGroup>
 
