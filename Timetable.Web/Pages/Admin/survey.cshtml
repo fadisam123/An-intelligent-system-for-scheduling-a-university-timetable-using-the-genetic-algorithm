@@ -5,13 +5,11 @@
 
 }
 <div style="width:70%">
-    <form method="post">
-
-
+    <form id="changeForm" asp-page-handler="SelectChanged" method="post">
         <div class="form-group">
             <label asp-for="@Model.SelectedRole" class="control-label"></label>
 
-            <select asp-for="@Model.SelectedRole" class="form-select">
+            <select onchange="$('#changeForm').submit(); $('selectVal').val('$(this).val()')" asp-for="@Model.SelectedRole" class="form-select">
                 @foreach (var value in Model?.Roles)
                 {
                     var displayAttribute = value.GetType()
@@ -23,19 +21,26 @@
                     <option value="@value"> @name </option>
                 }
             </select>
-
-            <div class="form-group ">
-                <label asp-for="@Model.StartDateTime" class="control-label"></label>
-                <input asp-for="@Model.StartDateTime" class="form-control" />
-                <span asp-validation-for="@Model.StartDateTime" class="text-danger"></span>
-            </div>
-
-            <div class="form-group ">
-                <label asp-for="@Model.EndDateTime" class="control-label"></label>
-                <input asp-for="@Model.EndDateTime" class="form-control" />
-                <span asp-validation-for="@Model.EndDateTime" class="text-danger"></span>
-            </div>
         </div>
+    </form>
+
+    <form asp-page-handler="Process" method="post">
+        <select hidden asp-for="@Model.SelectedRole" class="form-select">
+
+            <option hidden id="selectVal"></option>
+        </select>
+        <div class="form-group ">
+            <label asp-for="@Model.StartDateTime" class="control-label"></label>
+            <input asp-for="@Model.StartDateTime" class="form-control" />
+            <span asp-validation-for="@Model.StartDateTime" class="text-danger"></span>
+        </div>
+
+        <div class="form-group ">
+            <label asp-for="@Model.EndDateTime" class="control-label"></label>
+            <input asp-for="@Model.EndDateTime" class="form-control" />
+            <span asp-validation-for="@Model.EndDateTime" class="text-danger"></span>
+        </div>
+
         <button class="btn btn-info" type="submit">حفظ</button>
     </form>
 </div>

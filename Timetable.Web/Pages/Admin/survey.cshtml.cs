@@ -15,13 +15,13 @@ namespace Timetable.RazorWeb.Pages.Admin
 
         #region Output Data
         public List<RoleEnum> Roles = new List<RoleEnum>();
-        public TakingSurveyAllowedPeriod Surveys;
+        public TakingSurveyAllowedPeriod Survey;
         #endregion
 
         #region InputData
         [DisplayName("فتح استبيان من أجل")]
         [BindProperty]
-        public RoleEnum SelectedRole { get; set; }
+        public RoleEnum SelectedRole { get; set; } = RoleEnum.DepartmentHead;
 
         [DisplayName("تاريخ فتح أو بدء الاستبيان")]
         [DataType(DataType.DateTime)]
@@ -53,10 +53,25 @@ namespace Timetable.RazorWeb.Pages.Admin
                     Roles.Add(type);
                 }
             }
-            Surveys = _surveyService.getSurveyByRole(SelectedRole);
-
+            Survey = _surveyService.getSurveyByRole(SelectedRole);
+            if (Survey is null)
+            {
+                return;
+            }
+            else
+            {
+                StartDateTime = Survey.Start;
+                EndDateTime = Survey.End;
+            }
         }
-        public async Task<IActionResult> OnPost()
+
+        public void OnPostSelectChanged()
+        {
+            ModelState.Clear();
+            OnGet();
+        }
+
+        public async Task<IActionResult> OnPostProcess()
         {
             if (EndDateTime > StartDateTime)
             {

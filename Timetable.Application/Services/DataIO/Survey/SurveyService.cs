@@ -16,9 +16,9 @@ namespace Timetable.Application.Services.DataIO.Survey
             Uow.SaveChanges();
         }
 
-        public TakingSurveyAllowedPeriod getSurveyByRole(RoleEnum roleEnum)
+        public TakingSurveyAllowedPeriod? getSurveyByRole(RoleEnum roleEnum)
         {
-            throw new NotImplementedException();
+            return Uow.SurveyRepository.Find(s => s.role.Name.ToUpper() == roleEnum.ToString().ToUpper()).FirstOrDefault();
         }
     }
 }
