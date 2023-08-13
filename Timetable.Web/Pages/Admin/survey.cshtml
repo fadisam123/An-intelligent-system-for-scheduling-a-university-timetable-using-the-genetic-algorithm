@@ -4,7 +4,10 @@
 @{
 
 }
-<div style="width:70%">
+<div class="container">
+    <div class="row">
+        <div class="edit col-md-4">
+
     <form id="changeForm" asp-page-handler="SelectChanged" method="post">
         <div class="form-group">
             <label asp-for="@Model.SelectedRole" class="control-label"></label>
@@ -41,6 +44,8 @@
             <span asp-validation-for="@Model.EndDateTime" class="text-danger"></span>
         </div>
 
-        <button class="btn btn-info" type="submit">حفظ</button>
+        <button class="btn btn-primary" type="submit">حفظ</button>
     </form>
+</div>
+</div>
 </div>
