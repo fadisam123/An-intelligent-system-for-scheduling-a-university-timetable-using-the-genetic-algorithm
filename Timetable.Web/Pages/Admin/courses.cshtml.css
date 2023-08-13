@@ -10,7 +10,7 @@
     display: flex;
     width: 78%;
     margin-left: 6px;
-    margin-top: 100px;
+    margin-top: 20px;
     border: 1px solid #1F6E8C;
     border-radius: 5px;
     background-color: #2E8A99;
@@ -78,6 +78,7 @@ button {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    margin-bottom: 12px;
 }
 
 input {

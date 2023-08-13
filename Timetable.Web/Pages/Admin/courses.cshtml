@@ -60,8 +60,7 @@
     </div>
     <div class="sidebar">
 
-
-        <form dir="rtl" method="post">
+         <form dir="rtl" method="post">
 
             <input type="hidden" asp-for="@Model.courseInputModel.Id" />
 
@@ -100,10 +99,10 @@
 
             <div class="form-group">
                 <label asp-for="@Model.courseInputModel.HasPracticalSection" class="control-label"></label>
-                <input asp-for="@Model.courseInputModel.HasPracticalSection" class="form-check-input" />
+                <input class="form-check-input"  id="pass" name="pass" onclick="$('#LapLuctureNumGroup').toggleClass('hidden');"  asp-for="@Model.courseInputModel.HasPracticalSection"  />
             </div>
 
-            <div class="form-group ">
+            <div class="form-group hidden" id="LapLuctureNumGroup">
                 <label asp-for="@Model.courseInputModel.LapLuctureNumPerWeek" class="control-label"></label>
                 <input asp-for="@Model.courseInputModel.LapLuctureNumPerWeek" min="1" class="form-control" />
                 <span asp-validation-for="@Model.courseInputModel.LapLuctureNumPerWeek" class="text-danger"></span>
@@ -114,9 +113,7 @@
             </div>
         </form>
 
-
-
-
+       
 
     </div>
 </div>

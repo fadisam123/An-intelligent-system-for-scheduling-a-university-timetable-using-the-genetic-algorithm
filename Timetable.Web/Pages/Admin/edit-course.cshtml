@@ -3,12 +3,11 @@
 @{
     ViewData["Title"] = "Edit course";
 }
-<h1>تعديل بيانات مقرر</h1>
 
 <hr />
 <div class="container">
     <div class="row">
-        <div class="col-md-4">
+        <div class="edit col-md-4">
             <form dir="rtl" method="post">
 
                 <input type="hidden" asp-for="@Model.courseInputModel.Id" />
@@ -43,17 +42,17 @@
 
                 <div class="form-group">
                     <label asp-for="@Model.courseInputModel.IsElective" class="control-label"></label>
-                    <input asp-for="@Model.courseInputModel.IsElective" class="form-check-input" />
+                    <input  asp-for="@Model.courseInputModel.IsElective" class="form-check-input" />
                 </div>
 
-                <div class="form-group">
+                <div id="num-cours" class="form-group number-cours">
                     <label asp-for="@Model.courseInputModel.HasPracticalSection" class="control-label"></label>
-                    <input asp-for="@Model.courseInputModel.HasPracticalSection" class="form-check-input" />
+                    <input class="form-check-input"  id="pass" name="pass" onclick="$('#LapLuctureNumGroup').toggleClass('hidden');"  asp-for="@Model.courseInputModel.HasPracticalSection"  />
                 </div>
 
                 @if (Model.courseInputModel.HasPracticalSection)
                 {
-                    <div class="form-group ">
+                    <div class="form-group hidden" id="LapLuctureNumGroup">
                         <label asp-for="@Model.courseInputModel.LapLuctureNumPerWeek" class="control-label"></label>
                         <input asp-for="@Model.courseInputModel.LapLuctureNumPerWeek" min="1" class="form-control" />
                         <span asp-validation-for="@Model.courseInputModel.LapLuctureNumPerWeek" class="text-danger"></span>
@@ -63,11 +62,12 @@
                 <div class="form-group">
                     <button class="btn btn-primary" type="submit">حفظ</button>
                 </div>
+                 <div>
+                    <a asp-page="./courses">رجوع</a>
+                 </div>
             </form>
         </div>
     </div>
 
-    <div>
-        <a asp-page="./courses">رجوع</a>
-    </div>
+   
 </div>

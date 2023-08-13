@@ -9,7 +9,7 @@ body {
     display: flex;
     justify-content: space-between;
     text-align: center;
-    margin-top: 100px;
+    margin-top: 20px;
     margin-left: -4px;
     width: 80%;
     padding: 40px;
@@ -30,13 +30,7 @@ body {
     padding: 20px;
 }
 
-label, select, input, button {
-    margin-bottom: 15px;
-}
 
-label {
-    color: #fff;
-}
 
 table {
     border-collapse: collapse;

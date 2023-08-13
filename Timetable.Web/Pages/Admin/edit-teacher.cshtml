@@ -5,12 +5,9 @@
     ViewData["Title"] = "Edit Teacher";
 }
 
-<h1>تعديل بيانات مدرس</h1>
-
-<hr />
 <div class="container">
     <div class="row">
-        <div class="col-md-4">
+        <div class="edit col-md-4">
             <form dir="rtl" method="post">
 
                 <input type="hidden" asp-for="teachersViewModel.ID" />
@@ -53,13 +50,14 @@
                 </div>
 
                 <div class="form-group">
-                    <input type="submit" value="حفظ" class="btn btn-primary" />
+                    <input type="submit" value="حفظ" class="btn btn-primary"/>
                 </div>
+                 <div class="back">
+                    <a asp-page="./teachers">رجوع</a>
+                 </div>
             </form>
         </div>
     </div>
 
-    <div>
-        <a asp-page="./teachers">رجوع</a>
-    </div>
+   
 </div>
