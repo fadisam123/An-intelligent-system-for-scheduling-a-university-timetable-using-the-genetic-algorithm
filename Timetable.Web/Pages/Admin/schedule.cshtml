@@ -3,6 +3,7 @@
 @{
 }
 
+<div class="container">
 <form method="post">
 
     <div class="form-group">
@@ -12,7 +13,7 @@
         }
         else
         {
-            <label asp-for="@Model.SelectedSemester" class="control-label text-black ms-5"></label>
+            <label asp-for="@Model.SelectedSemester" class="control-label ms-5"></label>
             <select asp-for="@Model.SelectedSemester" class="form-select w-25">
                 @foreach (var item in Model?.Semesters)
                 {
@@ -34,7 +35,7 @@
         }
         else
         {
-            <label asp-for="@Model.SelectedYearInput" class="control-label text-black"></label>
+            <label asp-for="@Model.SelectedYearInput" class="control-label"></label>
             <select onchange="$('#yearChangedForm').submit()" asp-for="@Model.SelectedYearInput" class="form-select w-25">
                 @foreach (var item in Model?.Years)
                 {
@@ -48,7 +49,7 @@
         }
         else
         {
-            <label asp-for="@Model.SelectedSemesterInput" class="control-label text-black"></label>
+            <label asp-for="@Model.SelectedSemesterInput" class="control-label"></label>
             <select onchange="$('#yearChangedForm').submit()" asp-for="@Model.SelectedSemesterInput" class="form-select w-25">
                 @foreach (var item in Model?.Semesters)
                 {
@@ -61,6 +62,7 @@
 </form>
 
 <button id="editSaveButton" class="edit-save-button generate" onclick="toggleEditSave()">تعديل</button>
+</div>
 <table id="myTable">
  
 <div class="butt">
