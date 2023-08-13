@@ -38,11 +38,26 @@ button {
     cursor: pointer;
     border-radius: 5px;
     margin-top:3%;
-    margin-left:10px;
+    margin-left:20px;
+}
+
+.butt {
+    margin-right: 70px;
 }
 
  button:hover {
     background-color: blue;
+}
+
+
+ .generate {
+     margin-left: 45%;
+     margin-bottom:2%;
+ }
+
+form .form-group {
+    margin-left: 40%;
+    text-align-last: start;
 }
 
 
