@@ -8,7 +8,6 @@ body {
     font-family: Arial, sans-serif;
 }
 
-
 a.navbar-brand {
     white-space: normal;
     text-align: center;
@@ -19,10 +18,6 @@ a {
     color: #0077cc;
 }
 
-
-i {
-    font-size: 10px;
-}
 
 .btn-primary {
     color: #fff;
@@ -64,17 +59,17 @@ button.accept-policy {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 50px;
+    padding-top: 30px;
     border-radius: 5px;
 }
 
 h3 {
     color: white;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 
 .icon {
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 
 .sidebar-icon {
@@ -100,7 +95,5 @@ a {
     display: inline-block;
 }
 
-.sidebar-link:hover {
-    color: #e5e5e5;
-}
+
 

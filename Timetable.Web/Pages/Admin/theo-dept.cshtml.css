@@ -10,7 +10,7 @@
     margin-left: -4px;
     justify-content: space-between;
     text-align: center;
-    margin-top: 100px;
+    margin-top: 20px;
     padding: 40px;
     border: 1px solid #1F6E8C;
     border-radius: 5px;
@@ -29,9 +29,7 @@
     padding: 20px;
 }
 
-label, select, input, button {
-    margin-bottom: 15px;
-}
+
 
 label {
     color: #fff;

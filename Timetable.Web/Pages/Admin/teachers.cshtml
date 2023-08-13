@@ -40,7 +40,7 @@
             }
         </table>
     </div>
-    <form autocomplete="off" dir="rtl" method="post">
+    <form class="form-container" autocomplete="off" dir="rtl" method="post">
 
         <div class="form-group">
             <label asp-for="@Model.teachersViewModel.Name" class="control-label"></label>
@@ -77,7 +77,7 @@
             <input dir="ltr" asp-for="@Model.teachersViewModel.password" class="form-control">
             <span class="text-danger" asp-validation-for="@Model.teachersViewModel.password"></span>
         </div>
-        <button type="submit">إضافة مدرس</button>
+        <button class="btn btn-primary" type="submit">إضافة مدرس</button>
     </form>
 
 </div>

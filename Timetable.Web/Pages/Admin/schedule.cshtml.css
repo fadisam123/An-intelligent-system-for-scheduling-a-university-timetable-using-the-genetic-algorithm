@@ -30,12 +30,19 @@ th {
     background-color: #f2f2f2;
 }
 
-.edit-save-button {
+button {
     padding: 10px 20px;
     background-color: #1F6E8C;
     color: white;
     border: none;
     cursor: pointer;
-    margin: 3% 0 0 60%;
     border-radius: 5px;
+    margin-top:3%;
+    margin-left:10px;
 }
+
+ button:hover {
+    background-color: blue;
+}
+
+
