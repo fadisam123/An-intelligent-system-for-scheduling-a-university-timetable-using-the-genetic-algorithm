@@ -12,8 +12,8 @@
         }
         else
         {
-            <label asp-for="@Model.SelectedSemester" class="control-label"></label>
-            <select asp-for="@Model.SelectedSemester" class="form-select">
+            <label asp-for="@Model.SelectedSemester" class="control-label text-black ms-5"></label>
+            <select asp-for="@Model.SelectedSemester" class="form-select w-25">
                 @foreach (var item in Model?.Semesters)
                 {
                     <option value="@item.SemesterNo">@item.SemesterNo</option>
@@ -22,7 +22,7 @@
         }
     </div>
 
-    <button onclick="return confirm('سيتم حذف برنامج الدوام القديم واستبداله بالبرنامج المولد، هل أنت متأكد من المتابعة؟')" class="edit-save-button" type="submit">توليد</button>
+    <button onclick="return confirm('سيتم حذف برنامج الدوام القديم واستبداله بالبرنامج المولد، هل أنت متأكد من المتابعة؟')" class="edit-save-button generate" type="submit">توليد</button>
 </form>
 
 <form id="yearChangedForm" asp-page-handler="x" method="post">
@@ -34,8 +34,8 @@
         }
         else
         {
-            <label asp-for="@Model.SelectedYearInput" class="control-label"></label>
-            <select onchange="$('#yearChangedForm').submit()" asp-for="@Model.SelectedYearInput" class="form-select">
+            <label asp-for="@Model.SelectedYearInput" class="control-label text-black"></label>
+            <select onchange="$('#yearChangedForm').submit()" asp-for="@Model.SelectedYearInput" class="form-select w-25">
                 @foreach (var item in Model?.Years)
                 {
                     <option value="@item.YearNo">@item.YearNo</option>
@@ -48,8 +48,8 @@
         }
         else
         {
-            <label asp-for="@Model.SelectedSemesterInput" class="control-label"></label>
-            <select onchange="$('#yearChangedForm').submit()" asp-for="@Model.SelectedSemesterInput" class="form-select">
+            <label asp-for="@Model.SelectedSemesterInput" class="control-label text-black"></label>
+            <select onchange="$('#yearChangedForm').submit()" asp-for="@Model.SelectedSemesterInput" class="form-select w-25">
                 @foreach (var item in Model?.Semesters)
                 {
                     <option value="@item.SemesterNo">@item.SemesterNo</option>
@@ -60,12 +60,15 @@
 
 </form>
 
-<div>
-    <button>حفظ</button>
-    <button>توليد</button>
-    <button id="editSaveButton" class="edit-save-button" onclick="toggleEditSave()">تعديل</button>
-</div>
+<button id="editSaveButton" class="edit-save-button generate" onclick="toggleEditSave()">تعديل</button>
 <table id="myTable">
+ 
+<div class="butt">
+  <button>حفظ</button>
+  <button>توليد</button>
+  <button id="editSaveButton" class="edit-save-button" onclick="toggleEditSave()">تعديل</button>
+  </div>
+  <table id="myTable">
     <tr>
         <th>الخميس</th>
         <th>الأربعاء</th>
