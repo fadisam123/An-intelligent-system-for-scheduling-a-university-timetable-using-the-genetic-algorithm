@@ -15,7 +15,7 @@ namespace Timetable.RazorWeb.Pages.Admin
 
         #region Output Data
         public List<RoleEnum> Roles = new List<RoleEnum>();
-        public TakingSurveyAllowedPeriod Survey;
+        public List<TakingSurveyAllowedPeriod> Surveys;
         #endregion
 
         #region InputData
@@ -53,27 +53,12 @@ namespace Timetable.RazorWeb.Pages.Admin
                     Roles.Add(type);
                 }
             }
-            Survey = _surveyService.getSurveyByRole(SelectedRole);
-            if (Survey is null)
-            {
-                return;
-            }
-            else
-            {
-                StartDateTime = Survey.Start;
-                EndDateTime = Survey.End;
-            }
+            Surveys = _surveyService.getAllSurveys().ToList();
         }
 
-        public void OnPostSelectChanged()
+        public async Task<IActionResult> OnPost()
         {
-            ModelState.Clear();
-            OnGet();
-        }
-
-        public async Task<IActionResult> OnPostProcess()
-        {
-            if (EndDateTime > StartDateTime)
+            if (EndDateTime <= StartDateTime)
             {
                 ModelState.AddModelError("StartDateTime", "لايمكن ادخال توقيتين متطابقين ويجب أن يكون وقت الانتهاء بعد وقت البدء");
                 ModelState.AddModelError("EndDateTime", "لايمكن ادخال توقيتين متطابقين ويجب أن يكون وقت الانتهاء بعد وقت البدء");
@@ -95,7 +80,18 @@ namespace Timetable.RazorWeb.Pages.Admin
                 End = EndDateTime.Value,
                 role = await _roleManager.FindByNameAsync(SelectedRole.ToString())
             };
-            await _surveyService.createSurveyAsync(survey);
+            TakingSurveyAllowedPeriod? existSurvey = _surveyService.getSurveyByRole(SelectedRole);
+            if (existSurvey is null)
+            {
+                await _surveyService.createSurveyAsync(survey);
+            }
+            else
+            {
+                existSurvey.Start = StartDateTime.Value;
+                existSurvey.End = EndDateTime.Value;
+                _surveyService.updateSurvey(existSurvey);
+            }
+            
             return RedirectToPage();
         }
     }
