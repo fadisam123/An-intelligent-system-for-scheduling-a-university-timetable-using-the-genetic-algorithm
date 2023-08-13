@@ -13,6 +13,7 @@ namespace Timetable.Application.Persistence.UnitOfWork
         public IDayRepository DayRepository { get; }
         public ITimeRepository TimeRepository { get; }
         public ILectureRepository LectureRepository { get; }
+        public ISurveyRepository SurveyRepository { get; }
         public int SaveChanges();
     }
 }

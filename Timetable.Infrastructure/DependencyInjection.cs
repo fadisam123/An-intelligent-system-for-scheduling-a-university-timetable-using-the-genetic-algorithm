@@ -48,6 +48,7 @@ namespace Timetable.Infrastructure
             services.AddScoped<IDayRepository, DayRepository>();
             services.AddScoped<ITimeRepository, TimeRepository>();
             services.AddScoped<ILectureRepository, LectureRepository>();
+            services.AddScoped<ISurveyRepository, SurveyRepository>();
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 

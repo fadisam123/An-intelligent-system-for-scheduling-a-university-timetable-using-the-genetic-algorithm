@@ -10,29 +10,29 @@
 
 </head>
 <body>
-   <div>
-    <div class="containeer">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+    <div>
+        <div class="containeer">
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>
+        <div class="sidebar">
+            <div class="icon">
+                <a href="#" class="sidebar-icon">تسجيل الخروج</a>
+            </div>
+            <h3>بوابة الإدارة</h3>
+            <a asp-page="./survey" class="sidebar-link">فتح باب الاستبيان</a>
+            <a asp-page="" class="sidebar-link">برنامج الدوام العملي</a>
+            <a asp-page="./schedule" class="sidebar-link">برنامج الدوام النظري</a>
+            <a asp-page="./teachers" class="sidebar-link">اعضاء الهيئة التدريسية</a>
+            <a asp-page="./practical-dept" class="sidebar-link">إسناد مدرسين العملي</a>
+            <a asp-page="./theo-dept" class="sidebar-link">القسم النظري</a>
+            <a asp-page="./class-room" class="sidebar-link">القاعات الدراسية</a>
+            <a asp-page="./courses" class="sidebar-link">المواد الدراسية</a>
+            <a asp-page="" class="sidebar-link">اوقات المحاضرات</a>
+        </div>
     </div>
-    <div class="sidebar">
-      <div class="icon">
-        <a href="#" class="sidebar-icon">تسجيل الخروج</a>
-      </div>
-      <h3>بوابة الإدارة</h3>
-      <a asp-page="" class="sidebar-link">فتح باب الاستبيان</a>
-      <a asp-page="" class="sidebar-link">برنامج الدوام العملي</a>
-      <a asp-page="./schedule" class="sidebar-link">برنامج الدوام النظري</a>
-      <a asp-page="./teachers" class="sidebar-link" >اعضاء الهيئة التدريسية</a>
-      <a asp-page="./practical-dept" class="sidebar-link">إسناد مدرسين العملي</a>
-      <a asp-page="./theo-dept" class="sidebar-link">القسم النظري</a>
-      <a asp-page="./class-room" class="sidebar-link">القاعات الدراسية</a>
-      <a asp-page="./courses" class="sidebar-link">المواد الدراسية</a>
-      <a asp-page="" class="sidebar-link">اوقات المحاضرات</a>
-   </div>
-  </div>
-    
+
 
     <script src="~/lib/jquery/jquery.min.js"></script>
     <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>

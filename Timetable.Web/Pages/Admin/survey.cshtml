@@ -1,0 +1,41 @@
+﻿@page
+@using System.ComponentModel.DataAnnotations;
+@model Timetable.RazorWeb.Pages.Admin.surveyModel
+@{
+
+}
+<div style="width:70%">
+    <form method="post">
+
+
+        <div class="form-group">
+            <label asp-for="@Model.SelectedRole" class="control-label"></label>
+
+            <select asp-for="@Model.SelectedRole" class="form-select">
+                @foreach (var value in Model?.Roles)
+                {
+                    var displayAttribute = value.GetType()
+                    ?.GetField(value.ToString())
+                    ?.GetCustomAttributes(typeof(DisplayAttribute), false)
+                    .SingleOrDefault() as DisplayAttribute;
+                    var name = displayAttribute?.Name ?? value.ToString();
+
+                    <option value="@value"> @name </option>
+                }
+            </select>
+
+            <div class="form-group ">
+                <label asp-for="@Model.StartDateTime" class="control-label"></label>
+                <input asp-for="@Model.StartDateTime" class="form-control" />
+                <span asp-validation-for="@Model.StartDateTime" class="text-danger"></span>
+            </div>
+
+            <div class="form-group ">
+                <label asp-for="@Model.EndDateTime" class="control-label"></label>
+                <input asp-for="@Model.EndDateTime" class="form-control" />
+                <span asp-validation-for="@Model.EndDateTime" class="text-danger"></span>
+            </div>
+        </div>
+        <button class="btn btn-info" type="submit">حفظ</button>
+    </form>
+</div>

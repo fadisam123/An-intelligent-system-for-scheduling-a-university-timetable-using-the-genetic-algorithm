@@ -1,4 +1,5 @@
-﻿using Timetable.Application.Persistence.Repository;
+﻿using Microsoft.AspNetCore.Hosting.Server;
+using Timetable.Application.Persistence.Repository;
 using Timetable.Application.Persistence.UnitOfWork;
 
 namespace Timetable.Infrastructure.Persistence.UnitOfWork
@@ -10,7 +11,7 @@ namespace Timetable.Infrastructure.Persistence.UnitOfWork
             ICourseRepository courseRepository, IRoomRepository roomRepository,
             IYearRepository yearRepository, ISemesterRepository semesterRepository,
             IDayRepository dayRepository, ITimeRepository timeRepository,
-            ILectureRepository lectureRepository)
+            ILectureRepository lectureRepository, ISurveyRepository surveyRepository)
         {
             _context = context;
             TeacherRepository = teacherRepository;
@@ -21,6 +22,7 @@ namespace Timetable.Infrastructure.Persistence.UnitOfWork
             DayRepository = dayRepository;
             TimeRepository = timeRepository;
             LectureRepository = lectureRepository;
+            SurveyRepository = surveyRepository;
         }
         public ITeacherRepository TeacherRepository { get; private set; }
         public ICourseRepository CourseRepository { get; private set; }
@@ -30,6 +32,7 @@ namespace Timetable.Infrastructure.Persistence.UnitOfWork
         public IDayRepository DayRepository { get; private set; }
         public ITimeRepository TimeRepository { get; private set; }
         public ILectureRepository LectureRepository { get; private set; }
+        public ISurveyRepository SurveyRepository { get; }
 
         public int SaveChanges()
         {

@@ -30,7 +30,7 @@
     <div class="form-group">
         @if (Model?.Years?.Count is null || Model?.Years?.Count == 0)
         {
-            
+
         }
         else
         {
@@ -60,23 +60,20 @@
 
 </form>
 
-<button id="editSaveButton" class="edit-save-button" onclick="toggleEditSave()">تعديل</button>
-<table id="myTable">
- 
 <div>
-  <button>حفظ</button>
-  <button>توليد</button>
-  <button id="editSaveButton" class="edit-save-button" onclick="toggleEditSave()">تعديل</button>
-  </div>
-  <table id="myTable">
+    <button>حفظ</button>
+    <button>توليد</button>
+    <button id="editSaveButton" class="edit-save-button" onclick="toggleEditSave()">تعديل</button>
+</div>
+<table id="myTable">
     <tr>
-      <th>الخميس</th>
-      <th>الأربعاء</th>
-      <th>الثلاثاء</th>
-      <th>الاثنين</th>
-      <th>الأحد</th>
-      <th>السبت</th>
-      <th>الوقت</th>
+        <th>الخميس</th>
+        <th>الأربعاء</th>
+        <th>الثلاثاء</th>
+        <th>الاثنين</th>
+        <th>الأحد</th>
+        <th>السبت</th>
+        <th>الوقت</th>
     </tr>
     <tr>
         <td></td>
@@ -141,4 +138,4 @@
 
 @section Scripts {
     <script type="text/javascript" src="~/js/Admin/schedule.js"></script>
-}
+    }
