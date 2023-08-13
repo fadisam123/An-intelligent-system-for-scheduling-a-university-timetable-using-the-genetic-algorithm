@@ -5,6 +5,8 @@ namespace Timetable.Application.Services.DataIO.Survey
     public interface ISurveyService
     {
         public Task createSurveyAsync(TakingSurveyAllowedPeriod survey);
-        public TakingSurveyAllowedPeriod getSurveyByRole(RoleEnum roleEnum);
+        public IEnumerable<TakingSurveyAllowedPeriod>  getAllSurveys();
+        public TakingSurveyAllowedPeriod?  getSurveyByRole(RoleEnum roleEnum);
+        public void  updateSurvey(TakingSurveyAllowedPeriod survey);
     }
 }

@@ -1,45 +1,85 @@
 ﻿@page
 @using System.ComponentModel.DataAnnotations;
+@using Timetable.Domain.Enums;
 @model Timetable.RazorWeb.Pages.Admin.surveyModel
 @{
 
 }
+<div class="container">
+    <div class="main-content">
 
-    <form id="changeForm" asp-page-handler="SelectChanged" method="post">
-        <div class="form-group">
-            <label asp-for="@Model.SelectedRole" class="control-label"></label>
-
-            <select onchange="$('#changeForm').submit(); $('selectVal').val('$(this).val()')" asp-for="@Model.SelectedRole" class="form-select">
-                @foreach (var value in Model?.Roles)
+        <table id="courseTable">
+            <thead>
+                <tr>
+                    <th>وقت الانتهاء</th>
+                    <th>وقت البداية</th>
+                    <th>من أجل</th>
+                </tr>
+            </thead>
+            <tbody id="courseTableBody">
+                @foreach (var survey in @Model?.Surveys)
                 {
-                    var displayAttribute = value.GetType()
-                    ?.GetField(value.ToString())
-                    ?.GetCustomAttributes(typeof(DisplayAttribute), false)
-                    .SingleOrDefault() as DisplayAttribute;
-                    var name = displayAttribute?.Name ?? value.ToString();
+                    <tr>
+                        <td>@survey.End</td>
+                        <td>@survey.Start</td>
+                        @{
+                            foreach (RoleEnum type in Enum.GetValues(typeof(RoleEnum)))
+                            {
+                                if (type.ToString().ToUpper() == survey.role.Name.ToUpper())
+                                {
+                                    var displayAttribute = type.GetType()
+                                    ?.GetField(type.ToString())
+                                    ?.GetCustomAttributes(typeof(DisplayAttribute), false)
+                                    .SingleOrDefault() as DisplayAttribute;
+                                    var name = displayAttribute?.Name ?? type.ToString();
+                                    <td>@name</td>
+                                }
+                            }
 
-                    <option value="@value"> @name </option>
+
+                        }
+
+                    </tr>
+
                 }
-            </select>
-        </div>
-    </form>
+            </tbody>
+        </table>
+    </div>
+    <div class="row">
+        <div class="edit col-md-4">
 
-    <form asp-page-handler="Process" method="post">
-        <select hidden asp-for="@Model.SelectedRole" class="form-select">
+            <form method="post">
+                <div class="form-group">
+                    <label asp-for="@Model.SelectedRole" class="control-label"></label>
 
-            <option hidden id="selectVal"></option>
-        </select>
-        <div class="form-group ">
-            <label asp-for="@Model.StartDateTime" class="control-label"></label>
-            <input asp-for="@Model.StartDateTime" class="form-control" />
-            <span asp-validation-for="@Model.StartDateTime" class="text-danger"></span>
-        </div>
+                    <select asp-for="@Model.SelectedRole" class="form-select">
+                        @foreach (var value in Model?.Roles)
+                        {
+                            var displayAttribute = value.GetType()
+                            ?.GetField(value.ToString())
+                            ?.GetCustomAttributes(typeof(DisplayAttribute), false)
+                            .SingleOrDefault() as DisplayAttribute;
+                            var name = displayAttribute?.Name ?? value.ToString();
 
-        <div class="form-group ">
-            <label asp-for="@Model.EndDateTime" class="control-label"></label>
-            <input asp-for="@Model.EndDateTime" class="form-control" />
-            <span asp-validation-for="@Model.EndDateTime" class="text-danger"></span>
-        </div>
+                            <option value="@value"> @name </option>
+                        }
+                    </select>
+                </div>
+
+                <div class="form-group ">
+                    <label asp-for="@Model.StartDateTime" class="control-label"></label>
+                    <input asp-for="@Model.StartDateTime" class="form-control" />
+                    <span asp-validation-for="@Model.StartDateTime" class="text-danger"></span>
+                </div>
+
+                <div class="form-group ">
+                    <label asp-for="@Model.EndDateTime" class="control-label"></label>
+                    <input asp-for="@Model.EndDateTime" class="form-control" />
+                    <span asp-validation-for="@Model.EndDateTime" class="text-danger"></span>
+                </div>
 
         <button class="btn btn-primary" type="submit">حفظ</button>
     </form>
+</div>
+</div>
+</div>
