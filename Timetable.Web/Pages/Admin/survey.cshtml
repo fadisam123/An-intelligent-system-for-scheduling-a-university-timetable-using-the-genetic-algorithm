@@ -45,9 +45,7 @@
             </tbody>
         </table>
     </div>
-    <div class="row">
-        <div class="edit col-md-4">
-
+    <div class="sidebar">
             <form method="post">
                 <div class="form-group">
                     <label asp-for="@Model.SelectedRole" class="control-label"></label>
@@ -78,8 +76,7 @@
                     <span asp-validation-for="@Model.EndDateTime" class="text-danger"></span>
                 </div>
 
-                <button class="btn btn-primary" type="submit">حفظ</button>
-            </form>
-        </div>
-    </div>
+        <button class="btn btn-primary" type="submit">حفظ</button>
+    </form>
+</div>
 </div>
