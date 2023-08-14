@@ -9,6 +9,7 @@
         public bool IsElective { get; set; } = false;
         public int Year { get; set; } = 1;
         public int Semester { get; set; } = 1;
+        public CourseTypeEnum Type { get; set; } = CourseTypeEnum.TheoryCourse;
     }
     public class CourseOutputModel
     {

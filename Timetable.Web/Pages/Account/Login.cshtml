@@ -1,6 +1,43 @@
 ﻿@page
 @model Timetable.RazorWeb.Pages.Account.LoginModel
 @{
-    ViewData["Title"] = "rooms";
-    Layout = "../Admin/_AdminLayout";
+
 }
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LogIn</title>
+    @*<link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Timetable.RazorWeb.styles.css" asp-append-version="true" />*@
+
+</head>
+<body>
+
+
+    <form method="post">
+        <div class="form-group">
+            <label asp-for="@Model.userName" class="control-label"></label>
+            <input asp-for="@Model.userName" class="form-control" />
+            <span asp-validation-for="@Model.userName" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="@Model.password" class="control-label"></label>
+            <input asp-for="@Model.password" class="form-control" />
+            <span asp-validation-for="@Model.password" class="text-danger"></span>
+        </div>
+        <button type="submit">تسجيل دخول</button>
+    </form>
+
+    <script src="~/lib/jquery/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+</body>
+</html>

@@ -11,6 +11,7 @@ namespace Timetable.Application.Services.DataIO.Course
         public Course GetCorrespondingLabCourse(Course theoryCourse);
         public IEnumerable<Course> getAllTheoryCourses();
         public IEnumerable<Course> getAllLabCourses();
+        public IEnumerable<Course> getAllTeacherCourses(User teacher);
         public IEnumerable<Year> getAllYears();
         public Year getYear(int YearNo);
         public IEnumerable<Semester> getAllSemesters();

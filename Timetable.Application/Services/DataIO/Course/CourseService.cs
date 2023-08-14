@@ -87,5 +87,10 @@ namespace Timetable.Application.Services.DataIO.Course
         {
             return Uow.CourseRepository.CheckCoursesExistWithAssignedUsers();
         }
+
+        public IEnumerable<Course> getAllTeacherCourses(User teacher)
+        {
+            return Uow.CourseRepository.Find(c => c.user.Id == teacher.Id);
+        }
     }
 }

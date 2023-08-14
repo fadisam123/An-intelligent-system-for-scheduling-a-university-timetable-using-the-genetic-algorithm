@@ -11,7 +11,7 @@ builder.Services.AddValidatorServices();
 // Add services to the container.
 builder.Services.AddRazorPages().AddRazorPagesOptions(options =>
 {
-    options.Conventions.AddPageRoute("/Admin/schedule", "");
+    options.Conventions.AddPageRoute("/Account/Login", "");
 });
 builder.Services.AddControllers();
 var app = builder.Build();

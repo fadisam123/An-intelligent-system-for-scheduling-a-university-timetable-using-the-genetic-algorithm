@@ -19,7 +19,7 @@ namespace Timetable.RazorWeb.Pages.Admin
         #endregion
 
         #region InputData
-        [DisplayName("فتح استبيان من أجل")]
+        [DisplayName("استبيان من أجل")]
         [BindProperty]
         public RoleEnum SelectedRole { get; set; } = RoleEnum.DepartmentHead;
 
