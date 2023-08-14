@@ -2,6 +2,7 @@
 using Timetable.Application.Services.DataIO.Course;
 using Timetable.Application.Services.DataIO.DayTime;
 using Timetable.Application.Services.DataIO.Room;
+using Timetable.Application.Services.DataIO.SemesterYear;
 using Timetable.Application.Services.DataIO.Survey;
 using Timetable.Application.Services.DataIO.Teacher;
 
@@ -17,6 +18,7 @@ namespace Timetable.Infrastructure
             services.AddScoped<IDayTimeService, DayTimeService>();
             services.AddScoped<ILectureService, LectureService>();
             services.AddScoped<ISurveyService, SurveyService>();
+            services.AddScoped<ISemesterYearService, SemesterYearService>();
 
             return services;
         }
