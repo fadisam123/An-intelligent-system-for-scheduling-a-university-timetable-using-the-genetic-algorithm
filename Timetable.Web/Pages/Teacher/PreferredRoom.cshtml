@@ -1,0 +1,79 @@
+﻿@page
+@model Timetable.RazorWeb.Pages.Teacher.PreferredRoomModel
+@{
+}
+
+<div class="container">
+    <div class="table-container">
+        <table id="rooms-table">
+            <tr class="mb-5">
+                <th>العمليات</th>
+                <th>القاعة</th>
+                <th>المقرر</th>
+            </tr>
+            @foreach (var course in Model?.courses.Where(c => (c?.TeacherpreferredRoom is not null)))
+            {
+                <tr>
+                    <td>
+                        <form method="post" asp-page-handler="Delete" class="inline">
+                            <input type="hidden" name="courseId" value="@course.Id">
+
+                            <button onclick="return confirm('هل تريد الحذف فعلاً؟')" type="submit" class="btn btn-sm bg-danger">
+                                حذف
+                            </button>
+                        </form>
+                    </td>
+                    <td>@course?.TeacherpreferredRoom?.Name</td>
+                    <td>@course?.Name</td>
+                </tr>
+
+            }
+        </table>
+    </div>
+    <div class="form-container">
+
+        <form id="semesterChangedForm" asp-page-handler="x" method="post">
+            <div class="form-group">
+                <label asp-for="@Model.SelectedSemesterInput" class="control-label"></label>
+                <select onchange="$('#semesterChangedForm').submit()" asp-for="@Model.SelectedSemesterInput" class="form-select w-25">
+                    @foreach (var item in Model?.semesters)
+                    {
+                        <option value="@item.SemesterNo">@item.SemesterNo</option>
+                    }
+                </select>
+            </div>
+        </form>
+
+        <form dir="rtl" asp-page-handler="OnPost" method="post">
+
+            <div class="form-group">
+                <label asp-for="@Model.CourseId" class="control-label"></label>
+                <select asp-for="@Model.CourseId" class="form-select">
+                    <option value="">-- اختر مقرر --</option>
+                    @foreach (var item in Model?.courses)
+                    {
+                        <option value="@item.Id">@item.Name</option>
+                    }
+                </select>
+                <span class="text-danger" asp-validation-for="@Model.CourseId"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="@Model.RoomId" class="control-label"></label>
+                <select asp-for="@Model.RoomId" class="form-select">
+                    <option value="">-- اختر قاعة --</option>
+                    @foreach (var item in Model?.rooms)
+                    {
+                        <option value="@item.Id">@item.Name</option>
+                    }
+                </select>
+                <span class="text-danger" asp-validation-for="@Model.RoomId"></span>
+            </div>
+
+            <div class="form-group">
+                <button class="btn btn-primary" type="submit">حفظ</button>
+            </div>
+        </form>
+    </div>
+
+</div>

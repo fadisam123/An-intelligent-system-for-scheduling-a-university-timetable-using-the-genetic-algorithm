@@ -4,14 +4,14 @@
 }
 
 
- <div class="container">
-        <div class="table-container">
-            <table id="rooms-table">
-                <tr class="mb-5">
-                    <th>العمليات</th>
-                    <th>المقرر</th>
-                    <th>المدرس</th>
-                </tr>
+<div class="container">
+    <div class="table-container">
+        <table id="rooms-table">
+            <tr class="mb-5">
+                <th>العمليات</th>
+                <th>المقرر</th>
+                <th>المدرس</th>
+            </tr>
             @foreach (var theoryCourse in @Model?.TheoryCourses)
             {
                 <tr>
@@ -30,9 +30,9 @@
                 </tr>
 
             }
-            </table>
-        </div>
-        <div class="form-container">
+        </table>
+    </div>
+    <div class="form-container">
         <form dir="rtl" method="post">
 
             @*<input type="hidden" asp-for="@Model.courseInputModel.Id" />*@
@@ -66,11 +66,11 @@
                 <button class="btn btn-primary" type="submit">إسناد</button>
             </div>
         </form>
-        </div>
-        
     </div>
 
-    
-        @section Scripts {
+</div>
+
+
+@section Scripts {
     <script type="text/javascript" src="~/js/Admin/theo-dept.js"></script>
 }

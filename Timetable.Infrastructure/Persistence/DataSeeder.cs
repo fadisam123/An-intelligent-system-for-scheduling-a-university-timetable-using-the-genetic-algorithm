@@ -1398,7 +1398,7 @@ namespace Timetable.Infrastructure.Persistence
                 var teachers = dbContext.Users.Where(t => t.Courses.Any()).Include(t => t.Courses).ToList();
                 foreach (var teacher in teachers.Where(t => t.Type == UserTypeEnum.DepartmentHead))
                 {
-                    var courses = teacher.Courses;
+                    var courses = teacher.Courses.Where(c => c.semester.SemesterNo == 1);
                     foreach (var course in courses)
                     {
                         var Days = dbContext.Days.ToList();

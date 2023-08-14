@@ -9,7 +9,6 @@ using Timetable.RazorWeb.ViewModels.InputModels;
 
 namespace Timetable.RazorWeb.Pages.Admin
 {
-    [CustomAuthorize(new RoleEnum[] { RoleEnum.DepartmentHead, RoleEnum.Professor , RoleEnum.LapTeacher})]
     public class class_roomModel : PageModel
     {
         #region Fields

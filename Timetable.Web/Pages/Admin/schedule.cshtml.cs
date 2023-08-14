@@ -8,7 +8,6 @@ using Timetable.RazorWeb.Authorization;
 
 namespace Timetable.RazorWeb.Pages.Admin
 {
-    [CustomAuthorize(new RoleEnum[] { RoleEnum.Admin })]
     public class scheduleModel : PageModel
     {
         private readonly ILectureService _lectureService;

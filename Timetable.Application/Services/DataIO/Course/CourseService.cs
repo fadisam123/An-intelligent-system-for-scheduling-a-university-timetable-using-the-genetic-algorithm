@@ -92,5 +92,12 @@ namespace Timetable.Application.Services.DataIO.Course
         {
             return Uow.CourseRepository.Find(c => c.semester.SemesterNo == semester.SemesterNo && c.user.Id == teacher.Id).OrderBy(c => c.semester).ThenBy(c => c.year.YearNo);
         }
+
+        public void AssignTeacherPreferredRoom(Course TeacherCourse, Room PreferredRoom)
+        {
+            TeacherCourse.TeacherpreferredRoom = PreferredRoom;
+            Uow.CourseRepository.Update(TeacherCourse);
+            Uow.SaveChanges();
+        }
     }
 }

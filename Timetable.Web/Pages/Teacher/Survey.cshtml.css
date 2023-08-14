@@ -1,0 +1,62 @@
+﻿* {
+    padding: 0;
+    margin-top: 2%;
+    scroll-behavior: smooth;
+    transition: all .4s ease-in-out;
+    text-align: center;
+    color: #4CAF50;
+}
+
+table {
+    border-collapse: collapse;
+    width: 50%;
+    margin: 3% 0 0 20%;
+    background-color: #2E8A99;
+}
+
+th, td {
+    border: 1px solid #4CAF50;
+    padding: 2px;
+    width: 8px;
+    max-width: 8px;
+    height: 75px;
+}
+
+
+
+th {
+    background-color: #f2f2f2;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #1F6E8C;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin-right: 40px;
+}
+
+.butt {
+    margin-right: 70px;
+    margin-bottom: -70px;
+}
+
+button:hover {
+    background-color: blue;
+}
+
+
+.generate {
+    margin-top: 5px;
+}
+
+
+
+
+
+form .form-group {
+    margin-left: 40%;
+    text-align-last: start;
+}
