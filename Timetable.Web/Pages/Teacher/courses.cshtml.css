@@ -1,0 +1,17 @@
+﻿body {
+}
+
+
+
+#courseTable {
+    width: 100%;
+    border-collapse: collapse;
+    color: #fff;
+}
+
+    #courseTable th,
+    #courseTable td {
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+        color: #fff;
+    }

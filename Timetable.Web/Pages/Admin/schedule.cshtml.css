@@ -1,10 +1,11 @@
 ﻿* {
+
     padding: 0;
     margin-top: 2%;
     scroll-behavior: smooth;
     transition: all .4s ease-in-out;
     text-align: center;
-    color: #4CAF50;
+    color: #fff;
 }
 
 table {
@@ -17,14 +18,16 @@ table {
 th, td {
     border: 1px solid #4CAF50;
     padding: 2px;
-    width: 8px;
-    max-width: 8px;
-    height: 75px;
+    width: 40px;
+    max-width: 50px;
+    height: 100px;
+    font-size: 13px;
 }
 
-    
+
 
 th {
+    color: #4CAF50;
     background-color: #f2f2f2;
 }
 
