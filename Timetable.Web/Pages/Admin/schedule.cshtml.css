@@ -22,9 +22,7 @@ th, td {
     height: 75px;
 }
 
-    td:hover, :focus, :active {
-        background-color: #f2f2f2;
-    }
+    
 
 th {
     background-color: #f2f2f2;

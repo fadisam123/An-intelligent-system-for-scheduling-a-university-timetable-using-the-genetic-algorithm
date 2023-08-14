@@ -2,9 +2,9 @@
 for details on configuring this project to bundle and minify static web assets. */
 
 body {
-    background-color: #f2f2f2;
     margin: 0;
     padding: 0;
+    background-color: #f2f2f2;
     font-family: Arial, sans-serif;
 }
 
@@ -40,7 +40,7 @@ a {
 }
 
 .box-shadow {
-    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+    box-shadow:none;
 }
 
 button.accept-policy {
