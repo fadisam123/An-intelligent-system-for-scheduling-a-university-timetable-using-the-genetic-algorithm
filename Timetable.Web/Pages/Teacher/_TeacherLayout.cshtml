@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity;
+@using System.ComponentModel.DataAnnotations;
+@inject UserManager<User> UserManager
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -17,11 +20,34 @@
             </main>
         </div>
         <div class="sidebar">
+            <h3>بوابة المدرس</h3>
+            @{
+                User? teacher = @UserManager.GetUserAsync(User).Result;
+
+                var displayAttribute = teacher?.Type.GetType()
+                ?.GetField(teacher?.Type.ToString())
+                ?.GetCustomAttributes(typeof(DisplayAttribute), false)
+                .SingleOrDefault() as DisplayAttribute;
+                var teacherType = displayAttribute?.Name ?? teacher.Type.ToString();
+
+                if (teacher?.Type == UserTypeEnum.LapTeacher)
+                {
+                    <h4 class="text-success">أ. @teacher?.Name</h4>
+                }
+                else
+                {
+                    <h4 class="text-success">د. @teacher?.Name</h4>
+                }
+
+
+
+                <h6 class="text-success">الصفة: @teacherType</h6>
+            }
+
             <div class="icon">
-                <a href="#" class="sidebar-icon">تسجيل الخروج</a>
+                @await Html.PartialAsync("../PartialViews/_Logout")
             </div>
-            <h3>بوابة الإدارة</h3>
-            <a asp-page="./courses" class="sidebar-link">مقرراتي الدراسية</a>
+            <a asp-page="./Courses" class="sidebar-link">مقرراتي الدراسية</a>
             <a asp-page="" class="sidebar-link">اختيار الأوقات المفضلة (الاستبيان)</a>
             <a asp-page="" class="sidebar-link">اختيار القاعات المفضلة</a>
         </div>

@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity;
+@inject UserManager<User> UserManager
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -17,10 +19,12 @@
             </main>
         </div>
         <div class="sidebar">
-            <div class="icon">
-                <a href="#" class="sidebar-icon">تسجيل الخروج</a>
-            </div>
             <h3>بوابة الإدارة</h3>
+            <h4 class="text-success">@UserManager.GetUserAsync(User).Result?.Name</h4>
+            <div class="icon">
+                @await Html.PartialAsync("../PartialViews/_Logout")
+            </div>
+            
             <a asp-page="./survey" class="sidebar-link">فتح باب الاستبيان</a>
             <a asp-page="" class="sidebar-link">برنامج الدوام العملي</a>
             <a asp-page="./schedule" class="sidebar-link">برنامج الدوام النظري</a>

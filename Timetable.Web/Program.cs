@@ -1,9 +1,31 @@
+using Timetable.Domain.Enums;
 using Timetable.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Register my own Dependency for each project
 await builder.Services.AddInfrastructureServicesAsync(builder.Configuration);
+
+#region Authentication and autorization
+builder.Services.AddAuthentication().AddCookie(options =>
+{
+    options.LoginPath = "/Account/Login";
+    options.LogoutPath = "/Account/Logout";
+});
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("Teacher", policy =>
+    {
+        policy.RequireRole(RoleEnum.DepartmentHead.ToString(), RoleEnum.Professor.ToString(), RoleEnum.LapTeacher.ToString());
+    });
+
+    options.AddPolicy("Admin", policy =>
+    {
+        policy.RequireRole(RoleEnum.Admin.ToString());
+    });
+});
+#endregion
+
 builder.Services.AddApplicationServices();
 
 builder.Services.AddValidatorServices();
@@ -11,8 +33,14 @@ builder.Services.AddValidatorServices();
 // Add services to the container.
 builder.Services.AddRazorPages().AddRazorPagesOptions(options =>
 {
+    // The default page when app start
     options.Conventions.AddPageRoute("/Account/Login", "");
+    options.Conventions.AuthorizeFolder(folderPath: "/Admin", policy: "Admin");
+    options.Conventions.AuthorizeFolder(folderPath: "/Teacher", policy: "Teacher");
+    options.Conventions.AllowAnonymousToFolder("/Account");
 });
+
+
 builder.Services.AddControllers();
 var app = builder.Build();
 
@@ -29,6 +57,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapRazorPages();

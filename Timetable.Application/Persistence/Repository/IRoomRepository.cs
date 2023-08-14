@@ -2,5 +2,7 @@
 {
     public interface IRoomRepository : IGenericRepository<Room>
     {
+        IEnumerable<Room> GetAllTheoryRoom();
+        IEnumerable<Room> GetAllLabRoom();
     }
 }

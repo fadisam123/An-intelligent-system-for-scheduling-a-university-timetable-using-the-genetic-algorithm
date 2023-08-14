@@ -2,12 +2,14 @@ using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
-using Timetable.Application.Services.DataIO.Course;
 using Timetable.Application.Services.DataIO.Room;
+using Timetable.Domain.Enums;
+using Timetable.RazorWeb.Authorization;
 using Timetable.RazorWeb.ViewModels.InputModels;
 
 namespace Timetable.RazorWeb.Pages.Admin
 {
+    [CustomAuthorize(new RoleEnum[] { RoleEnum.DepartmentHead, RoleEnum.Professor , RoleEnum.LapTeacher})]
     public class class_roomModel : PageModel
     {
         #region Fields

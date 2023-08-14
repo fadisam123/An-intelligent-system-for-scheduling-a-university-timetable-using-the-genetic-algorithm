@@ -30,6 +30,7 @@ namespace Timetable.Application.GA
         private Semester semester;
         private List<TimetableIndividual> population;
         private Random random;
+        private TimeSpan breakDuration;
 
         private int maxGenerations;
         private int populationSize;
@@ -54,8 +55,10 @@ namespace Timetable.Application.GA
 
             Days = uow.DayRepository.GetAll().ToList();
             Times = uow.TimeRepository.GetAll().ToList();
-            Rooms = uow.RoomRepository.GetAll().ToList();
+            Rooms = uow.RoomRepository.GetAllTheoryRoom().ToList();
 
+            var orderedTimes = Times.OrderBy(t => t.Start);
+            breakDuration = orderedTimes.ElementAt(1).Start - orderedTimes.ElementAt(0).End;
         }
 
         public TimetableIndividual Run()
@@ -135,6 +138,7 @@ namespace Timetable.Application.GA
         {
             double preferredDayTime = 0.0;
             double preferredRoom = 0.0;
+            double noBreakBetweenLecture = 0.0;
             int conflict = 1;
 
             for (int i = 0; i < individual.Lectures.Count(); i++)
@@ -144,7 +148,7 @@ namespace Timetable.Application.GA
                     var i1 = individual.Lectures[i];
                     var i2 = individual.Lectures[j];
 
-                    // conflict with lectures times and rooms
+                    // conflict with lectures times and rooms (محاضرتين بنفس الوقت ونفس القاعة)
                     if (
                         i1.day.DayNo == i2.day.DayNo &&
                         i1.Time.Id == i2.Time.Id &&
@@ -153,7 +157,7 @@ namespace Timetable.Application.GA
                     {
                         conflict++;
                     }
-                    // conflict within same year lectures times
+                    // conflict within same year lectures times (إحدى السنوات لديها محاضرتين بنفس الوقت)
                     if (
                         i1.course.year.YearNo == i2.course.year.YearNo &&
                         i1.day.DayNo == i2.day.DayNo &&
@@ -162,27 +166,15 @@ namespace Timetable.Application.GA
                     {
                         conflict++;
                     }
-                    // conflict same teacher have two lectures at the same day and time
+                    // conflict same teacher have two lectures at the same day and time (أحد المدرسين لديه درسين بنفس الوقت)
                     if (
                         i1.course.user.Id == i2.course.user.Id &&
                         i1.day.DayNo == i2.day.DayNo &&
-                        i1.Time.Id == i2.Room.Id
+                        i1.Time.Id == i2.Time.Id
                        )
                     {
                         conflict++;
                     }
-                }
-
-                // Courses with two lectures per week must satisfy this constraint
-                if (
-                        individual.Lectures[i].course.LuctureNumPerWeek == 2 &&
-                        individual.Lectures.Where
-                        (
-                            lec => lec.course.Id == individual.Lectures[i].course.Id
-                        ).Count() != 2
-                    )
-                {
-                    conflict++;
                 }
 
                 //double hitsRate = 0.0; ;
@@ -205,7 +197,7 @@ namespace Timetable.Application.GA
                 //hitsRate /= allTeachers.Count;
                 //preferredDayTime = hitsRate * 500;
 
-                if (individual.Lectures[i].course.user.Preferences.Where(pdt => pdt.day.DayNo == individual.Lectures[i].day.DayNo && pdt.time.Id == individual.Lectures[i].Time.Id).Count() != 0)
+                if (individual.Lectures[i].course.user.Preferences.Where(p => p.day.DayNo == individual.Lectures[i].day.DayNo && p.time.Id == individual.Lectures[i].Time.Id).Count() != 0)
                 {
                     preferredDayTime++;
                 }
@@ -213,17 +205,22 @@ namespace Timetable.Application.GA
                 {
                     preferredRoom++;
                 }
+                if(individual.Lectures.Where(l => (l.course.year.YearNo == individual.Lectures[i].course.year.YearNo) && (l.day == individual.Lectures[i].day) && (l.Time.Start == individual.Lectures[i].Time.End.Add(breakDuration) || l.Time.End.Add(breakDuration) == individual.Lectures[i].Time.Start)).Count() != 0)
+                {
+                    noBreakBetweenLecture++;
+                }
             }
             //Console.WriteLine(preferredDayTime + "/" + individual.Lectures.Count);
             //Console.WriteLine();
             preferredDayTime = preferredDayTime / individual.Lectures.Count;
             preferredRoom = preferredRoom / individual.Lectures.Count;
+            noBreakBetweenLecture = noBreakBetweenLecture / individual.Lectures.Count;
 
             // from 300 (Total = 300)
             //double fitness = ((Math.Log(Math.Pow(conflict, -1)) + 0.1) * 1000) + (preferredDayTime * 100) + (preferredRoom * 100);
 
-            double fitness = ((Math.Log(Math.Pow(conflict, -1)) + 0.1) * 1000) * Math.Exp((preferredRoom + preferredDayTime) * 10);
-            Console.WriteLine(fitness + "\t" + conflict + "\t" + preferredDayTime + "\t" + preferredRoom);
+            double fitness = ((Math.Log(Math.Pow(conflict, -1)) + 0.1) * 1000) * Math.Exp((preferredRoom + preferredDayTime /*+ noBreakBetweenLecture*/) * 10);
+            Console.WriteLine(fitness + "\t" + conflict + "\t" + preferredDayTime + "\t" + preferredRoom + "\t" + noBreakBetweenLecture);
             return fitness;
         }
 

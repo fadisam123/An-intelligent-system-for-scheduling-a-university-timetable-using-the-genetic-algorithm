@@ -1,0 +1,43 @@
+﻿@page
+@model Timetable.RazorWeb.Pages.Account.AccessDeniedModel
+@{
+    ViewData["Title"] = "Access Denied";
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LogIn</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" />
+    @*<link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Timetable.RazorWeb.styles.css" asp-append-version="true" />*@
+</head>
+<body>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+        }
+
+        h1 {
+            color: red;
+        }
+
+        h6 {
+            color: red;
+        }
+
+    </style>
+    <div class="mt-5 d-flex flex-column align-items-center justify-content-center">
+        <h1 class=""><code>لا يمكنك الوصول إلى هذه الصفحة</code></h1>
+        <hr class="" style="margin:auto;width:50%">
+        <h3 class="">لا تملك الصلاحية للوصول إلى هذه الصفحة</h3>
+        <h3 class="">🚫🚫🚫🚫</h3>
+        <h6 class="">رمز الخطأ: 403 الوصول محظور</h6>
+    </div>
+
+    <script src="~/lib/jquery/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
