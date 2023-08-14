@@ -17,7 +17,7 @@
 </head>
 <body>
 
-
+    <div class="login-box">
     <form autocomplete="off" method="post">
         <div dir="rtl" class="form-group">
             <label asp-for="@Model.userName" class="control-label"></label>
@@ -38,9 +38,9 @@
         </div>
         
         <div dir="rtl" class="text-danger" asp-validation-summary="All"></div>
-        <div dir="rtl"><button type="submit">تسجيل دخول</button></div>
+        <div dir="rtl"><button class="next" type="submit">تسجيل دخول</button></div>
     </form>
-
+    </div>
     <script src="~/lib/jquery/jquery.min.js"></script>
     <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
