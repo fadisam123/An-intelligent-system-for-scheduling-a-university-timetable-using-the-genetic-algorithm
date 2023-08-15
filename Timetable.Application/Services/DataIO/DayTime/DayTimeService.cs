@@ -29,14 +29,38 @@ namespace Timetable.Application.Services.DataIO.DayTime
             return Uow.TimeRepository.GetAll();
         }
 
-        public Day GetDayById(int dayId)
+        public Day? GetDayById(int dayId)
         {
-            return Uow.DayRepository.Find(d => d.DayNo == dayId).First();
+            return Uow.DayRepository.Find(d => d.DayNo == dayId).FirstOrDefault();
         }
 
         public Time GetTimeById(Guid timeId)
         {
             return Uow.TimeRepository.GetById(timeId);
+        }
+
+        public void RemoveDays()
+        {
+            Uow.DayRepository.RemoveRange(GetAllDays());
+            Uow.SaveChanges();
+        }
+
+        public void RemoveTimes()
+        {
+            Uow.TimeRepository.RemoveRange(GetAllTimes());
+            Uow.SaveChanges();
+        }
+
+        public void AddTimes(Time[] times)
+        {
+            Uow.TimeRepository.AddRange(times);
+            Uow.SaveChanges();
+        }
+
+        public void AddDays(Day[] days)
+        {
+            Uow.DayRepository.AddRange(days);
+            Uow.SaveChanges();
         }
     }
 }

@@ -52,19 +52,19 @@ namespace Timetable.Application.Services.DataIO.Course
                 c.Type == CourseTypeEnum.LapCourse).Any();
         }
 
-        public Year getYear(int yearNo)
+        public Year? getYear(int yearNo)
         {
-            return Uow.YearRepository.Find(y => y.YearNo == yearNo).First();
+            return Uow.YearRepository.Find(y => y.YearNo == yearNo).FirstOrDefault();
         }
 
-        public Semester getSemester(int semesterNo)
+        public Semester? getSemester(int semesterNo)
         {
-            return Uow.SemesterRepository.Find(s => s.SemesterNo == semesterNo).First();
+            return Uow.SemesterRepository.Find(s => s.SemesterNo == semesterNo).FirstOrDefault();
         }
 
-        public Course GetCorrespondingLabCourse(Course theoryCourse)
+        public Course? GetCorrespondingLabCourse(Course theoryCourse)
         {
-            return Uow.CourseRepository.Find(c => c.Name.ToUpper() == theoryCourse.Name.ToUpper() && c.Type == CourseTypeEnum.LapCourse).First();
+            return Uow.CourseRepository.Find(c => c.Name.ToUpper() == theoryCourse.Name.ToUpper() && c.Type == CourseTypeEnum.LapCourse).FirstOrDefault();
         }
 
         public IEnumerable<Course> getAllLabCourses()
@@ -101,6 +101,49 @@ namespace Timetable.Application.Services.DataIO.Course
         {
             TeacherCourse.TeacherpreferredRoom = PreferredRoom;
             Uow.CourseRepository.Update(TeacherCourse);
+            Uow.SaveChanges();
+        }
+
+        public IEnumerable<Course> getAllAssignedLabCourses()
+        {
+            return Uow.CourseRepository.Find(c => c.Type == CourseTypeEnum.LapCourse && c.user != null && c.TeacherpreferredRoom != null);
+        }
+        public IEnumerable<Course> getAllNotAssignedLabCourses()
+        {
+            return Uow.CourseRepository.Find(c => c.Type == CourseTypeEnum.LapCourse && c.user == null && c.TeacherpreferredRoom == null);
+        }
+
+        public IEnumerable<Course> getAllAssignedTheoryCourses()
+        {
+            return Uow.CourseRepository.Find(c => c.Type == CourseTypeEnum.TheoryCourse && c.user != null);
+        }
+        public IEnumerable<Course> getAllNotAssignedTheoryCourses()
+        {
+            return Uow.CourseRepository.Find(c => c.Type == CourseTypeEnum.TheoryCourse && c.user == null);
+        }
+
+        public async Task RemoveAssignedLapCourseTeacher(Guid labCourseId)
+        {
+            var course = Uow.CourseRepository.GetById(labCourseId);
+            _ = course.user;
+            _ = course.TeacherpreferredRoom;
+            course.TeacherpreferredRoom = null;
+            course.user = null;
+            Uow.CourseRepository.Update(course);
+            Uow.SaveChanges();
+        }
+        public async Task RemoveAssignedTheoryCourseTeacher(Guid theoryCourseId)
+        {
+            var course = Uow.CourseRepository.GetById(theoryCourseId);
+            _ = course.user;
+            course.user = null;
+            Uow.CourseRepository.Update(course);
+            Uow.SaveChanges();
+        }
+
+        public void DeleteCourseById(Guid courseId)
+        {
+            Uow.CourseRepository.Remove(getCourseById(courseId));
             Uow.SaveChanges();
         }
     }

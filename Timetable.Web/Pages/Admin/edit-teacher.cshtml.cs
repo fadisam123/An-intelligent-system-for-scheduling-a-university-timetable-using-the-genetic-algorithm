@@ -55,7 +55,17 @@ namespace Timetable.RazorWeb.Pages.Admin
             {
                 throw new NotImplementedException(message: teacherId + " is not a valid guid");
             }
-
+            User teacher = _teacherService.getTeacherById(TeacherId);
+            teacher.Name = teachersViewModel.Name;
+            teacher.Type = teachersViewModel.SelectedTeacherType;
+            if (teachersViewModel.password is not null)
+            {
+                await _teacherService.UpdateTeacher(teacher, teachersViewModel.password);
+            }
+            else
+            {
+                _teacherService.UpdateTeacher(teacher);
+            }
             return RedirectToPage("./teachers");
         }
     }

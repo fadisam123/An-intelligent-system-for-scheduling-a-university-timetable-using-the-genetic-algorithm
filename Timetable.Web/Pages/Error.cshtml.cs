@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Data.SqlClient;
 using System.Diagnostics;
 
 namespace Timetable.Web.Pages
@@ -8,20 +10,14 @@ namespace Timetable.Web.Pages
     [IgnoreAntiforgeryToken]
     public class ErrorModel : PageModel
     {
-        public string? RequestId { get; set; }
+        public string? ExceptionMessage { get; set; }
 
-        public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
-
-        private readonly ILogger<ErrorModel> _logger;
-
-        public ErrorModel(ILogger<ErrorModel> logger)
-        {
-            _logger = logger;
-        }
+        public ErrorModel() { }
 
         public void OnGet()
         {
-            RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier;
+            ExceptionMessage = TempData["ExceptionMessage"]?.ToString();
+            TempData.Remove("ExceptionMessage");
         }
     }
 }

@@ -49,5 +49,24 @@ namespace Timetable.Application.Services.DataIO.Teacher
         {
             return Uow.TeacherRepository.Find(t => t.Type == UserTypeEnum.Professor || t.Type == UserTypeEnum.DepartmentHead);
         }
+
+        public void DeleteTeacherById(Guid teacherId)
+        {
+            Uow.TeacherRepository.Remove(getTeacherById(teacherId));
+            Uow.SaveChanges();
+        }
+
+        public void UpdateTeacher(User teacher)
+        {
+            Uow.TeacherRepository.Update(teacher);
+            Uow.SaveChanges();
+        }
+
+        public async Task UpdateTeacher(User teacher, string newPassword)
+        {
+            UpdateTeacher(teacher);
+            await UserManager.RemovePasswordAsync(teacher);
+            await UserManager.AddPasswordAsync(teacher, newPassword);
+        }
     }
 }

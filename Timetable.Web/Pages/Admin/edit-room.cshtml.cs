@@ -22,11 +22,10 @@ namespace Timetable.RazorWeb.Pages.Admin
         [Display(Name = "اسم القاعة")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "اسم القاعة مطلوب")]
         [BindProperty]
-
         public string RoomName { get; set; } = string.Empty;
+
         [Display(Name = "نوع القاعة")]
         [BindProperty]
-
         public RoomTypeEnum selectedRoomType { get; set; } = RoomTypeEnum.TheoryRoom;
         #endregion
 
@@ -61,12 +60,15 @@ namespace Timetable.RazorWeb.Pages.Admin
 
         public async Task<IActionResult> OnPost(string roomId)
         {
-            Guid TeacherId;
-            if (!Guid.TryParse(roomId, out TeacherId))
+            Guid RoomId;
+            if (!Guid.TryParse(roomId, out RoomId))
             {
                 throw new NotImplementedException(message: roomId + " is not a valid guid");
             }
-
+            Room room = _roomService.getRoomById(RoomId);
+            room.type = selectedRoomType;
+            room.Name = RoomName;
+            _roomService.UpdateRoom(room);
             return RedirectToPage("./class-room");
         }
     }

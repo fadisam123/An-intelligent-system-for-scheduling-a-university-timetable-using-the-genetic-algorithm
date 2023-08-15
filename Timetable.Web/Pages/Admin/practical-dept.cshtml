@@ -13,7 +13,7 @@
                 <th>المقرر</th>
                 <th>المدرس</th>
             </tr>
-            @foreach (var lapCourse in @Model?.LabCourses)
+            @foreach (var lapCourse in @Model?.AssignedLabCourses)
             {
                 <tr>
                     <td>
@@ -35,7 +35,7 @@
         </table>
     </div>
     <div class="form-container">
-        <form dir="rtl" method="post">
+        <form dir="rtl" asp-page-handler="create" method="post">
 
             @*<input type="hidden" asp-for="@Model.courseInputModel.Id" />*@
 
@@ -45,7 +45,7 @@
                     <option value="">-- اختر مدرس --</option>
                     @foreach (var item in Model?.LabTeachers)
                     {
-                        <option value="@item.Id">@item.Name (@item.UserName)</option>
+                        <option value="@item.Id">@item.Name&ensp;(@item.UserName)</option>
                     }
                 </select>
                 <span class="text-danger" asp-validation-for="@Model.TeacherId"></span>
@@ -54,13 +54,22 @@
 
             <div class="form-group">
                 <label asp-for="@Model.CourseId" class="control-label"></label>
-                <select asp-for="@Model.CourseId" class="form-select">
-                    <option value="">-- اختر مقرر --</option>
-                    @foreach (var item in Model?.LabCourses)
-                    {
-                        <option value="@item.Id">@item.Name</option>
-                    }
-                </select>
+                @if (Model?.NotAssignedLabCourses.Count != 0)
+                {
+                    <select asp-for="@Model.CourseId" class="form-select">
+                        <option value="">-- اختر مقرر --</option>
+                        @foreach (var item in Model?.NotAssignedLabCourses)
+                        {
+                            <option value="@item.Id">@item.Name&ensp;(فصل @item.semester.SemesterNo)&ensp;(سنة @item.year.YearNo)</option>
+                        }
+                    </select>
+                }
+                else
+                {
+                    <select asp-for="@Model.CourseId" class="form-select">
+                        <option value="">-- كل المقررات تم اسنادها --</option>
+                    </select>
+                }
                 <span class="text-danger" asp-validation-for="@Model.CourseId"></span>
             </div>
 

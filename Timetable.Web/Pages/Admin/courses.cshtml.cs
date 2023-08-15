@@ -3,7 +3,9 @@ using FluentValidation.AspNetCore;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using Timetable.Application.Services.DataIO.Course;
+using Timetable.Domain.Entities;
 using Timetable.RazorWeb.ViewModels.InputModels;
 using Timetable.RazorWeb.ViewModels.OutputModels;
 
@@ -61,8 +63,8 @@ namespace Timetable.RazorWeb.Pages.Admin
                 return Page();
             }
 
-            Year selectedYear = _courseService.getYear(courseInputModel.SelectedYear);
-            Semester selectedSemester = _courseService.getSemester(courseInputModel.SelectedSemester);
+            Year? selectedYear = _courseService.getYear(courseInputModel.SelectedYear);
+            Semester? selectedSemester = _courseService.getSemester(courseInputModel.SelectedSemester);
 
             Course course = new Course { Name = courseInputModel.Name,
                 year = selectedYear,
@@ -91,7 +93,20 @@ namespace Timetable.RazorWeb.Pages.Admin
 
         public async Task<IActionResult> OnPostDeleteAsync(string courseId)
         {
-
+            try
+            {
+                _courseService.DeleteCourseById(new Guid(courseId));
+            }
+            catch (DbUpdateException ex)
+            {
+                TempData["ExceptionMessage"] = "لا يمكن حذف هذا العنصر لأن بيانات أخرى مرتبطة معه إذا كنت تريد حذف هذا المقرر بالفعل قم بحذف كل البيانات المرتبطة معه في برنامج الدوام وبعد ذلك قم بحذفه";
+                return RedirectToPage("/Error");
+            }
+            catch (Exception e)
+            {
+                TempData["ExceptionMessage"] = "حدث خطأ ما الرجاء المحاولة لاحقاً";
+                return RedirectToPage("/Error");
+            }
             return RedirectToPage();
         }
     }

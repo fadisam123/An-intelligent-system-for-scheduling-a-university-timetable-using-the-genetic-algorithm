@@ -1,6 +1,7 @@
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
 using Timetable.Application.Services.DataIO.Room;
 using Timetable.Domain.Enums;
@@ -63,7 +64,20 @@ namespace Timetable.RazorWeb.Pages.Admin
 
         public async Task<IActionResult> OnPostDeleteAsync(string roomId)
         {
-
+            try
+            {
+                _roomService.deleteRoomById(new Guid(roomId));
+            }
+            catch (DbUpdateException ex)
+            {
+                TempData["ExceptionMessage"] = "لا يمكن حذف هذا العنصر لأن بيانات أخرى مرتبطة معه إذا كنت تريد حذف القاعة بالفعل قم بحذف كل البيانات المرتبطة بهذه القاعة وبعد ذلك قم بحذفها";
+                return RedirectToPage("/Error");
+            }
+            catch (Exception e)
+            {
+                TempData["ExceptionMessage"] = "حدث خطأ ما الرجاء المحاولة لاحقاً";
+                return RedirectToPage("/Error");
+            }
             return RedirectToPage();
         }
         #endregion

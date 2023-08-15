@@ -1,0 +1,51 @@
+﻿@page "{lapCourseId}"
+@model Timetable.RazorWeb.Pages.Admin.edit_practical_deptModel
+@{
+}
+<div class="container">
+    <div class="form-container">
+        <form dir="rtl" method="post">
+            <input name="lapCourseId" value="@Model.course.Id" hidden />
+            <input asp-for="@Model.CourseId" value="@Model.course.Id" hidden />
+            <div class="form-group">
+                <label asp-for="@Model.CourseId" class="control-label"></label>
+                <select disabled asp-for="@Model.CourseId" class="form-select">
+                    <option value="@Model.course.Id">@Model.course.Name&ensp;(فصل @Model.course.semester.SemesterNo)&ensp;(سنة @Model.course.year.YearNo)</option>
+                </select>
+                <span class="text-danger" asp-validation-for="@Model.CourseId"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="@Model.TeacherId" class="control-label"></label>
+                <select asp-for="@Model.TeacherId" class="form-select">
+                    <option value="">-- اختر مدرس --</option>
+                    @foreach (var item in Model?.LabTeachers)
+                    {
+                        <option value="@item.Id">@item.Name&ensp;(@item.UserName)</option>
+                    }
+                </select>
+                <span class="text-danger" asp-validation-for="@Model.TeacherId"></span>
+            </div>
+
+
+            <div class="form-group">
+                <label asp-for="@Model.RoomId" class="control-label"></label>
+                <select asp-for="@Model.RoomId" class="form-select">
+                    <option value="">-- اختر مخبر --</option>
+                    @foreach (var item in Model?.LabRooms)
+                    {
+                        <option value="@item.Id">@item.Name</option>
+                    }
+                </select>
+                <span class="text-danger" asp-validation-for="@Model.RoomId"></span>
+            </div>
+
+            <div class="form-group">
+                <button class="btn btn-primary" type="submit">حفظ</button>
+            </div>
+            <div class="back">
+                <a asp-page="./practical-dept">رجوع</a>
+            </div>
+        </form>
+    </div>
+</div>

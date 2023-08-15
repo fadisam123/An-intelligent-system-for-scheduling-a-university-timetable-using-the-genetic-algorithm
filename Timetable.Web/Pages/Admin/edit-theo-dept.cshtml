@@ -1,0 +1,38 @@
+﻿@page
+@model Timetable.RazorWeb.Pages.Admin.edit_theo_deptModel
+@{
+}
+<div class="container">
+    <div class="form-container">
+        <form dir="rtl" method="post">
+            <input name="theoryCourseId" value="@Model.course.Id" hidden />
+            <input asp-for="@Model.CourseId" value="@Model.course.Id" hidden />
+            <div class="form-group">
+                <label asp-for="@Model.CourseId" class="control-label"></label>
+                <select disabled asp-for="@Model.CourseId" class="form-select">
+                    <option value="@Model.course.Id">@Model.course.Name&ensp;(فصل @Model.course.semester.SemesterNo)&ensp;(سنة @Model.course.year.YearNo)</option>
+                </select>
+                <span class="text-danger" asp-validation-for="@Model.CourseId"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="@Model.TeacherId" class="control-label"></label>
+                <select asp-for="@Model.TeacherId" class="form-select">
+                    <option value="">-- اختر مدرس --</option>
+                    @foreach (var item in Model?.TheoryTeachers)
+                    {
+                        <option value="@item.Id">@item.Name&ensp;(@item.UserName)</option>
+                    }
+                </select>
+                <span class="text-danger" asp-validation-for="@Model.TeacherId"></span>
+            </div>
+
+            <div class="form-group">
+                <button class="btn btn-primary" type="submit">حفظ</button>
+            </div>
+            <div class="back">
+                <a asp-page="./practical-dept">رجوع</a>
+            </div>
+        </form>
+    </div>
+</div>

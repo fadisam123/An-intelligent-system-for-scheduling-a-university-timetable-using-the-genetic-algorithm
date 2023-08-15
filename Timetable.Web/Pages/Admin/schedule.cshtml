@@ -18,27 +18,30 @@
 </style>
 
 <div class="container">
-    <form asp-page-handler="generate" method="post">
 
-        <div class="form-group">
-            @if (Model?.Semesters?.Count is null || Model?.Semesters?.Count == 0)
-            {
-                <div class="text-danger">لايوجد بيانات في كافية لتوليد البرنامج الرجاء إدخال المقررات ثم اسنادها إلى المدرسين ثم العودة إلى هنا</div>
-            }
-            else
-            {
-                <label asp-for="@Model.SelectedSemester" class="control-label ms-5"></label>
-                <select asp-for="@Model.SelectedSemester" class="form-select w-25">
+
+
+    @if (Model?.Semesters?.Count is null || Model?.Semesters?.Count == 0)
+    {
+        <div class="d-flex align-items-center justify-content-center">
+            <div dir="rtl" class="m-auto align-items-center justify-content-center d-block text-danger">لايوجد بيانات في كافية لتوليد البرنامج الرجاء إدخال المقررات ثم اسنادها إلى المدرسين ثم العودة إلى هنا</div>
+        </div>
+    }
+    else
+    {
+        <form asp-page-handler="generate" method="post">
+            <div class="form-group">
+                <label dir="rtl" asp-for="@Model.SelectedSemester" class="control-label ms-5"></label>
+                <select dir="rtl" asp-for="@Model.SelectedSemester" class="form-select w-25">
                     @foreach (var item in Model?.Semesters)
                     {
                         <option value="@item.SemesterNo">@item.SemesterNo</option>
                     }
                 </select>
-            }
-        </div>
-
-        <button onclick="return confirm('سيتم حذف برنامج الدوام القديم واستبداله بالبرنامج المولد، هل أنت متأكد من المتابعة؟')" class="edit-save-button generate" type="submit">توليد</button>
-    </form>
+            </div>
+            <button onclick="return confirm('سيتم حذف برنامج الدوام القديم واستبداله بالبرنامج المولد، هل أنت متأكد من المتابعة؟')" class="edit-save-button generate" type="submit">توليد</button>
+        </form>
+    }
 
     <form id="yearChangedForm" asp-page-handler="x" method="post">
 
@@ -49,8 +52,8 @@
             }
             else
             {
-                <label asp-for="@Model.SelectedYearInput" class="control-label"></label>
-                <select onchange="$('#yearChangedForm').submit()" asp-for="@Model.SelectedYearInput" class="form-select w-25">
+                <label dir="rtl" asp-for="@Model.SelectedYearInput" class="control-label"></label>
+                <select dir="rtl" onchange="$('#yearChangedForm').submit()" asp-for="@Model.SelectedYearInput" class="form-select w-25">
                     @foreach (var item in Model?.Years)
                     {
                         <option value="@item.YearNo">@item.YearNo</option>
@@ -63,8 +66,8 @@
             }
             else
             {
-                <label asp-for="@Model.SelectedSemesterInput" class="control-label"></label>
-                <select onchange="$('#yearChangedForm').submit()" asp-for="@Model.SelectedSemesterInput" class="form-select w-25">
+                <label dir="rtl" asp-for="@Model.SelectedSemesterInput" class="control-label"></label>
+                <select dir="rtl" onchange="$('#yearChangedForm').submit()" asp-for="@Model.SelectedSemesterInput" class="form-select w-25">
                     @foreach (var item in Model?.Semesters)
                     {
                         <option value="@item.SemesterNo">@item.SemesterNo</option>
@@ -83,7 +86,7 @@
         @*الوقت*@
         <input name="timeId" id="timeIdInput" value="" hidden />
 
-        <div class="form-group">
+        <div dir="rtl" class="form-group">
             <label asp-for="@Model.TeacherId" class="control-label"></label>
             <select asp-for="@Model.TeacherId" class="form-select">
                 <option value="">-- اختر مدرس --</option>
@@ -96,7 +99,7 @@
         </div>
 
 
-        <div class="form-group">
+        <div dir="rtl" class="form-group">
             <label asp-for="@Model.CourseId" class="control-label"></label>
             <select asp-for="@Model.CourseId" class="form-select">
                 <option value="">-- اختر مقرر --</option>
@@ -108,7 +111,7 @@
             <span class="text-danger" asp-validation-for="@Model.CourseId"></span>
         </div>
 
-        <div class="form-group">
+        <div dir="rtl" class="form-group">
             <label asp-for="@Model.RoomId" class="control-label"></label>
             <select asp-for="@Model.RoomId" class="form-select">
                 <option value="">-- اختر قاعة --</option>
@@ -132,52 +135,55 @@
 <br />
 <br />
 
-<table id="myTable">
+@if (Model.Days is not null && Model.Times is not null)
+{
+    <table id="myTable">
 
 
-    <tr>
-        @foreach (var day in Model.Days)
-        {
-            <th>@day.Name</th>
-        }
-        <th>الوقت</th>
-    </tr>
-
-
-    @*---- أسطر ----*@
-    @for (int i = 0; i < Model.Times.Count; i++)
-    {
         <tr>
-            @*---- أعمدة  ----*@
-            @for (int j = 0; j < Model.Days.Count; j++)
+            @foreach (var day in Model?.Days)
             {
-                var lucture = @Model?.Lectures?.FirstOrDefault(l => l.Time.Id == Model.Times[i].Id && l.day.DayNo == Model.Days[j].DayNo && l.course.year.YearNo == Model.SelectedYearInput);
-                if (lucture is not null)
-                {
-                    <td data-luctureId="@lucture.Id">
-                        @lucture.course.Name <br>
-                        @lucture.Room.Name <br>
-                        د. @lucture.course.user.Name
-                    </td>
-                }
-                else
-                {
-                    <td data-dayId="@Model.Days[j].DayNo" data-timeId="@Model.Times[i].Id">
-                    </td>
-                }
-
-                if (j == Model.Days.Count - 1)
-                {
-                    <td>
-                        @Model.Times[i].Start <br>
-                        @Model.Times[i].End
-                    </td>
-                }
+                <th>@day.Name</th>
             }
+            <th>الوقت</th>
         </tr>
-    }
 
-</table>
+
+        @*---- أسطر ----*@
+        @for (int i = 0; i < Model?.Times?.Count; i++)
+        {
+            <tr>
+                @*---- أعمدة  ----*@
+                @for (int j = 0; j < Model?.Days?.Count; j++)
+                {
+                    var lucture = @Model?.Lectures?.FirstOrDefault(l => l.Time.Id == Model.Times[i].Id && l.day.DayNo == Model.Days[j].DayNo && l.course.year.YearNo == Model.SelectedYearInput);
+                    if (lucture is not null)
+                    {
+                        <td data-luctureId="@lucture.Id">
+                            @lucture.course.Name <br>
+                            @lucture.Room.Name <br>
+                            د. @lucture.course.user.Name
+                        </td>
+                    }
+                    else
+                    {
+                        <td data-dayId="@Model?.Days[j]?.DayNo" data-timeId="@Model?.Times[i]?.Id">
+                        </td>
+                    }
+
+                    if (j == Model?.Days?.Count - 1)
+                    {
+                        <td>
+                            @Model?.Times[i]?.Start <br>
+                            @Model?.Times[i]?.End
+                        </td>
+                    }
+                }
+            </tr>
+        }
+
+    </table>
+}
 
 <br>
 
@@ -187,8 +193,8 @@
 <script>
 
 
-    
-    
+
+
 
 
 

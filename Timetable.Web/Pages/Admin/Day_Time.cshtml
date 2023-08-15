@@ -6,6 +6,44 @@
 <div class="container p-5">
     <div class="main-content">
 
+        @if (Model.workingDays is not null && Model.workingTimes is not null)
+        {
+            <table id="myTable">
+
+
+                <tr>
+                    @foreach (var day in Model?.workingDays)
+                    {
+                        <th>@day.Name</th>
+                    }
+                    <th>الوقت</th>
+                </tr>
+
+
+                @*---- أسطر ----*@
+                @for (int i = 0; i < Model?.workingTimes?.Count; i++)
+                {
+                    <tr>
+                        @*---- أعمدة  ----*@
+                        @for (int j = 0; j < Model?.workingDays?.Count; j++)
+                        {
+
+                            <td>
+                            </td>
+
+                            if (j == Model?.workingDays?.Count - 1)
+                            {
+                                <td>
+                                    @Model?.workingTimes[i]?.Start <br>
+                                    @Model?.workingTimes[i]?.End
+                                </td>
+                            }
+                        }
+                    </tr>
+                }
+
+            </table>
+        }
 
     </div>
     <div class="semester-year">
@@ -30,17 +68,39 @@
                 <span asp-validation-for="@Model.dayTimeInputModel.NumOfLecturePerDay" class="text-danger"></span>
             </div>
 
-            <div class="form-group ">
-                <label asp-for="@Model.dayTimeInputModel.LectureDuration" class="control-label"></label>
-                <input dir="ltr" value="00:00" asp-for="@Model.dayTimeInputModel.LectureDuration" class="form-control" />
-                <span asp-validation-for="@Model.dayTimeInputModel.LectureDuration" class="text-danger"></span>
-            </div>
+            @if (Model.dayTimeInputModel.LectureDuration is not null)
+            {
+                <div class="form-group ">
+                    <label asp-for="@Model.dayTimeInputModel.LectureDuration" class="control-label"></label>
+                    <input dir="ltr" asp-for="@Model.dayTimeInputModel.LectureDuration" class="form-control" />
+                    <span asp-validation-for="@Model.dayTimeInputModel.LectureDuration" class="text-danger"></span>
+                </div>
+            }
+            else
+            {
+                <div class="form-group ">
+                    <label asp-for="@Model.dayTimeInputModel.LectureDuration" class="control-label"></label>
+                    <input dir="ltr" value="00:00" asp-for="@Model.dayTimeInputModel.LectureDuration" class="form-control" />
+                    <span asp-validation-for="@Model.dayTimeInputModel.LectureDuration" class="text-danger"></span>
+                </div>
+            }
 
-            <div class="form-group ">
-                <label asp-for="@Model.dayTimeInputModel.BreakDuration" class="control-label"></label>
-                <input dir="ltr" value="00:00" asp-for="@Model.dayTimeInputModel.BreakDuration" class="form-control" />
-                <span asp-validation-for="@Model.dayTimeInputModel.BreakDuration" class="text-danger"></span>
-            </div>
+            @if (Model.dayTimeInputModel.LectureDuration is not null)
+            {
+                <div class="form-group ">
+                    <label asp-for="@Model.dayTimeInputModel.BreakDuration" class="control-label"></label>
+                    <input dir="ltr" asp-for="@Model.dayTimeInputModel.BreakDuration" class="form-control" />
+                    <span asp-validation-for="@Model.dayTimeInputModel.BreakDuration" class="text-danger"></span>
+                </div>
+            }
+            else
+            {
+                <div class="form-group ">
+                    <label asp-for="@Model.dayTimeInputModel.BreakDuration" class="control-label"></label>
+                    <input value="00:00" dir="ltr" asp-for="@Model.dayTimeInputModel.BreakDuration" class="form-control" />
+                    <span asp-validation-for="@Model.dayTimeInputModel.BreakDuration" class="text-danger"></span>
+                </div>
+            }
 
             <div class="form-group ">
                 <label asp-for="@Model.dayTimeInputModel.FirstLectureTime" class="control-label"></label>
@@ -61,7 +121,7 @@
 </div>
 
 <style>
-.semester-year {
-    margin-right: 30%;
-}
+    .semester-year {
+        margin-right: 30%;
+    }
 </style>

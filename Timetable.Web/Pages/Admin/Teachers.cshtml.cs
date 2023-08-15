@@ -3,6 +3,8 @@ using FluentValidation.AspNetCore;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using System.Xml.Linq;
 using Timetable.Application.Services.DataIO.Teacher;
 using Timetable.RazorWeb.ViewModels.InputModels;
@@ -72,7 +74,20 @@ namespace Timetable.RazorWeb.Pages.Admin
 
         public async Task<IActionResult> OnPostDeleteAsync(string teacherId)
         {
-
+            try
+            {
+                _teacherService.DeleteTeacherById(new Guid(teacherId));
+            }
+            catch (DbUpdateException ex)
+            {
+                TempData["ExceptionMessage"] = "لا يمكن حذف هذا العنصر لأن بيانات أخرى مرتبطة معه إذا كنت تريد حذف المدرس بالفعل قم بحذف كل البيانات المرتبطة مع هذا المدرس وبعد ذلك قم بحذفه";
+                return RedirectToPage("/Error");
+            }
+            catch (Exception e)
+            {
+                TempData["ExceptionMessage"] = "حدث خطأ ما الرجاء المحاولة لاحقاً";
+                return RedirectToPage("/Error");
+            }
             return RedirectToPage();
         } 
         #endregion

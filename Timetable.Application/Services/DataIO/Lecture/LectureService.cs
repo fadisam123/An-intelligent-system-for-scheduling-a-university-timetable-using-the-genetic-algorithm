@@ -138,7 +138,7 @@ namespace Timetable.Application.Services.DataIO.DayTime
                     {
                         rowCellNumber = (Math.Abs(int.Parse(item.Time.Start.ToString().Split(":")[0]) - 1) * 2) + 8;
                     }
-                    table.UpdateCell(rowCellNumber, item.day.DayNo, item.course.Name + "\n" + item.course.user.Name + "\n" + item.Room.Name);
+                    table.UpdateCell(rowCellNumber, item.day.DayNo, item?.course?.Name + "\n" + item?.course?.user?.Name + "\n" + item?.Room?.Name);
                 }
                 AnsiConsole.MarkupLineInterpolated($"[grey bold]Count: {currentYearLectures.Count()}[/]");
                 Console.WriteLine();
@@ -201,14 +201,14 @@ namespace Timetable.Application.Services.DataIO.DayTime
             {
                 localHits = 0.0;
                 localNoHits = 0.0;
-                AnsiConsole.MarkupLineInterpolated($"[deeppink4_1 bold]{teacher.Name} preferences:[/]");
+                AnsiConsole.MarkupLineInterpolated($"[deeppink4_1 bold]{teacher?.Name} preferences:[/]");
 
                 if (teacher.Preferences != null)
                 {
                     var teacherPreferences = teacher.Preferences.OrderBy(pdt => pdt.day.DayNo).ThenBy(pdt => pdt.time.Start).ToList();
                     foreach (var preference in teacherPreferences)
                     {
-                        var currentTeacherLectures = lectures.Where(l => l.course.user.Id == teacher.Id).ToList();
+                        var currentTeacherLectures = lectures.Where(l => l?.course?.user?.Id == teacher?.Id).ToList();
                         var matchedLecture = currentTeacherLectures.Where(ctl => ctl.day.DayNo == preference.day.DayNo && ctl.Time.Id == preference.time.Id).ToList();
                         if (matchedLecture.Count() != 0)
                         {

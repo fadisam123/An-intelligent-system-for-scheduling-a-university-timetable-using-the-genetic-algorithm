@@ -23,7 +23,7 @@ namespace Timetable.Infrastructure
                 .AddIdentity<User, Role>(options =>
                     {
                         options.Password.RequiredLength = 6;
-                        options.Password.RequiredUniqueChars = 1;
+                        options.Password.RequiredUniqueChars = 0;
                         options.Password.RequireNonAlphanumeric = false;
                         options.Password.RequireDigit = false;
                         options.Password.RequireUppercase = false;

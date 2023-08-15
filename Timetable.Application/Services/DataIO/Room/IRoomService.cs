@@ -8,5 +8,7 @@
         public IEnumerable<Room> getAllRooms();
         public IEnumerable<Room> getAllTheoryRooms();
         public IEnumerable<Room> getAllLabRooms();
+        public void deleteRoomById(Guid roomId);
+        public void UpdateRoom(Room room);
     }
 }

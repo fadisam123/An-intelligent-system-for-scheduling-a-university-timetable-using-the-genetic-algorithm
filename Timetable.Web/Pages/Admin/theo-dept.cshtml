@@ -12,18 +12,18 @@
                 <th>المقرر</th>
                 <th>المدرس</th>
             </tr>
-            @foreach (var theoryCourse in @Model?.TheoryCourses)
+            @foreach (var theoryCourse in @Model?.AssignedTheoryCourses)
             {
                 <tr>
                     <td>
                         <form method="post" asp-page-handler="Delete" class="inline">
-                            <input type="hidden" name="lapCourseId" value="@theoryCourse.Id">
+                            <input type="hidden" name="theoryCourseId" value="@theoryCourse.Id">
 
                             <button onclick="return confirm('هل تريد الحذف فعلاً؟')" type="submit" class="btn btn-sm bg-danger">
                                 حذف
                             </button>
                         </form>
-                        <a class="btn btn-sm bg-success" asp-page="./edit-practical-dept" asp-route-lapCourseId="@theoryCourse.Id">تعديل</a>
+                        <a class="btn btn-sm bg-success" asp-page="./edit-theo-dept" asp-route-theoryCourseId="@theoryCourse.Id">تعديل</a>
                     </td>
                     <td>@theoryCourse.Name</td>
                     <td>@theoryCourse?.user?.Name <span class="text-info">(@theoryCourse?.user?.UserName)</span></td>
@@ -52,13 +52,22 @@
 
             <div class="form-group">
                 <label asp-for="@Model.CourseId" class="control-label"></label>
-                <select asp-for="@Model.CourseId" class="form-select">
-                    <option value="">-- اختر مقرر --</option>
-                    @foreach (var item in Model?.TheoryCourses)
-                    {
-                        <option value="@item.Id">@item.Name</option>
-                    }
-                </select>
+                @if (Model?.NotAssignedTheoryCourses.Count != 0)
+                {
+                    <select asp-for="@Model.CourseId" class="form-select">
+                        <option value="">-- اختر مقرر --</option>
+                        @foreach (var item in Model?.NotAssignedTheoryCourses)
+                        {
+                            <option value="@item.Id">@item.Name&ensp;(فصل @item.semester.SemesterNo)&ensp;(سنة @item.year.YearNo)</option>
+                        }
+                    </select>
+                }
+                else
+                {
+                    <select asp-for="@Model.CourseId" class="form-select">
+                        <option value="">-- كل المقررات تم اسنادها --</option>
+                    </select>
+                }
                 <span class="text-danger" asp-validation-for="@Model.CourseId"></span>
             </div>
 

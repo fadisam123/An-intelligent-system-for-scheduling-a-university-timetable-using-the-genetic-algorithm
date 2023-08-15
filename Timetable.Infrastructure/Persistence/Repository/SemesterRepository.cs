@@ -7,5 +7,11 @@ namespace Timetable.Infrastructure.Persistence.Repository
         public SemesterRepository(AppDbContext context) : base(context)
         {
         }
+
+        public void Clear()
+        {
+            _context.Semesters.RemoveRange(_context.Semesters);
+            _context.SaveChanges();
+        }
     }
 }

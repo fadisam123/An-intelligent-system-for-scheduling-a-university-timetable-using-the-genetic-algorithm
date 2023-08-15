@@ -40,12 +40,12 @@ courseForm.addEventListener('submit', function (e) {
 
     courseForm.reset();
     practicalCheckbox.checked = false;
-    practicalCountGroup.style.display = 'none';
+    //practicalCountGroup.style.display = 'none';
     editRowIndex = -1;
 });
 
 practicalCheckbox.addEventListener('change', function () {
-    practicalCountGroup.style.display = this.checked ? 'block' : 'none';
+    //practicalCountGroup.style.display = this.checked ? 'block' : 'none';
 });
 
 courseTableBody.addEventListener('click', function (e) {

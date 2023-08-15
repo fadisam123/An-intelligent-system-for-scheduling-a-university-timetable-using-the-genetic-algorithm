@@ -24,9 +24,13 @@ namespace Timetable.Infrastructure.Persistence.Repository
 
         public IEnumerable<Course> getAllTheoryCourses(Semester semester, Year year)
         {
-            return _context.Courses.Where(c => c.Type == CourseTypeEnum.TheoryCourse && c.semester.SemesterNo == semester.SemesterNo && c.year.YearNo == year.YearNo)
-                .Include(c => c.year).Include(c => c.semester).OrderBy(c => c.semester)
-                .ThenBy(c => c.year).ThenByDescending(c => c.CreatedAt).ToList();
+            if (_context.Courses.Any())
+            {
+                return _context.Courses.Where(c => c.Type == CourseTypeEnum.TheoryCourse && c.semester.SemesterNo == semester.SemesterNo && c.year.YearNo == year.YearNo)
+                    .Include(c => c.year).Include(c => c.semester).OrderBy(c => c.semester)
+                    .ThenBy(c => c.year).ThenByDescending(c => c.CreatedAt).ToList();
+            }
+            return new List<Course> { };
         }
     }
 }

@@ -38,5 +38,17 @@ namespace Timetable.Application.Services.DataIO.Room
         {
             return Uow.RoomRepository.Find(r => r.type == RoomTypeEnum.LapRoom || r.type == RoomTypeEnum.MixedRoom);
         }
+
+        public void deleteRoomById(Guid roomId)
+        {
+            Uow.RoomRepository.Remove(getRoomById(roomId));
+            Uow.SaveChanges();
+        }
+
+        public void UpdateRoom(Room room)
+        {
+            Uow.RoomRepository.Update(room);
+            Uow.SaveChanges();
+        }
     }
 }

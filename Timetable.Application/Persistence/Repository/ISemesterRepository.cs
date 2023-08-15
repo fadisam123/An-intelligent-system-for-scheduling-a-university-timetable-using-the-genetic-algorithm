@@ -2,5 +2,6 @@
 {
     public interface ISemesterRepository : IGenericRepository<Semester>
     {
+        public void Clear();
     }
 }

@@ -7,5 +7,10 @@ namespace Timetable.Infrastructure.Persistence.Repository
         public YearRepository(AppDbContext context) : base(context)
         {
         }
+        public void Clear()
+        {
+            _context.Years.RemoveRange(_context.Years);
+            _context.SaveChanges();
+        }
     }
 }

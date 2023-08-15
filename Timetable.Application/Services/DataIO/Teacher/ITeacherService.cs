@@ -9,5 +9,8 @@ namespace Timetable.Application.Services.DataIO.Teacher
         public IEnumerable<User> getAllTeachers();
         public IEnumerable<User> getAllLabTeachers();
         public IEnumerable<User> getAllTheoryTeachers();
+        public void DeleteTeacherById(Guid teacherId);
+        public void UpdateTeacher(User teacher);
+        public Task UpdateTeacher(User teacher, string newPassword);
     }
 }

@@ -52,6 +52,14 @@
 
                 @if (Model.courseInputModel.HasPracticalSection)
                 {
+                    <div class="form-group" id="LapLuctureNumGroup">
+                        <label asp-for="@Model.courseInputModel.LapLuctureNumPerWeek" class="control-label"></label>
+                        <input asp-for="@Model.courseInputModel.LapLuctureNumPerWeek" min="1" class="form-control" />
+                        <span asp-validation-for="@Model.courseInputModel.LapLuctureNumPerWeek" class="text-danger"></span>
+                    </div>
+                }
+                else
+                {
                     <div class="form-group hidden" id="LapLuctureNumGroup">
                         <label asp-for="@Model.courseInputModel.LapLuctureNumPerWeek" class="control-label"></label>
                         <input asp-for="@Model.courseInputModel.LapLuctureNumPerWeek" min="1" class="form-control" />
