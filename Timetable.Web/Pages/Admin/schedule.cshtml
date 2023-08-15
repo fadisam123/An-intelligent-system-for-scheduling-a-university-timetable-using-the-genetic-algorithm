@@ -3,11 +3,11 @@
 @{
 }
 <style>
-    td {
+    tr td:not(:last-child) {
         cursor: pointer;
     }
 
-        td:hover {
+    tr td:not(:last-child):hover {
             background-color: lightgreen;
         }
 
@@ -202,42 +202,53 @@
 
     var table = document.getElementById("myTable");
     var cells = table.getElementsByTagName("td");
-
+    console.log(cells);
     for (var i = 0; i < cells.length; i++) {
-        cells[i].addEventListener("click", function (event) {
-            var isSelected = event.target.classList.contains("selected");
+        if (cells[i].getAttribute("data-luctureId") || cells[i].getAttribute("data-dayId")) {
 
-            // Remove the "selected" class from any previously selected cells
-            var selectedCells = document.querySelectorAll(".selected");
-            selectedCells.forEach(function (cell) {
-                cell.classList.remove("selected");
+            cells[i].addEventListener("click", function (event) {
+                var isSelected = event.target.classList.contains("selected");
+
+                // Remove the "selected" class from any previously selected cells
+                var selectedCells = document.querySelectorAll(".selected");
+                selectedCells.forEach(function (cell) {
+                    cell.classList.remove("selected");
+                });
+
+                // If the clicked cell was not selected, add the "selected" class
+                if (!isSelected) {
+                    event.target.classList.add("selected");
+                    $("#addLectureForm").removeClass("d-none");
+                }
+                else
+                {
+                    $("#addLectureForm").addClass("d-none");
+                }
+
+
+                // Retrieve the data-* attribute value from the clicked cell
+                if (event.target.getAttribute("data-luctureId")) {
+                    //console.log("luctureId = " + event.target.getAttribute("data-luctureId"));
+                    let luctureId = event.target.getAttribute("data-luctureId");
+                    $("#luctureIdInput").val(luctureId);
+                    $("#deleteBtn").click();
+                    console.log("luctureId = " + luctureId);
+
+                } else {
+                    //console.log("dayId = " + event.target.getAttribute("data-dayId"));
+
+                    //$("#addLectureForm").toggleClass("d-none");
+
+                    let dayId = event.target.getAttribute("data-dayId");
+                    let timeId = event.target.getAttribute("data-timeId");
+                    $("#dayIdInput").val(dayId);
+                    $("#timeIdInput").val(timeId);
+                    console.log("day = " + dayId + ", time = " + timeId);
+                }
             });
 
-            // If the clicked cell was not selected, add the "selected" class
-            if (!isSelected) {
-                event.target.classList.add("selected");
-            }
+        }
 
-
-            // Retrieve the data-* attribute value from the clicked cell
-            if (event.target.getAttribute("data-luctureId")) {
-                //console.log("luctureId = " + event.target.getAttribute("data-luctureId"));
-                let luctureId = event.target.getAttribute("data-luctureId");
-                $("#luctureIdInput").val(luctureId);
-                $("#deleteBtn").click();
-                console.log("luctureId = " + luctureId);
-
-            } else {
-                //console.log("dayId = " + event.target.getAttribute("data-dayId"));
-
-                $("#addLectureForm").toggleClass("d-none");
-                let dayId = event.target.getAttribute("data-dayId");
-                let timeId = event.target.getAttribute("data-timeId");
-                $("#dayIdInput").val(dayId);
-                $("#timeIdInput").val(timeId);
-                console.log("day = " + dayId + ", time = " + timeId);
-            }
-        });
     }
 </script>
 
