@@ -160,9 +160,9 @@
                     if (lucture is not null)
                     {
                         <td data-luctureId="@lucture.Id">
-                            @lucture.course.Name <br>
-                            @lucture.Room.Name <br>
-                            د. @lucture.course.user.Name
+                            @lucture?.course.Name <br>
+                            @lucture?.Room.Name <br>
+                            د. @lucture?.course?.user.Name?
                         </td>
                     }
                     else
