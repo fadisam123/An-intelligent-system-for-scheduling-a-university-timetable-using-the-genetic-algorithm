@@ -2,9 +2,23 @@
 @model Timetable.RazorWeb.Pages.Admin.scheduleModel
 @{
 }
+<style>
+    td {
+        cursor: pointer;
+    }
+
+        td:hover {
+            background-color: lightgreen;
+        }
+
+    .selected {
+        color: black;
+        background-color: yellow;
+    }
+</style>
 
 <div class="container">
-    <form method="post">
+    <form asp-page-handler="generate" method="post">
 
         <div class="form-group">
             @if (Model?.Semesters?.Count is null || Model?.Semesters?.Count == 0)
@@ -60,13 +74,60 @@
         </div>
 
     </form>
-
-    <button id="editSaveButton" class="edit-save-button generate" onclick="toggleEditSave()">تعديل</button>
 </div>
-<div class="butt">
-    <button>حفظ</button>
-    <button>توليد</button>
-    <button id="editSaveButton" class="edit-save-button" onclick="toggleEditSave()">تعديل</button>
+<div id="addLectureForm" class="d-none">
+    <form asp-page-handler="create" method="post">
+        @*اليوم*@
+        <input name="dayId" id="dayIdInput" value="" hidden />
+
+        @*الوقت*@
+        <input name="timeId" id="timeIdInput" value="" hidden />
+
+        <div class="form-group">
+            <label asp-for="@Model.TeacherId" class="control-label"></label>
+            <select asp-for="@Model.TeacherId" class="form-select">
+                <option value="">-- اختر مدرس --</option>
+                @foreach (var item in Model?.TheoryTeachers)
+                {
+                    <option value="@item.Id">@item.Name (@item.UserName)</option>
+                }
+            </select>
+            <span class="text-danger" asp-validation-for="@Model.TeacherId"></span>
+        </div>
+
+
+        <div class="form-group">
+            <label asp-for="@Model.CourseId" class="control-label"></label>
+            <select asp-for="@Model.CourseId" class="form-select">
+                <option value="">-- اختر مقرر --</option>
+                @foreach (var item in Model?.TheoryCourses)
+                {
+                    <option value="@item.Id">@item.Name</option>
+                }
+            </select>
+            <span class="text-danger" asp-validation-for="@Model.CourseId"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="@Model.RoomId" class="control-label"></label>
+            <select asp-for="@Model.RoomId" class="form-select">
+                <option value="">-- اختر قاعة --</option>
+                @foreach (var item in Model?.TheoryRooms)
+                {
+                    <option value="@item.Id">@item.Name</option>
+                }
+            </select>
+            <span class="text-danger" asp-validation-for="@Model.RoomId"></span>
+        </div>
+        <button type="submit">حفظ</button>
+    </form>
+
+    <form asp-page-handler="delete" method="post">
+        @*معرف المحاضرة*@
+        <input name="luctureId" id="luctureIdInput" value="" hidden />
+
+        <button id="deleteBtn" onclick="return confirm('هل تريد فعلاً حذف هذه المحاضرة؟')" hidden type="submit"></button>
+    </form>
 </div>
 <br />
 <br />
@@ -90,10 +151,10 @@
             @*---- أعمدة  ----*@
             @for (int j = 0; j < Model.Days.Count; j++)
             {
-                var lucture = @Model?.Lectures?.FirstOrDefault(l => l.Time.Id == Model.Times[i].Id && l.day.DayNo == Model.Days[j].DayNo);
+                var lucture = @Model?.Lectures?.FirstOrDefault(l => l.Time.Id == Model.Times[i].Id && l.day.DayNo == Model.Days[j].DayNo && l.course.year.YearNo == Model.SelectedYearInput);
                 if (lucture is not null)
                 {
-                    <td>
+                    <td data-luctureId="@lucture.Id">
                         @lucture.course.Name <br>
                         @lucture.Room.Name <br>
                         د. @lucture.course.user.Name
@@ -101,7 +162,7 @@
                 }
                 else
                 {
-                    <td>
+                    <td data-dayId="@Model.Days[j].DayNo" data-timeId="@Model.Times[i].Id">
                     </td>
                 }
 
@@ -120,6 +181,59 @@
 
 <br>
 
+
+
+
+<script>
+
+
+    
+    
+
+
+
+
+
+    var table = document.getElementById("myTable");
+    var cells = table.getElementsByTagName("td");
+
+    for (var i = 0; i < cells.length; i++) {
+        cells[i].addEventListener("click", function (event) {
+            var isSelected = event.target.classList.contains("selected");
+
+            // Remove the "selected" class from any previously selected cells
+            var selectedCells = document.querySelectorAll(".selected");
+            selectedCells.forEach(function (cell) {
+                cell.classList.remove("selected");
+            });
+
+            // If the clicked cell was not selected, add the "selected" class
+            if (!isSelected) {
+                event.target.classList.add("selected");
+            }
+
+
+            // Retrieve the data-* attribute value from the clicked cell
+            if (event.target.getAttribute("data-luctureId")) {
+                //console.log("luctureId = " + event.target.getAttribute("data-luctureId"));
+                let luctureId = event.target.getAttribute("data-luctureId");
+                $("#luctureIdInput").val(luctureId);
+                $("#deleteBtn").click();
+                console.log("luctureId = " + luctureId);
+
+            } else {
+                //console.log("dayId = " + event.target.getAttribute("data-dayId"));
+
+                $("#addLectureForm").toggleClass("d-none");
+                let dayId = event.target.getAttribute("data-dayId");
+                let timeId = event.target.getAttribute("data-timeId");
+                $("#dayIdInput").val(dayId);
+                $("#timeIdInput").val(timeId);
+                console.log("day = " + dayId + ", time = " + timeId);
+            }
+        });
+    }
+</script>
 
 
 @section Scripts {

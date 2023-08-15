@@ -26,7 +26,7 @@ namespace Timetable.RazorWeb.Pages.Account
 
         [BindProperty]
         [DisplayName("(تذكرني) ابق في حالة تسجيل دخول حتى إذا تم اغلاق المتصفح")]
-        public bool isPersistent { get; set; }
+        public bool isPersistent { get; set; } = false;
 
 
         public LoginModel(UserManager<User> userManager, SignInManager<User> signInManager)

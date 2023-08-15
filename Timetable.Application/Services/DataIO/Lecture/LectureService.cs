@@ -237,6 +237,20 @@ namespace Timetable.Application.Services.DataIO.DayTime
 
         }
 
+        public void AddLecture(Lecture lecture)
+        {
+            Uow.LectureRepository.Add(lecture);
+            Uow.SaveChanges();
+        }
 
+        public void DeleteLectureById(Guid lectureId)
+        {
+            var l = Uow.LectureRepository.GetById(lectureId);
+            if (l is not null)
+            {
+                Uow.LectureRepository.Remove(l);
+                Uow.SaveChanges();
+            }
+        }
     }
 }

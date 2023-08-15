@@ -48,10 +48,10 @@
                 @await Html.PartialAsync("../PartialViews/_Logout")
             </div>
             <a asp-page="./Courses" class="sidebar-link">مقرراتي الدراسية</a>
-            <a asp-page="./Survey" class="sidebar-link">اختيار الأوقات المفضلة (الاستبيان)</a>
+            <a asp-page="./Survey" class="sidebar-link">أوقات المحاضرات المفضلة</a>
             @if (teacher.Type == UserTypeEnum.Professor || teacher.Type == UserTypeEnum.DepartmentHead)
             {
-                <a asp-page="./PreferredRoom" class="sidebar-link">اختيار القاعات المفضلة</a>
+                <a asp-page="./PreferredRoom" class="sidebar-link">القاعات المفضلة للمقررات</a>
             }
         </div>
     </div>

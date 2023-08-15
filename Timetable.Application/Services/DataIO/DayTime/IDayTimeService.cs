@@ -7,5 +7,6 @@
         public IEnumerable<Day> GetAllDays();
         public IEnumerable<Time> GetAllTimes();
         public Day GetDayById(int dayId);
+        public Time GetTimeById(Guid timeId);
     }
 }

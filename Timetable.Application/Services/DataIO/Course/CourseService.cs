@@ -19,6 +19,10 @@ namespace Timetable.Application.Services.DataIO.Course
             Uow.SaveChanges();
         }
 
+        public IEnumerable<Course> getAllTheoryCourses(Semester semester, Year year)
+        {
+            return Uow.CourseRepository.getAllTheoryCourses(semester, year);
+        }
         public IEnumerable<Course> getAllTheoryCourses()
         {
             return Uow.CourseRepository.getAllTheoryCourses();

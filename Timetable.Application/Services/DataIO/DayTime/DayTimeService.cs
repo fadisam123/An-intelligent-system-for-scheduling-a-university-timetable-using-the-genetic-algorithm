@@ -33,5 +33,10 @@ namespace Timetable.Application.Services.DataIO.DayTime
         {
             return Uow.DayRepository.Find(d => d.DayNo == dayId).First();
         }
+
+        public Time GetTimeById(Guid timeId)
+        {
+            return Uow.TimeRepository.GetById(timeId);
+        }
     }
 }

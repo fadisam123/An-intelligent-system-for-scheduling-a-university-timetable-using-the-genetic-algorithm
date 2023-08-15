@@ -219,7 +219,7 @@ namespace Timetable.Application.GA
             // from 300 (Total = 300)
             //double fitness = ((Math.Log(Math.Pow(conflict, -1)) + 0.1) * 1000) + (preferredDayTime * 100) + (preferredRoom * 100);
 
-            double fitness = ((Math.Log(Math.Pow(conflict, -1)) + 0.1) * 1000) * Math.Exp((preferredRoom + preferredDayTime /*+ noBreakBetweenLecture*/) * 10);
+            double fitness = ((Math.Log(Math.Pow(conflict, -1)) + 0.1) * 1000) * Math.Exp((/*preferredRoom +*/ preferredDayTime /*+ noBreakBetweenLecture*/) * 10);
             Console.WriteLine(fitness + "\t" + conflict + "\t" + preferredDayTime + "\t" + preferredRoom + "\t" + noBreakBetweenLecture);
             return fitness;
         }

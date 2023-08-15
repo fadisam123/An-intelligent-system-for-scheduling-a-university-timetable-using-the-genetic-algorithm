@@ -9,6 +9,7 @@ namespace Timetable.Application.Services.DataIO.Course
         public Task createCourseAsync(Course course);
         public Course getCourseById(Guid teacherId);
         public Course GetCorrespondingLabCourse(Course theoryCourse);
+        public IEnumerable<Course> getAllTheoryCourses(Semester semester, Year year);
         public IEnumerable<Course> getAllTheoryCourses();
         public IEnumerable<Course> getAllLabCourses();
         public IEnumerable<Course> getAllTeacherSemesterCourses(User teacher, Semester semester);

@@ -838,6 +838,8 @@ namespace Timetable.Infrastructure.Persistence
         {
             if (!dbContext.Courses.Any(c => c.Type == CourseTypeEnum.LapCourse))
             {
+                var Rooms = dbContext.Rooms.Where(r => r.type == RoomTypeEnum.LapRoom || r.type == RoomTypeEnum.MixedRoom).ToList();
+
                 var courses = new List<Course>
                 {
                     // year 1 semester 1
@@ -847,7 +849,8 @@ namespace Timetable.Infrastructure.Persistence
                         semester = dbContext.Semesters.First(s => s.SemesterNo == 1),
                         LuctureNumPerWeek = 1,
                         user = dbContext.Users.First(u => u.UserName == "u11"),
-                        Name = "رياضيات متقطعة"
+                        Name = "رياضيات متقطعة",
+                        TeacherpreferredRoom = Rooms[_random.Next(0, Rooms.Count())]
                     },
                     new Course {
                         Type = CourseTypeEnum.LapCourse,
@@ -855,7 +858,8 @@ namespace Timetable.Infrastructure.Persistence
                         semester = dbContext.Semesters.First(s => s.SemesterNo == 1),
                         LuctureNumPerWeek = 1,
                         user = dbContext.Users.First(u => u.UserName == "u12"),
-                        Name = "1 فيزياء"
+                        Name = "1 فيزياء",
+                        TeacherpreferredRoom = Rooms[_random.Next(0, Rooms.Count())]
                     },
                     new Course {
                         Type = CourseTypeEnum.LapCourse,
@@ -863,7 +867,8 @@ namespace Timetable.Infrastructure.Persistence
                         semester = dbContext.Semesters.First(s => s.SemesterNo == 1),
                         LuctureNumPerWeek = 1,
                         user = dbContext.Users.First(u => u.UserName == "u13"),
-                        Name = "مبادئ عمل حواسيب"
+                        Name = "مبادئ عمل حواسيب",
+                        TeacherpreferredRoom = Rooms[_random.Next(0, Rooms.Count())]
                     },
                     new Course {
                         Type = CourseTypeEnum.LapCourse,
@@ -871,7 +876,8 @@ namespace Timetable.Infrastructure.Persistence
                         semester = dbContext.Semesters.First(s => s.SemesterNo == 1),
                         LuctureNumPerWeek = 1,
                         user = dbContext.Users.First(u => u.UserName == "u14"),
-                        Name = "تحليل 1"
+                        Name = "تحليل 1",
+                        TeacherpreferredRoom = Rooms[_random.Next(0, Rooms.Count())]
                     },
                     new Course {
                         Type = CourseTypeEnum.LapCourse,
@@ -879,7 +885,8 @@ namespace Timetable.Infrastructure.Persistence
                         semester = dbContext.Semesters.First(s => s.SemesterNo == 1),
                         LuctureNumPerWeek = 2,
                         user = dbContext.Users.First(u => u.UserName == "u15"),
-                        Name = "برمجة 1"
+                        Name = "برمجة 1",
+                        TeacherpreferredRoom = Rooms[_random.Next(0, Rooms.Count())]
                     },
 
                     // year 1 semester 2
@@ -889,7 +896,8 @@ namespace Timetable.Infrastructure.Persistence
                         semester = dbContext.Semesters.First(s => s.SemesterNo == 2),
                         LuctureNumPerWeek = 1,
                         user = dbContext.Users.First(u => u.UserName == "u16"),
-                        Name = "تحليل 2"
+                        Name = "تحليل 2",
+                        TeacherpreferredRoom = Rooms[_random.Next(0, Rooms.Count())]
                     },
                     new Course {
                         Type = CourseTypeEnum.LapCourse,
@@ -897,7 +905,8 @@ namespace Timetable.Infrastructure.Persistence
                         semester = dbContext.Semesters.First(s => s.SemesterNo == 2),
                         LuctureNumPerWeek = 1,
                         user = dbContext.Users.First(u => u.UserName == "u17"),
-                        Name = "دارات كهربائية"
+                        Name = "دارات كهربائية",
+                        TeacherpreferredRoom = Rooms[_random.Next(0, Rooms.Count())]
                     },
                     new Course {
                         Type = CourseTypeEnum.LapCourse,
@@ -905,7 +914,8 @@ namespace Timetable.Infrastructure.Persistence
                         semester = dbContext.Semesters.First(s => s.SemesterNo == 2),
                         LuctureNumPerWeek = 2,
                         user = dbContext.Users.First(u => u.UserName == "u18"),
-                        Name = "برمجة 2"
+                        Name = "برمجة 2",
+                        TeacherpreferredRoom = Rooms[_random.Next(0, Rooms.Count())]
                     },
                     new Course {
                         Type = CourseTypeEnum.LapCourse,
@@ -913,7 +923,8 @@ namespace Timetable.Infrastructure.Persistence
                         semester = dbContext.Semesters.First(s => s.SemesterNo == 2),
                         LuctureNumPerWeek = 1,
                         user = dbContext.Users.First(u => u.UserName == "u19"),
-                        Name = "جبر خطي"
+                        Name = "جبر خطي",
+                        TeacherpreferredRoom = Rooms[_random.Next(0, Rooms.Count())]
                     },
                     new Course {
                         Type = CourseTypeEnum.LapCourse,
@@ -921,7 +932,8 @@ namespace Timetable.Infrastructure.Persistence
                         semester = dbContext.Semesters.First(s => s.SemesterNo == 2),
                         LuctureNumPerWeek = 1,
                         user = dbContext.Users.First(u => u.UserName == "u11"),
-                        Name = "فيزياء 2"
+                        Name = "فيزياء 2",
+                        TeacherpreferredRoom = Rooms[_random.Next(0, Rooms.Count())]
                     },
 
                     // year 2 semester 1
@@ -931,7 +943,8 @@ namespace Timetable.Infrastructure.Persistence
                         semester = dbContext.Semesters.First(s => s.SemesterNo == 1),
                         LuctureNumPerWeek = 1,
                         user = dbContext.Users.First(u => u.UserName == "u12"),
-                        Name = "برمجة 3"
+                        Name = "برمجة 3",
+                        TeacherpreferredRoom = Rooms[_random.Next(0, Rooms.Count())]
                     },
                     new Course {
                         Type = CourseTypeEnum.LapCourse,
@@ -939,7 +952,8 @@ namespace Timetable.Infrastructure.Persistence
                         semester = dbContext.Semesters.First(s => s.SemesterNo == 1),
                         LuctureNumPerWeek = 1,
                         user = dbContext.Users.First(u => u.UserName == "u13"),
-                        Name = "تحليل 3"
+                        Name = "تحليل 3",
+                        TeacherpreferredRoom = Rooms[_random.Next(0, Rooms.Count())]
                     },
                     new Course {
                         Type = CourseTypeEnum.LapCourse,
@@ -947,7 +961,8 @@ namespace Timetable.Infrastructure.Persistence
                         semester = dbContext.Semesters.First(s => s.SemesterNo == 1),
                         LuctureNumPerWeek = 1,
                         user = dbContext.Users.First(u => u.UserName == "u14"),
-                        Name = "الكترونيات"
+                        Name = "الكترونيات",
+                        TeacherpreferredRoom = Rooms[_random.Next(0, Rooms.Count())]
                     },
                     new Course {
                         Type = CourseTypeEnum.LapCourse,
@@ -955,7 +970,8 @@ namespace Timetable.Infrastructure.Persistence
                         semester = dbContext.Semesters.First(s => s.SemesterNo == 1),
                         LuctureNumPerWeek = 1,
                         user = dbContext.Users.First(u => u.UserName == "u15"),
-                        Name = "برمجة رياضية"
+                        Name = "برمجة رياضية",
+                        TeacherpreferredRoom = Rooms[_random.Next(0, Rooms.Count())]
                     },
                     new Course {
                         Type = CourseTypeEnum.LapCourse,
@@ -963,7 +979,8 @@ namespace Timetable.Infrastructure.Persistence
                         semester = dbContext.Semesters.First(s => s.SemesterNo == 1),
                         LuctureNumPerWeek = 1,
                         user = dbContext.Users.First(u => u.UserName == "u16"),
-                        Name = "تحليل عددي 1"
+                        Name = "تحليل عددي 1",
+                        TeacherpreferredRoom = Rooms[_random.Next(0, Rooms.Count())]
                     },
 
                     // year 2 semester 2
@@ -973,7 +990,8 @@ namespace Timetable.Infrastructure.Persistence
                         semester = dbContext.Semesters.First(s => s.SemesterNo == 2),
                         LuctureNumPerWeek = 1,
                         user = dbContext.Users.First(u => u.UserName == "u17"),
-                        Name = "تحليل 4"
+                        Name = "تحليل 4",
+                        TeacherpreferredRoom = Rooms[_random.Next(0, Rooms.Count())]
                     },
                     new Course {
                         Type = CourseTypeEnum.LapCourse,
@@ -981,7 +999,8 @@ namespace Timetable.Infrastructure.Persistence
                         semester = dbContext.Semesters.First(s => s.SemesterNo == 2),
                         LuctureNumPerWeek = 1,
                         user = dbContext.Users.First(u => u.UserName == "u18"),
-                        Name = "دارات منطقية"
+                        Name = "دارات منطقية",
+                        TeacherpreferredRoom = Rooms[_random.Next(0, Rooms.Count())]
                     },
                     new Course {
                         Type = CourseTypeEnum.LapCourse,
@@ -989,7 +1008,8 @@ namespace Timetable.Infrastructure.Persistence
                         semester = dbContext.Semesters.First(s => s.SemesterNo == 2),
                         LuctureNumPerWeek = 1,
                         user = dbContext.Users.First(u => u.UserName == "u19"),
-                        Name = "خوارزميات 1"
+                        Name = "خوارزميات 1",
+                        TeacherpreferredRoom = Rooms[_random.Next(0, Rooms.Count())]
                     },
                     new Course {
                         Type = CourseTypeEnum.LapCourse,
@@ -997,7 +1017,8 @@ namespace Timetable.Infrastructure.Persistence
                         semester = dbContext.Semesters.First(s => s.SemesterNo == 2),
                         LuctureNumPerWeek = 1,
                         user = dbContext.Users.First(u => u.UserName == "u11"),
-                        Name = "تحليل عددي 2"
+                        Name = "تحليل عددي 2",
+                        TeacherpreferredRoom = Rooms[_random.Next(0, Rooms.Count())]
                     },
                     new Course {
                         Type = CourseTypeEnum.LapCourse,
@@ -1005,7 +1026,8 @@ namespace Timetable.Infrastructure.Persistence
                         semester = dbContext.Semesters.First(s => s.SemesterNo == 2),
                         LuctureNumPerWeek = 1,
                         user = dbContext.Users.First(u => u.UserName == "u12"),
-                        Name = "إحصاء"
+                        Name = "إحصاء",
+                        TeacherpreferredRoom = Rooms[_random.Next(0, Rooms.Count())]
                     },
 
                     // year 3 semester 1
@@ -1015,7 +1037,8 @@ namespace Timetable.Infrastructure.Persistence
                         semester = dbContext.Semesters.First(s => s.SemesterNo == 1),
                         LuctureNumPerWeek = 1,
                         user = dbContext.Users.First(u => u.UserName == "u13"),
-                        Name = "رسوميات حاسوبية"
+                        Name = "رسوميات حاسوبية",
+                        TeacherpreferredRoom = Rooms[_random.Next(0, Rooms.Count())]
                     },
                     new Course {
                         Type = CourseTypeEnum.LapCourse,
@@ -1023,7 +1046,8 @@ namespace Timetable.Infrastructure.Persistence
                         semester = dbContext.Semesters.First(s => s.SemesterNo == 1),
                         LuctureNumPerWeek = 1,
                         user = dbContext.Users.First(u => u.UserName == "u14"),
-                        Name = "معالج مصغر"
+                        Name = "معالج مصغر",
+                        TeacherpreferredRoom = Rooms[_random.Next(0, Rooms.Count())]
                     },
                     new Course {
                         Type = CourseTypeEnum.LapCourse,
@@ -1031,7 +1055,8 @@ namespace Timetable.Infrastructure.Persistence
                         semester = dbContext.Semesters.First(s => s.SemesterNo == 1),
                         LuctureNumPerWeek = 1,
                         user = dbContext.Users.First(u => u.UserName == "u15"),
-                        Name = "خوارزميات 2"
+                        Name = "خوارزميات 2",
+                        TeacherpreferredRoom = Rooms[_random.Next(0, Rooms.Count())]
                     },
                     new Course {
                         Type = CourseTypeEnum.LapCourse,
@@ -1039,7 +1064,8 @@ namespace Timetable.Infrastructure.Persistence
                         semester = dbContext.Semesters.First(s => s.SemesterNo == 1),
                         LuctureNumPerWeek = 1,
                         user = dbContext.Users.First(u => u.UserName == "u16"),
-                        Name = "نظرية معلومات"
+                        Name = "نظرية معلومات",
+                        TeacherpreferredRoom = Rooms[_random.Next(0, Rooms.Count())]
                     },
                     new Course {
                         Type = CourseTypeEnum.LapCourse,
@@ -1047,7 +1073,8 @@ namespace Timetable.Infrastructure.Persistence
                         semester = dbContext.Semesters.First(s => s.SemesterNo == 1),
                         LuctureNumPerWeek = 1,
                         user = dbContext.Users.First(u => u.UserName == "u17"),
-                        Name = "معالجة اشارة"
+                        Name = "معالجة اشارة",
+                        TeacherpreferredRoom = Rooms[_random.Next(0, Rooms.Count())]
                     },
                     new Course {
                         Type = CourseTypeEnum.LapCourse,
@@ -1055,7 +1082,8 @@ namespace Timetable.Infrastructure.Persistence
                         semester = dbContext.Semesters.First(s => s.SemesterNo == 1),
                         LuctureNumPerWeek = 1,
                         user = dbContext.Users.First(u => u.UserName == "u18"),
-                        Name = "مخططات"
+                        Name = "مخططات",
+                        TeacherpreferredRoom = Rooms[_random.Next(0, Rooms.Count())]
                     },
                     new Course {
                         Type = CourseTypeEnum.LapCourse,
@@ -1063,7 +1091,8 @@ namespace Timetable.Infrastructure.Persistence
                         semester = dbContext.Semesters.First(s => s.SemesterNo == 1),
                         LuctureNumPerWeek = 1,
                         user = dbContext.Users.First(u => u.UserName == "u19"),
-                        Name = "معطيات 1"
+                        Name = "معطيات 1",
+                        TeacherpreferredRoom = Rooms[_random.Next(0, Rooms.Count())]
                     },
 
                     // year 3 semester 2
@@ -1073,7 +1102,8 @@ namespace Timetable.Infrastructure.Persistence
                         semester = dbContext.Semesters.First(s => s.SemesterNo == 2),
                         LuctureNumPerWeek = 1,
                         user = dbContext.Users.First(u => u.UserName == "u11"),
-                        Name = "شبكات حاسوبية"
+                        Name = "شبكات حاسوبية",
+                        TeacherpreferredRoom = Rooms[_random.Next(0, Rooms.Count())]
                     },
                     new Course {
                         Type = CourseTypeEnum.LapCourse,
@@ -1081,7 +1111,8 @@ namespace Timetable.Infrastructure.Persistence
                         semester = dbContext.Semesters.First(s => s.SemesterNo == 2),
                         LuctureNumPerWeek = 1,
                         user = dbContext.Users.First(u => u.UserName == "u12"),
-                        Name = "بنية 1"
+                        Name = "بنية 1",
+                        TeacherpreferredRoom = Rooms[_random.Next(0, Rooms.Count())]
                     },
                     new Course {
                         Type = CourseTypeEnum.LapCourse,
@@ -1089,7 +1120,8 @@ namespace Timetable.Infrastructure.Persistence
                         semester = dbContext.Semesters.First(s => s.SemesterNo == 2),
                         LuctureNumPerWeek = 1,
                         user = dbContext.Users.First(u => u.UserName == "u13"),
-                        Name = "اتصالات"
+                        Name = "اتصالات",
+                        TeacherpreferredRoom = Rooms[_random.Next(0, Rooms.Count())]
                     },
                     new Course {
                         Type = CourseTypeEnum.LapCourse,
@@ -1097,7 +1129,8 @@ namespace Timetable.Infrastructure.Persistence
                         semester = dbContext.Semesters.First(s => s.SemesterNo == 2),
                         LuctureNumPerWeek = 1,
                         user = dbContext.Users.First(u => u.UserName == "u14"),
-                        Name = "مبادئ ذكاء"
+                        Name = "مبادئ ذكاء",
+                        TeacherpreferredRoom = Rooms[_random.Next(0, Rooms.Count())]
                     },
                     new Course {
                         Type = CourseTypeEnum.LapCourse,
@@ -1105,7 +1138,8 @@ namespace Timetable.Infrastructure.Persistence
                         semester = dbContext.Semesters.First(s => s.SemesterNo == 2),
                         LuctureNumPerWeek = 1,
                         user = dbContext.Users.First(u => u.UserName == "u15"),
-                        Name = "صورية"
+                        Name = "صورية",
+                        TeacherpreferredRoom = Rooms[_random.Next(0, Rooms.Count())]
                     },
                     new Course {
                         Type = CourseTypeEnum.LapCourse,
@@ -1113,7 +1147,8 @@ namespace Timetable.Infrastructure.Persistence
                         semester = dbContext.Semesters.First(s => s.SemesterNo == 2),
                         LuctureNumPerWeek = 1,
                         user = dbContext.Users.First(u => u.UserName == "u16"),
-                        Name = "برمجيات 1"
+                        Name = "برمجيات 1",
+                        TeacherpreferredRoom = Rooms[_random.Next(0, Rooms.Count())]
                     },
                     new Course {
                         Type = CourseTypeEnum.LapCourse,
@@ -1121,7 +1156,8 @@ namespace Timetable.Infrastructure.Persistence
                         semester = dbContext.Semesters.First(s => s.SemesterNo == 2),
                         LuctureNumPerWeek = 1,
                         user = dbContext.Users.First(u => u.UserName == "u17"),
-                        Name = "خوارزميات 3"
+                        Name = "خوارزميات 3",
+                        TeacherpreferredRoom = Rooms[_random.Next(0, Rooms.Count())]
                     },
 
                     // year 4 semester 1
@@ -1131,7 +1167,8 @@ namespace Timetable.Infrastructure.Persistence
                         semester = dbContext.Semesters.First(s => s.SemesterNo == 1),
                         LuctureNumPerWeek = 1,
                         user = dbContext.Users.First(u => u.UserName == "u18"),
-                        Name = "أرتال"
+                        Name = "أرتال",
+                        TeacherpreferredRoom = Rooms[_random.Next(0, Rooms.Count())]
                     },
                     new Course {
                         Type = CourseTypeEnum.LapCourse,
@@ -1139,7 +1176,8 @@ namespace Timetable.Infrastructure.Persistence
                         semester = dbContext.Semesters.First(s => s.SemesterNo == 1),
                         LuctureNumPerWeek = 1,
                         user = dbContext.Users.First(u => u.UserName == "u19"),
-                        Name = "بنية 2"
+                        Name = "بنية 2",
+                        TeacherpreferredRoom = Rooms[_random.Next(0, Rooms.Count())]
                     },
                     new Course {
                         Type = CourseTypeEnum.LapCourse,
@@ -1148,7 +1186,8 @@ namespace Timetable.Infrastructure.Persistence
                         LuctureNumPerWeek = 1,
                         user = dbContext.Users.First(u => u.UserName == "u11"),
                         Name = "معطيات 2",
-                        IsElective = true
+                        IsElective = true,
+                        TeacherpreferredRoom = Rooms[_random.Next(0, Rooms.Count())]
                     },
                     new Course {
                         Type = CourseTypeEnum.LapCourse,
@@ -1157,7 +1196,8 @@ namespace Timetable.Infrastructure.Persistence
                         LuctureNumPerWeek = 1,
                         user = dbContext.Users.First(u => u.UserName == "u16"),
                         Name = "شبكات متقدمة",
-                        IsElective = true
+                        IsElective = true,
+                        TeacherpreferredRoom = Rooms[_random.Next(0, Rooms.Count())]
                     },
                     new Course {
                         Type = CourseTypeEnum.LapCourse,
@@ -1166,7 +1206,8 @@ namespace Timetable.Infrastructure.Persistence
                         LuctureNumPerWeek = 1,
                         user = dbContext.Users.First(u => u.UserName == "u17"),
                         Name = "برمجة منطقية",
-                        IsElective = true
+                        IsElective = true,
+                        TeacherpreferredRoom = Rooms[_random.Next(0, Rooms.Count())]
                     },
                     new Course {
                         Type = CourseTypeEnum.LapCourse,
@@ -1174,7 +1215,8 @@ namespace Timetable.Infrastructure.Persistence
                         semester = dbContext.Semesters.First(s => s.SemesterNo == 1),
                         LuctureNumPerWeek = 2,
                         user = dbContext.Users.First(u => u.UserName == "u12"),
-                        Name = "تصميم مترجمات"
+                        Name = "تصميم مترجمات",
+                        TeacherpreferredRoom = Rooms[_random.Next(0, Rooms.Count())]
                     },
                     new Course {
                         Type = CourseTypeEnum.LapCourse,
@@ -1182,7 +1224,8 @@ namespace Timetable.Infrastructure.Persistence
                         semester = dbContext.Semesters.First(s => s.SemesterNo == 1),
                         LuctureNumPerWeek = 1,
                         user = dbContext.Users.First(u => u.UserName == "u13"),
-                        Name = "نظم وسائط"
+                        Name = "نظم وسائط",
+                        TeacherpreferredRoom = Rooms[_random.Next(0, Rooms.Count())]
                     },
                     new Course {
                         Type = CourseTypeEnum.LapCourse,
@@ -1190,7 +1233,8 @@ namespace Timetable.Infrastructure.Persistence
                         semester = dbContext.Semesters.First(s => s.SemesterNo == 1),
                         LuctureNumPerWeek = 1,
                         user = dbContext.Users.First(u => u.UserName == "u14"),
-                        Name = "بحوث عمليات"
+                        Name = "بحوث عمليات",
+                        TeacherpreferredRoom = Rooms[_random.Next(0, Rooms.Count())]
                     },
                     new Course {
                         Type = CourseTypeEnum.LapCourse,
@@ -1198,7 +1242,8 @@ namespace Timetable.Infrastructure.Persistence
                         semester = dbContext.Semesters.First(s => s.SemesterNo == 1),
                         LuctureNumPerWeek = 1,
                         user = dbContext.Users.First(u => u.UserName == "u15"),
-                        Name = "نظم تشغيل 1"
+                        Name = "نظم تشغيل 1",
+                        TeacherpreferredRoom = Rooms[_random.Next(0, Rooms.Count())]
                     },
 
                     // year 4 semester 2
@@ -1208,7 +1253,8 @@ namespace Timetable.Infrastructure.Persistence
                         semester = dbContext.Semesters.First(s => s.SemesterNo == 2),
                         LuctureNumPerWeek = 2,
                         user = dbContext.Users.First(u => u.UserName == "u16"),
-                        Name = "أمن معلومات"
+                        Name = "أمن معلومات",
+                        TeacherpreferredRoom = Rooms[_random.Next(0, Rooms.Count())]
                     },
                     new Course {
                         Type = CourseTypeEnum.LapCourse,
@@ -1217,7 +1263,8 @@ namespace Timetable.Infrastructure.Persistence
                         LuctureNumPerWeek = 1,
                         user = dbContext.Users.First(u => u.UserName == "u17"),
                         Name = "روبوتية",
-                        IsElective = true
+                        IsElective = true,
+                        TeacherpreferredRoom = Rooms[_random.Next(0, Rooms.Count())]
                     },
                     new Course {
                         Type = CourseTypeEnum.LapCourse,
@@ -1225,7 +1272,8 @@ namespace Timetable.Infrastructure.Persistence
                         semester = dbContext.Semesters.First(s => s.SemesterNo == 2),
                         LuctureNumPerWeek = 1,
                         user = dbContext.Users.First(u => u.UserName == "u18"),
-                        Name = "برمجيات 2"
+                        Name = "برمجيات 2",
+                        TeacherpreferredRoom = Rooms[_random.Next(0, Rooms.Count())]
                     },
                     new Course {
                         Type = CourseTypeEnum.LapCourse,
@@ -1233,7 +1281,8 @@ namespace Timetable.Infrastructure.Persistence
                         semester = dbContext.Semesters.First(s => s.SemesterNo == 2),
                         LuctureNumPerWeek = 1,
                         user = dbContext.Users.First(u => u.UserName == "u19"),
-                        Name = "تفرعية"
+                        Name = "تفرعية",
+                        TeacherpreferredRoom = Rooms[_random.Next(0, Rooms.Count())]
                     },
                     new Course {
                         Type = CourseTypeEnum.LapCourse,
@@ -1242,7 +1291,8 @@ namespace Timetable.Infrastructure.Persistence
                         LuctureNumPerWeek = 1,
                         user = dbContext.Users.First(u => u.UserName == "u11"),
                         Name = "عصبونية",
-                        IsElective = true
+                        IsElective = true,
+                        TeacherpreferredRoom = Rooms[_random.Next(0, Rooms.Count())]
                     },
                     new Course {
                         Type = CourseTypeEnum.LapCourse,
@@ -1250,7 +1300,8 @@ namespace Timetable.Infrastructure.Persistence
                         semester = dbContext.Semesters.First(s => s.SemesterNo == 2),
                         LuctureNumPerWeek = 1,
                         user = dbContext.Users.First(u => u.UserName == "u12"),
-                        Name = "تسويق"
+                        Name = "تسويق",
+                        TeacherpreferredRoom = Rooms[_random.Next(0, Rooms.Count())]
                     },
                     new Course {
                         Type = CourseTypeEnum.LapCourse,
@@ -1258,7 +1309,8 @@ namespace Timetable.Infrastructure.Persistence
                         semester = dbContext.Semesters.First(s => s.SemesterNo == 2),
                         LuctureNumPerWeek = 1,
                         user = dbContext.Users.First(u => u.UserName == "u13"),
-                        Name = "نظم رقمية"
+                        Name = "نظم رقمية",
+                        TeacherpreferredRoom = Rooms[_random.Next(0, Rooms.Count())]
                     },
                     new Course {
                         Type = CourseTypeEnum.LapCourse,
@@ -1267,7 +1319,8 @@ namespace Timetable.Infrastructure.Persistence
                         LuctureNumPerWeek = 1,
                         user = dbContext.Users.First(u => u.UserName == "u14"),
                         Name = "نظم تشغيل 2",
-                        IsElective = true
+                        IsElective = true,
+                        TeacherpreferredRoom = Rooms[_random.Next(0, Rooms.Count())]
                     },
 
                     // year 5 semester 1
@@ -1278,7 +1331,8 @@ namespace Timetable.Infrastructure.Persistence
                         LuctureNumPerWeek = 1,
                         user = dbContext.Users.First(u => u.UserName == "u15"),
                         Name = "نظم خبيرة",
-                        IsElective = true
+                        IsElective = true,
+                        TeacherpreferredRoom = Rooms[_random.Next(0, Rooms.Count())]
                     },
                     new Course {
                         Type = CourseTypeEnum.LapCourse,
@@ -1287,7 +1341,8 @@ namespace Timetable.Infrastructure.Persistence
                         LuctureNumPerWeek = 1,
                         user = dbContext.Users.First(u => u.UserName == "u15"),
                         Name = "نظم موزعة",
-                        IsElective = true
+                        IsElective = true,
+                        TeacherpreferredRoom = Rooms[_random.Next(0, Rooms.Count())]
                     },
                     new Course {
                         Type = CourseTypeEnum.LapCourse,
@@ -1295,7 +1350,8 @@ namespace Timetable.Infrastructure.Persistence
                         semester = dbContext.Semesters.First(s => s.SemesterNo == 1),
                         LuctureNumPerWeek = 1,
                         user = dbContext.Users.First(u => u.UserName == "u16"),
-                        Name = "نمذجة ومحاكاة"
+                        Name = "نمذجة ومحاكاة",
+                        TeacherpreferredRoom = Rooms[_random.Next(0, Rooms.Count())]
                     },
                     new Course {
                         Type = CourseTypeEnum.LapCourse,
@@ -1303,7 +1359,8 @@ namespace Timetable.Infrastructure.Persistence
                         semester = dbContext.Semesters.First(s => s.SemesterNo == 1),
                         LuctureNumPerWeek = 1,
                         user = dbContext.Users.First(u => u.UserName == "u17"),
-                        Name = "تحكم منطقي PLC"
+                        Name = "تحكم منطقي PLC",
+                        TeacherpreferredRoom = Rooms[_random.Next(0, Rooms.Count())]
                     },
                     new Course {
                         Type = CourseTypeEnum.LapCourse,
@@ -1312,7 +1369,8 @@ namespace Timetable.Infrastructure.Persistence
                         LuctureNumPerWeek = 1,
                         user = dbContext.Users.First(u => u.UserName == "u18"),
                         Name = "برمجيات 3",
-                        IsElective = true
+                        IsElective = true,
+                        TeacherpreferredRoom = Rooms[_random.Next(0, Rooms.Count())]
                     },
                     new Course {
                         Type = CourseTypeEnum.LapCourse,
@@ -1321,7 +1379,8 @@ namespace Timetable.Infrastructure.Persistence
                         LuctureNumPerWeek = 1,
                         user = dbContext.Users.First(u => u.UserName == "u18"),
                         Name = "رؤية حاسوبية",
-                        IsElective = true
+                        IsElective = true,
+                        TeacherpreferredRoom = Rooms[_random.Next(0, Rooms.Count())]
                     },
                     new Course {
                         Type = CourseTypeEnum.LapCourse,
@@ -1330,7 +1389,8 @@ namespace Timetable.Infrastructure.Persistence
                         LuctureNumPerWeek = 1,
                         user = dbContext.Users.First(u => u.UserName == "u19"),
                         Name = "أمن شبكات",
-                        IsElective = true
+                        IsElective = true,
+                        TeacherpreferredRoom = Rooms[_random.Next(0, Rooms.Count())]
                     },
                     new Course {
                         Type = CourseTypeEnum.LapCourse,
@@ -1338,7 +1398,8 @@ namespace Timetable.Infrastructure.Persistence
                         semester = dbContext.Semesters.First(s => s.SemesterNo == 1),
                         LuctureNumPerWeek = 1,
                         user = dbContext.Users.First(u => u.UserName == "u19"),
-                        Name = "جودة وموثوقية"
+                        Name = "جودة وموثوقية",
+                        TeacherpreferredRoom = Rooms[_random.Next(0, Rooms.Count())]
                     },
 
                     // year 5 semester 2
@@ -1347,8 +1408,9 @@ namespace Timetable.Infrastructure.Persistence
                         year = dbContext.Years.First(y => y.YearNo == 5),
                         semester = dbContext.Semesters.First(s => s.SemesterNo == 2),
                         LuctureNumPerWeek = 1,
-                        user = dbContext.Users.First(u => u.UserName == "u1"),
-                        Name = "زمن حقيقي"
+                        user = dbContext.Users.First(u => u.UserName == "u11"),
+                        Name = "زمن حقيقي",
+                        TeacherpreferredRoom = Rooms[_random.Next(0, Rooms.Count())]
                     },
                     new Course {
                         Type = CourseTypeEnum.LapCourse,
@@ -1357,7 +1419,8 @@ namespace Timetable.Infrastructure.Persistence
                         LuctureNumPerWeek = 1,
                         user = dbContext.Users.First(u => u.UserName == "u12"),
                         Name = "معالجة لغات طبيعية",
-                        IsElective = true
+                        IsElective = true,
+                        TeacherpreferredRoom = Rooms[_random.Next(0, Rooms.Count())]
                     },
                     new Course {
                         Type = CourseTypeEnum.LapCourse,
@@ -1366,7 +1429,8 @@ namespace Timetable.Infrastructure.Persistence
                         LuctureNumPerWeek = 1,
                         user = dbContext.Users.First(u => u.UserName == "u13"),
                         Name = "شبكات لاسلكية",
-                        IsElective = true
+                        IsElective = true,
+                        TeacherpreferredRoom = Rooms[_random.Next(0, Rooms.Count())]
                     },
                     new Course {
                         Type = CourseTypeEnum.LapCourse,
@@ -1375,7 +1439,8 @@ namespace Timetable.Infrastructure.Persistence
                         LuctureNumPerWeek = 1,
                         user = dbContext.Users.First(u => u.UserName == "u14"),
                         Name = "تنقيب معطيات",
-                        IsElective = true
+                        IsElective = true,
+                        TeacherpreferredRoom = Rooms[_random.Next(0, Rooms.Count())]
                     },
                     new Course {
                         Type = CourseTypeEnum.LapCourse,
@@ -1383,7 +1448,8 @@ namespace Timetable.Infrastructure.Persistence
                         semester = dbContext.Semesters.First(s => s.SemesterNo == 2),
                         LuctureNumPerWeek = 1,
                         user = dbContext.Users.First(u => u.UserName == "u15"),
-                        Name = "نظم انتاجية"
+                        Name = "نظم انتاجية",
+                        TeacherpreferredRoom = Rooms[_random.Next(0, Rooms.Count())]
                     },
                 };
                 await dbContext.Courses.AddRangeAsync(courses);
@@ -1396,95 +1462,35 @@ namespace Timetable.Infrastructure.Persistence
             if (!dbContext.TeacherPreferenceDayTimes.Any() && dbContext.Days.Any() && dbContext.Times.Any())
             {
                 var teachers = dbContext.Users.Where(t => t.Courses.Any()).Include(t => t.Courses).ToList();
-                foreach (var teacher in teachers.Where(t => t.Type == UserTypeEnum.DepartmentHead))
+                foreach (var teacher in teachers)
                 {
                     var courses = teacher.Courses.Where(c => c.semester.SemesterNo == 1);
                     foreach (var course in courses)
                     {
-                        var Days = dbContext.Days.ToList();
-                        var Times = dbContext.Times.ToList();
-                    again:
-                        int randomDayIndex = _random.Next(0, Days.Count());
-                        Day randomDay = Days[randomDayIndex];
-
-
-                        int randomTimeIndex = _random.Next(0, Times.Count());
-                        Time randomTime = Times[randomTimeIndex];
-
-                        var tpdt = new TeacherPreferenceDayTime
+                        int repeate = _random.Next(1,3);
+                        for (int i = 0; i < repeate; i++)
                         {
-                            user = teacher,
-                            day = randomDay,
-                            time = randomTime
-                        };
-                        if (dbContext.TeacherPreferenceDayTimes.Where(p => p.user.Type != UserTypeEnum.DepartmentHead && p.user.Preferences.Any(x => x.day.DayNo == randomDay.DayNo && x.time.Start == randomTime.Start)).Any())
-                        {
-                            goto again;
+                            var Days = dbContext.Days.ToList();
+                            var Times = dbContext.Times.ToList();
+
+                            int randomDayIndex = _random.Next(0, Days.Count());
+                            Day randomDay = Days[randomDayIndex];
+
+                            int randomTimeIndex = _random.Next(0, Times.Count());
+                            Time randomTime = Times[randomTimeIndex];
+
+                            var tpdt = new TeacherPreferenceDayTime
+                            {
+                                user = teacher,
+                                day = randomDay,
+                                time = randomTime
+                            };
+
+                            await dbContext.TeacherPreferenceDayTimes.AddAsync(tpdt);
+                            await dbContext.SaveChangesAsync(); 
                         }
-                        await dbContext.TeacherPreferenceDayTimes.AddAsync(tpdt);
-                        await dbContext.SaveChangesAsync();
                     }
                 }
-
-                foreach (var teacher in teachers.Where(t => t.Type == UserTypeEnum.Professor))
-                {
-                    var courses = teacher.Courses;
-                    foreach (var course in courses)
-                    {
-                        var Days = dbContext.Days.ToList();
-                        var Times = dbContext.Times.ToList();
-                    again:
-                        int randomDayIndex = _random.Next(0, Days.Count());
-                        Day randomDay = Days[randomDayIndex];
-
-
-                        int randomTimeIndex = _random.Next(0, Times.Count());
-                        Time randomTime = Times[randomTimeIndex];
-
-                        var tpdt = new TeacherPreferenceDayTime
-                        {
-                            user = teacher,
-                            day = randomDay,
-                            time = randomTime
-                        };
-                        if (dbContext.TeacherPreferenceDayTimes.Where(p => p.user.Type != UserTypeEnum.Professor && p.user.Preferences.Any(x => x.day.DayNo == randomDay.DayNo && x.time.Start == randomTime.Start)).Any())
-                        {
-                            goto again;
-                        }
-                        await dbContext.TeacherPreferenceDayTimes.AddAsync(tpdt);
-                        await dbContext.SaveChangesAsync();
-                    }
-                }
-
-                //foreach (var teacher in teachers.Where(t => t.Type == UserTypeEnum.LapTeacher))
-                //{
-                //    var courses = teacher.Courses;
-                //    foreach (var course in courses)
-                //    {
-                //        var Days = dbContext.Days.ToList();
-                //        var Times = dbContext.Times.ToList();
-                //    again:
-                //        int randomDayIndex = _random.Next(0, Days.Count());
-                //        Day randomDay = Days[randomDayIndex];
-
-
-                //        int randomTimeIndex = _random.Next(0, Times.Count());
-                //        Time randomTime = Times[randomTimeIndex];
-
-                //        var tpdt = new TeacherPreferenceDayTime
-                //        {
-                //            user = teacher,
-                //            day = randomDay,
-                //            time = randomTime
-                //        };
-                //        if (dbContext.TeacherPreferenceDayTimes.Where(p => p.user.Type != UserTypeEnum.LapTeacher && p.user.Preferences.Any(x => x.day.DayNo == randomDay.DayNo && x.time.Start == randomTime.Start)).Any())
-                //        {
-                //            goto again;
-                //        }
-                //        await dbContext.TeacherPreferenceDayTimes.AddAsync(tpdt);
-                //        await dbContext.SaveChangesAsync();
-                //    }
-                //}
             }
         }
 
@@ -1492,7 +1498,7 @@ namespace Timetable.Infrastructure.Persistence
         {
             if (dbContext.Courses.Any() && dbContext.Rooms.Any())
             {
-                var courses = dbContext.Courses.Where(c => c.Type == CourseTypeEnum.TheoryCourse && c.user != null).ToList();
+                var courses = dbContext.Courses.Where(c => c.semester.SemesterNo == 1 && c.Type == CourseTypeEnum.TheoryCourse && c.user != null).ToList();
                 foreach (var course in courses)
                 {
                     if (course.TeacherpreferredRoom is null)
