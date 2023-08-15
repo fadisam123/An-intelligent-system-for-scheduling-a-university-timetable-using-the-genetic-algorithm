@@ -38,7 +38,7 @@ button {
     border: none;
     cursor: pointer;
     border-radius: 5px;
-    margin-right: 40px;
+    
     
 }
 
@@ -54,7 +54,10 @@ button {
 
 
  .generate {
-     margin-top: 5px;
+     clear: both;
+     display: block;
+     margin-top: 10px;
+     margin-left: 20px;
  }
 
 
@@ -62,8 +65,10 @@ button {
 
 
 form .form-group {
-    margin-left: 40%;
-    text-align-last: start;
+    display: inline-block;
+    margin-bottom: 10px;
+    padding-right:20px; 
+    /*text-align-last: start;*/
 }
 
 
