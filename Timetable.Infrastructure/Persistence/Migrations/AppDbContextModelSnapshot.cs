@@ -479,7 +479,7 @@ namespace Timetable.Infrastructure.Persistence.Migrations
                     b.HasOne("Timetable.Domain.Entities.Role", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
@@ -488,7 +488,7 @@ namespace Timetable.Infrastructure.Persistence.Migrations
                     b.HasOne("Timetable.Domain.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
@@ -497,7 +497,7 @@ namespace Timetable.Infrastructure.Persistence.Migrations
                     b.HasOne("Timetable.Domain.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
@@ -506,13 +506,13 @@ namespace Timetable.Infrastructure.Persistence.Migrations
                     b.HasOne("Timetable.Domain.Entities.Role", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Timetable.Domain.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
@@ -521,7 +521,7 @@ namespace Timetable.Infrastructure.Persistence.Migrations
                     b.HasOne("Timetable.Domain.Entities.User", null)
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
@@ -530,24 +530,22 @@ namespace Timetable.Infrastructure.Persistence.Migrations
                     b.HasOne("Timetable.Domain.Entities.Semester", "semester")
                         .WithMany("Courses")
                         .HasForeignKey("SemesterNo")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Timetable.Domain.Entities.Room", "TeacherpreferredRoom")
                         .WithMany("Courses")
-                        .HasForeignKey("TeacherpreferredRoomId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("TeacherpreferredRoomId");
 
                     b.HasOne("Timetable.Domain.Entities.Year", "year")
                         .WithMany("Courses")
                         .HasForeignKey("YearNo")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Timetable.Domain.Entities.User", "user")
                         .WithMany("Courses")
-                        .HasForeignKey("userId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("userId");
 
                     b.Navigation("TeacherpreferredRoom");
 
@@ -563,30 +561,29 @@ namespace Timetable.Infrastructure.Persistence.Migrations
                     b.HasOne("Timetable.Domain.Entities.Day", "day")
                         .WithMany("Lectures")
                         .HasForeignKey("DayNo")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Timetable.Domain.Entities.Group", "group")
                         .WithMany("Lectures")
-                        .HasForeignKey("GroupNo")
-                        .OnDelete(DeleteBehavior.Restrict);
+                        .HasForeignKey("GroupNo");
 
                     b.HasOne("Timetable.Domain.Entities.Room", "Room")
                         .WithMany("Lectures")
                         .HasForeignKey("RoomId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Timetable.Domain.Entities.Time", "Time")
                         .WithMany("Lectures")
                         .HasForeignKey("TimeId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Timetable.Domain.Entities.Course", "course")
                         .WithMany("Lectures")
                         .HasForeignKey("courseId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Room");
@@ -605,7 +602,7 @@ namespace Timetable.Infrastructure.Persistence.Migrations
                     b.HasOne("Timetable.Domain.Entities.Role", "role")
                         .WithOne("SurveyPeriod")
                         .HasForeignKey("Timetable.Domain.Entities.TakingSurveyAllowedPeriod", "RoleID")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("role");
@@ -616,19 +613,19 @@ namespace Timetable.Infrastructure.Persistence.Migrations
                     b.HasOne("Timetable.Domain.Entities.Day", "day")
                         .WithMany("TeacherPreferenceDayTimes")
                         .HasForeignKey("DayNo")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Timetable.Domain.Entities.Time", "time")
                         .WithMany("TeacherPreferenceDayTimes")
                         .HasForeignKey("timeId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Timetable.Domain.Entities.User", "user")
                         .WithMany("Preferences")
                         .HasForeignKey("userId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("day");

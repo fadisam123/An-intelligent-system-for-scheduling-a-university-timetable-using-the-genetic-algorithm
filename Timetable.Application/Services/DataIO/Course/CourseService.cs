@@ -64,7 +64,7 @@ namespace Timetable.Application.Services.DataIO.Course
 
         public Course? GetCorrespondingLabCourse(Course theoryCourse)
         {
-            return Uow.CourseRepository.Find(c => c.Name.ToUpper() == theoryCourse.Name.ToUpper() && c.Type == CourseTypeEnum.LapCourse).FirstOrDefault();
+            return Uow.CourseRepository.Find(c => c.semester.SemesterNo == theoryCourse.semester.SemesterNo && c.year.YearNo == theoryCourse.year.YearNo && c.Name.ToUpper() == theoryCourse.Name.ToUpper() && c.Type == CourseTypeEnum.LapCourse).FirstOrDefault();
         }
 
         public IEnumerable<Course> getAllLabCourses()
@@ -144,6 +144,12 @@ namespace Timetable.Application.Services.DataIO.Course
         public void DeleteCourseById(Guid courseId)
         {
             Uow.CourseRepository.Remove(getCourseById(courseId));
+            Uow.SaveChanges();
+        }
+
+        public void Update(Course course)
+        {
+            Uow.CourseRepository.Update(course);
             Uow.SaveChanges();
         }
     }

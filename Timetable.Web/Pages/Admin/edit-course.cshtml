@@ -10,7 +10,7 @@
         <div class="edit col-md-4">
             <form dir="rtl" method="post">
 
-                <input type="hidden" asp-for="@Model.courseInputModel.Id" />
+                <input name="courseId" type="hidden" value="@Model.courseInputModel.Id" />
 
                 <div class="form-group">
                     <label asp-for="@Model.courseInputModel.Name" class="control-label"></label>
@@ -47,7 +47,7 @@
 
                 <div id="num-cours" class="form-group number-cours">
                     <label asp-for="@Model.courseInputModel.HasPracticalSection" class="control-label"></label>
-                    <input class="form-check-input"  id="pass" name="pass" onclick="$('#LapLuctureNumGroup').toggleClass('hidden');"  asp-for="@Model.courseInputModel.HasPracticalSection"  />
+                    <input class="form-check-input"  id="pass" onclick="$('#LapLuctureNumGroup').toggleClass('hidden');"  asp-for="@Model.courseInputModel.HasPracticalSection"  />
                 </div>
 
                 @if (Model.courseInputModel.HasPracticalSection)

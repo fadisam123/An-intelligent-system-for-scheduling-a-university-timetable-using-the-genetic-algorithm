@@ -42,6 +42,7 @@ namespace Timetable.RazorWeb.Pages.Admin
                 throw new NotImplementedException(message: courseId + " is not a valid guid");
             }
             var course = _courseService.getCourseById(CourseId);
+            courseInputModel.Id = courseId;
             courseInputModel.Name = course.Name;
             courseInputModel.SelectedYear = course.year.YearNo;
             courseInputModel.SelectedSemester = course.semester.SemesterNo;
@@ -62,8 +63,38 @@ namespace Timetable.RazorWeb.Pages.Admin
             {
                 throw new NotImplementedException(message: courseId + " is not a valid guid");
             }
+            Course course = _courseService.getCourseById(CeacherId);
+            course.Name = courseInputModel.Name;
+            course.year = _courseService.getYear(courseInputModel.SelectedYear);
+            course.semester = _courseService.getSemester(courseInputModel.SelectedSemester);
+            course.LuctureNumPerWeek = courseInputModel.LuctureNumPerWeek;
+            course.IsElective = courseInputModel.IsElective;
+            course.Type = CourseTypeEnum.TheoryCourse;
 
-            return RedirectToPage("./class-room");
+            _courseService.Update(course);
+
+            if (courseInputModel.HasPracticalSection)
+            {
+                Course? LabCourse = _courseService.GetCorrespondingLabCourse(course);
+                if (LabCourse is not null)
+                {
+                    LabCourse.LuctureNumPerWeek = courseInputModel.LapLuctureNumPerWeek;
+                }
+                else
+                {
+                    Course newLabCourse = new Course {
+                        Name = course.Name,
+                        year = course.year,
+                        semester = course.semester,
+                        LuctureNumPerWeek = courseInputModel.LapLuctureNumPerWeek,
+                        IsElective = course.IsElective,
+                        Type = CourseTypeEnum.LapCourse
+                    };
+                    await _courseService.createCourseAsync(newLabCourse);
+                }
+            }
+
+            return RedirectToPage("./courses");
         }
     }
 }
