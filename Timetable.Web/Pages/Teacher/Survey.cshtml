@@ -3,6 +3,41 @@
 @{
 }
 
+<style>
+    tr td:not(:last-child) {
+        cursor: pointer;
+    }
+
+        tr td:not(:last-child):hover {
+            background-color: lightgreen;
+        }
+
+    .selected {
+        color: black;
+        background-color: yellow;
+    }
+</style>
+
+<div id="addPreferrenceForm" class="d-none">
+    <form asp-page-handler="create" method="post">
+        @*اليوم*@
+        <input name="dayId" id="dayIdInput" value="" hidden />
+
+        @*الوقت*@
+        <input name="timeId" id="timeIdInput" value="" hidden />
+
+        <button id="addBtn" hidden type="submit">حفظ</button>
+    </form>
+
+    <form asp-page-handler="delete" method="post">
+        @*معرف المحاضرة*@
+        <input name="preferrenceId" id="preferrenceIdInput" value="" hidden />
+
+        <button id="deleteBtn" hidden type="submit"></button>
+    </form>
+</div>
+
+
 <table id="myTable">
 
 
@@ -22,18 +57,108 @@
             @*---- أعمدة  ----*@
             @for (int j = 0; j < Model.Days.Count; j++)
             {
+                var dayTimeSelectedNum = @Model.allPreferences.Where(p => p.day.DayNo == @Model.Days[i].DayNo && p.time.Id == @Model.Times[j].Id).Count();
                 var preferrence = @Model?.TeacherPreferrences?.FirstOrDefault(p => p.time.Id == Model.Times[i].Id && p.day.DayNo == Model.Days[j].DayNo);
-                if (preferrence is not null)
+
+                if (dayTimeSelectedNum > 5)
                 {
-                    <td class="bg-success">
-                        تم الاختيار
-                    </td>
+                    if (preferrence is not null)
+                    {
+                        <td data-preferrenceId="@preferrence.Id" class="text-bg-danger bg-danger  bg-opacity-100">
+                            تم اختيار هذا الوقت
+                        </td>
+                    }
+                    else
+                    {
+                        <td data-dayId="@Model?.Days[j]?.DayNo" data-timeId="@Model?.Times[i]?.Id" class="text-bg-danger bg-danger bg-opacity-100">
+                            @dayTimeSelectedNum
+                        </td>
+                    }
+
+                }
+
+
+                else if (dayTimeSelectedNum == 5)
+                {
+                    if (preferrence is not null)
+                    {
+                        <td data-preferrenceId="@preferrence.Id" class="text-bg-danger bg-danger  bg-opacity-75">
+                            تم اختيار هذا الوقت
+                        </td>
+                    }
+                    else
+                    {
+                        <td data-dayId="@Model?.Days[j]?.DayNo" data-timeId="@Model?.Times[i]?.Id" class="text-bg-danger bg-danger bg-opacity-75">
+                            @dayTimeSelectedNum
+                        </td>
+                    }
+
+                }
+                else if (dayTimeSelectedNum == 3 || dayTimeSelectedNum == 4)
+                {
+                    if (preferrence is not null)
+                    {
+                        <td data-preferrenceId="@preferrence.Id" class="text-bg-danger bg-danger bg-opacity-50">
+                            تم اختيار هذا الوقت
+                        </td>
+                    }
+                    else
+                    {
+                        <td data-dayId="@Model?.Days[j]?.DayNo" data-timeId="@Model?.Times[i]?.Id" class="text-bg-danger bg-danger bg-opacity-50">
+                            @dayTimeSelectedNum
+                        </td>
+                    }
+                }
+                else if (dayTimeSelectedNum == 2)
+                {
+
+                    if (preferrence is not null)
+                    {
+                        <td data-preferrenceId="@preferrence.Id" class="text-bg-danger bg-danger bg-opacity-25">
+                            تم اختيار هذا الوقت
+                        </td>
+                    }
+                    else
+                    {
+                        <td data-dayId="@Model?.Days[j]?.DayNo" data-timeId="@Model?.Times[i]?.Id" class="text-bg-danger bg-danger bg-opacity-25">
+                            @dayTimeSelectedNum
+                        </td>
+                    }
+
+                }
+                else if (dayTimeSelectedNum == 1)
+                {
+
+                    if (preferrence is not null)
+                    {
+                        <td data-preferrenceId="@preferrence.Id" class="text-bg-primary bg-primary bg-opacity-25">
+                            تم اختيار هذا الوقت
+                        </td>
+                    }
+                    else
+                    {
+                        <td data-dayId="@Model?.Days[j]?.DayNo" data-timeId="@Model?.Times[i]?.Id" class="text-bg-primary bg-primary bg-opacity-25">
+                            @dayTimeSelectedNum
+                        </td>
+                    }
+
                 }
                 else
                 {
-                    <td>
-                    </td>
+                    if (preferrence is not null)
+                    {
+                        <td data-preferrenceId="@preferrence.Id" class="text-bg-primary bg-primary bg-opacity-50">
+                            تم اختيار هذا الوقت
+                        </td>
+                    }
+                    else
+                    {
+                        <td data-dayId="@Model?.Days[j]?.DayNo" data-timeId="@Model?.Times[i]?.Id" class="text-bg-primary bg-primary bg-opacity-50">
+                        </td>
+                    }
+
                 }
+
 
                 if (j == Model.Days.Count - 1)
                 {
@@ -42,8 +167,37 @@
                         @Model.Times[i].End
                     </td>
                 }
+
             }
         </tr>
     }
 
 </table>
+
+
+
+<script>
+    var table = document.getElementById("myTable");
+    var cells = table.getElementsByTagName("td");
+    console.log(cells);
+    for (var i = 0; i < cells.length; i++) {
+        if (cells[i].getAttribute("data-preferrenceId") || cells[i].getAttribute("data-dayId")) {
+            cells[i].addEventListener("click", function (event) {
+                // Retrieve the data-* attribute value from the clicked cell
+                if (event.target.getAttribute("data-preferrenceId")) {
+                    let preferrenceId = event.target.getAttribute("data-preferrenceId");
+                    $("#preferrenceIdInput").val(preferrenceId);
+                    $("#deleteBtn").click();
+                    console.log("preferrenceId = " + preferrenceId);
+                } else {
+                    let dayId = event.target.getAttribute("data-dayId");
+                    let timeId = event.target.getAttribute("data-timeId");
+                    $("#dayIdInput").val(dayId);
+                    $("#timeIdInput").val(timeId);
+                    $("#addBtn").click();
+                    console.log("day = " + dayId + ", time = " + timeId);
+                }
+            });
+        }
+    }
+</script>

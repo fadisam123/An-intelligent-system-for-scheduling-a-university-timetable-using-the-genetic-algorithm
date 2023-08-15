@@ -6,6 +6,7 @@ using Timetable.Application.Services.DataIO.Course;
 using Timetable.Application.Services.DataIO.DayTime;
 using Timetable.Application.Services.DataIO.Survey;
 using Timetable.Application.Services.DataIO.Teacher;
+using Timetable.Domain.Entities;
 
 namespace Timetable.RazorWeb.Pages.Teacher
 {
@@ -19,6 +20,7 @@ namespace Timetable.RazorWeb.Pages.Teacher
         public List<Day> Days { set; get; } = null!;
         public List<Time> Times { set; get; } = null!;
         public List<TeacherPreferenceDayTime> TeacherPreferrences { set; get; } = null!;
+        public List<TeacherPreferenceDayTime> allPreferences { set; get; } = null!;
 
         [DisplayName("الفصل")]
         [BindProperty]
@@ -42,13 +44,40 @@ namespace Timetable.RazorWeb.Pages.Teacher
         {
             var teacher = await _userManager.GetUserAsync(User);
             TeacherPreferrences = teacher.Preferences.OrderByDescending(p => p.day.DayNo).ThenByDescending(p => p.time.Start).ToList();
-            Days = _dayTimeService.GetAllDays().ToList();
-            Times = _dayTimeService.GetAllTimes().ToList();
+            Days = _dayTimeService.GetAllDays().OrderByDescending(d => d.DayNo).ToList();
+            Times = _dayTimeService.GetAllTimes().OrderBy(t => t.Start).ToList();
+            allPreferences = _surveyService.GetAllPreferences().ToList();
+
+            for (int i = 0; i < Times.Count; i++)
+            {
+
+                for (int j = 0; j < Days.Count; j++)
+                {
+                    
+
+                }
+
+            }
         }
 
-        public void OnPost()
+        public async Task OnPostCreate(string dayId, string timeId)
         {
-            
+            //Lecture newLecture = new Lecture
+            //{
+            //    course = _courseService.getCourseById(CourseId),
+            //    day = _dayTimeService.GetDayById(int.Parse(dayId)),
+            //    Room = _roomService.getRoomById(RoomId),
+            //    Time = _dayTimeService.GetTimeById(new Guid(timeId)),
+            //    Type = LectureTypeEnum.TheoryLecture
+            //};
+            //_lectureService.AddLecture(newLecture);
+            await OnGet();
+        }
+
+        public async Task OnPostDelete(string preferrenceId)
+        {
+            //_lectureService.DeleteLectureById(new Guid(luctureId));
+            await OnGet();
         }
     }
 }

@@ -31,5 +31,10 @@ namespace Timetable.Application.Services.DataIO.Survey
             Uow.SurveyRepository.Update(survey);
             Uow.SaveChanges();
         }
+
+        public IEnumerable<TeacherPreferenceDayTime> GetAllPreferences()
+        {
+            return Uow.SurveyRepository.GetAllPreferences();
+        }
     }
 }

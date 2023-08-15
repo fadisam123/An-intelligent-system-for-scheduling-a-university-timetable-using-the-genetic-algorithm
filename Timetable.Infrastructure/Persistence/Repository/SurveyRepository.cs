@@ -7,5 +7,10 @@ namespace Timetable.Infrastructure.Persistence.Repository
         public SurveyRepository(AppDbContext context) : base(context)
         {
         }
+
+        public IEnumerable<TeacherPreferenceDayTime> GetAllPreferences()
+        {
+            return _context.TeacherPreferenceDayTimes;
+        }
     }
 }

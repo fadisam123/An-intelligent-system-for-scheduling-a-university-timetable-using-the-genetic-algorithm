@@ -8,5 +8,6 @@ namespace Timetable.Application.Services.DataIO.Survey
         public IEnumerable<TakingSurveyAllowedPeriod>  getAllSurveys();
         public TakingSurveyAllowedPeriod?  getSurveyByRole(RoleEnum roleEnum);
         public void  updateSurvey(TakingSurveyAllowedPeriod survey);
+        public IEnumerable<TeacherPreferenceDayTime> GetAllPreferences();
     }
 }
