@@ -1,0 +1,67 @@
+﻿
+body {
+    padding: 10px;
+    margin: 0;
+    text-align: center;
+}
+
+.container {
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    margin-top: 20px;
+    margin-left: -4px;
+    width: 80%;
+    padding: 80px;
+    border: 1px solid #1F6E8C;
+    border-radius: 5px;
+    background-color: #2E8A99;
+}
+
+
+
+.form-group {
+    margin-bottom: 10px;
+}
+
+.form-container {
+    width: 45%;
+    padding: 20px;
+}
+
+.table-container {
+    border: 1px solid #1F6E8C;
+    border-radius: 5px;
+    width: 60%;
+    padding: 20px;
+}
+
+label, select, input, button {
+    margin-bottom: 15px;
+}
+
+label {
+    color: #fff;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    color: #fff;
+}
+
+th, td {
+    padding: 8px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+    color: #fff;
+}
+
+button {
+    padding: 6px 12px;
+    background-color: #1F6E8C;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}

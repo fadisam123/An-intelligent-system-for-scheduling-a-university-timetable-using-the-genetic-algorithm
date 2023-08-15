@@ -29,13 +29,12 @@ body {
     }
 
 
-        .login-box .form-group input:not([type="checkbox"]) {
-            padding: 10px 5px;
-            font-size: 16px;
-            color: #fff;
-            margin-bottom: 30px;
+        .login-box .form-group input {
+            padding: 7px 5px;
+            font-size: 14px;
+            color: black;
+            margin-bottom: 25px;
             outline: none;
-            background: transparent;
         }
 
 
@@ -58,7 +57,7 @@ body {
         position: relative;
         display: inline-block;
         padding: 10px 20px;
-        color: #03e9f4;
+        color: blue;
         border: none;
         border-radius: 5px;
         background: transparent;
@@ -72,10 +71,13 @@ body {
     }
 
         .login-box form .next:hover {
-            background-color: #03e9f4;
+            background-color: blue;
             color: #fff;
         }
 
 
 
-
+.form-check-input[type=checkbox] {
+    margin-top: 9px;
+    cursor: pointer;
+}
