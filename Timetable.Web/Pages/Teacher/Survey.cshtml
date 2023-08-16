@@ -37,7 +37,7 @@
     </form>
 </div>
 
-
+<button id="printButton">Print Schedule</button>
 <table id="myTable">
 
 
@@ -175,29 +175,37 @@
 </table>
 
 
-
-<script>
-    var table = document.getElementById("myTable");
-    var cells = table.getElementsByTagName("td");
-    console.log(cells);
-    for (var i = 0; i < cells.length; i++) {
-        if (cells[i].getAttribute("data-preferrenceId") || cells[i].getAttribute("data-dayId")) {
-            cells[i].addEventListener("click", function (event) {
-                // Retrieve the data-* attribute value from the clicked cell
-                if (event.target.getAttribute("data-preferrenceId")) {
-                    let preferrenceId = event.target.getAttribute("data-preferrenceId");
-                    $("#preferrenceIdInput").val(preferrenceId);
-                    $("#deleteBtn").click();
-                    console.log("preferrenceId = " + preferrenceId);
-                } else {
-                    let dayId = event.target.getAttribute("data-dayId");
-                    let timeId = event.target.getAttribute("data-timeId");
-                    $("#dayIdInput").val(dayId);
-                    $("#timeIdInput").val(timeId);
-                    $("#addBtn").click();
-                    console.log("day = " + dayId + ", time = " + timeId);
-                }
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#printButton').click(function () {
+                console.log("Print button clicked."); // Check if this message appears when the button is clicked
+                window.print(); // Open print dialog
             });
+        });
+
+        var table = document.getElementById("myTable");
+        var cells = table.getElementsByTagName("td");
+        console.log(cells);
+        for (var i = 0; i < cells.length; i++) {
+            if (cells[i].getAttribute("data-preferrenceId") || cells[i].getAttribute("data-dayId")) {
+                cells[i].addEventListener("click", function (event) {
+                    // Retrieve the data-* attribute value from the clicked cell
+                    if (event.target.getAttribute("data-preferrenceId")) {
+                        let preferrenceId = event.target.getAttribute("data-preferrenceId");
+                        $("#preferrenceIdInput").val(preferrenceId);
+                        $("#deleteBtn").click();
+                        console.log("preferrenceId = " + preferrenceId);
+                    } else {
+                        let dayId = event.target.getAttribute("data-dayId");
+                        let timeId = event.target.getAttribute("data-timeId");
+                        $("#dayIdInput").val(dayId);
+                        $("#timeIdInput").val(timeId);
+                        $("#addBtn").click();
+                        console.log("day = " + dayId + ", time = " + timeId);
+                    }
+                });
+            }
         }
-    }
-</script>
+    </script>
+}
