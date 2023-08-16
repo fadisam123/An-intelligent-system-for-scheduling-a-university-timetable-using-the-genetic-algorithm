@@ -11,7 +11,8 @@ namespace Timetable.Infrastructure.Persistence.UnitOfWork
             ICourseRepository courseRepository, IRoomRepository roomRepository,
             IYearRepository yearRepository, ISemesterRepository semesterRepository,
             IDayRepository dayRepository, ITimeRepository timeRepository,
-            ILectureRepository lectureRepository, ISurveyRepository surveyRepository)
+            ILectureRepository lectureRepository, ISurveyRepository surveyRepository,
+            ITeacherPreferenceDayTimesRepository teacherPreferenceDayTimesRepository)
         {
             _context = context;
             TeacherRepository = teacherRepository;
@@ -23,6 +24,7 @@ namespace Timetable.Infrastructure.Persistence.UnitOfWork
             TimeRepository = timeRepository;
             LectureRepository = lectureRepository;
             SurveyRepository = surveyRepository;
+            TeacherPreferenceDayTimesRepository = teacherPreferenceDayTimesRepository;
         }
         public ITeacherRepository TeacherRepository { get; private set; }
         public ICourseRepository CourseRepository { get; private set; }
@@ -33,6 +35,7 @@ namespace Timetable.Infrastructure.Persistence.UnitOfWork
         public ITimeRepository TimeRepository { get; private set; }
         public ILectureRepository LectureRepository { get; private set; }
         public ISurveyRepository SurveyRepository { get; }
+        public ITeacherPreferenceDayTimesRepository TeacherPreferenceDayTimesRepository { get; }
 
         public int SaveChanges()
         {

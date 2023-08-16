@@ -32,7 +32,10 @@ namespace Timetable.RazorWeb.Pages.Admin
             dayTimeInputModel = new DayTimeInputModel();
             workingDays = _dayTimeService.GetAllDays().OrderByDescending(d => d.DayNo).ToList();
             workingTimes = _dayTimeService.GetAllTimes().OrderBy(t => t.Start).ToList();
-
+            if (workingTimes.Count == 0 || workingDays.Count == 0)
+            {
+                return;
+            }
             foreach (var day in workingDays)
             {
                 if (day.DayNo == 7)

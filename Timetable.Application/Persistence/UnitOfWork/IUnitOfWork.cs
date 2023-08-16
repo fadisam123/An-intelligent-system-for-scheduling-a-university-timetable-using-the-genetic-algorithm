@@ -14,6 +14,7 @@ namespace Timetable.Application.Persistence.UnitOfWork
         public ITimeRepository TimeRepository { get; }
         public ILectureRepository LectureRepository { get; }
         public ISurveyRepository SurveyRepository { get; }
+        public ITeacherPreferenceDayTimesRepository TeacherPreferenceDayTimesRepository { get; }
         public int SaveChanges();
     }
 }

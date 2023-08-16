@@ -1,0 +1,145 @@
+﻿@page
+@model Timetable.RazorWeb.Pages.Teacher.ScheduleModel
+@{
+}
+<style>
+
+    * {
+        padding: 0;
+        margin-top: 2%;
+        scroll-behavior: smooth;
+        transition: all .4s ease-in-out;
+        text-align: center;
+        color: #fff;
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 50%;
+        margin: 3% 0 0 20%;
+        background-color: #2E8A99;
+    }
+
+    th, td {
+        border: 1px solid #4CAF50;
+        padding: 2px;
+        width: 40px;
+        max-width: 50px;
+        height: 100px;
+        font-size: 13px;
+    }
+
+
+
+    th {
+        color: #4CAF50;
+        background-color: #f2f2f2;
+    }
+
+    button {
+        padding: 10px 20px;
+        background-color: #1F6E8C;
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .butt {
+        margin-right: 70px;
+        margin-bottom: -70px;
+    }
+
+    button:hover {
+        background-color: blue;
+    }
+
+
+    .generate {
+        clear: both;
+        display: block;
+        margin-top: 10px;
+        margin-left: 20px;
+    }
+
+    form .form-group {
+        display: inline-block;
+        margin-bottom: 10px;
+        padding-right: 20px;
+        /*text-align-last: start;*/
+    }
+    option{
+        color: black;
+    }
+
+</style>
+<div class="container">
+<form id="yearChangedForm" asp-page-handler="x" method="post">
+
+    <div class="form-group">
+        @if (Model?.Semesters?.Count is null || Model?.Semesters?.Count == 0)
+        {
+
+        }
+        else
+        {
+            <label dir="rtl" asp-for="@Model.SelectedSemesterInput" class="control-label"></label>
+            <select dir="rtl" onchange="$('#yearChangedForm').submit()" asp-for="@Model.SelectedSemesterInput" class="form-select">
+                @foreach (var item in Model?.Semesters)
+                {
+                    <option value="@item.SemesterNo">@item.SemesterNo</option>
+                }
+            </select>
+        }
+    </div>
+</form>
+</div>
+@if (Model.Days is not null && Model.Times is not null)
+{
+    <table id="myTable">
+
+
+        <tr>
+            @foreach (var day in Model?.Days)
+            {
+                <th>@day.Name</th>
+            }
+            <th>الوقت</th>
+        </tr>
+
+
+        @*---- أسطر ----*@
+        @for (int i = 0; i < Model?.Times?.Count; i++)
+        {
+            <tr>
+                @*---- أعمدة  ----*@
+                @for (int j = 0; j < Model?.Days?.Count; j++)
+                {
+                    var lucture = @Model?.Lectures?.FirstOrDefault(l => l.Time.Id == Model.Times[i].Id && l.day.DayNo == Model.Days[j].DayNo);
+                    if (lucture is not null)
+                    {
+                        <td data-luctureId="@lucture.Id">
+                            @lucture?.course.Name <br>
+                            @lucture?.Room.Name <br>
+                            (سنة @lucture?.course?.year.YearNo)
+                        </td>
+                    }
+                    else
+                    {
+                        <td data-dayId="@Model?.Days[j]?.DayNo" data-timeId="@Model?.Times[i]?.Id">
+                        </td>
+                    }
+
+                    if (j == Model?.Days?.Count - 1)
+                    {
+                        <td>
+                            @Model?.Times[i]?.Start <br>
+                            @Model?.Times[i]?.End
+                        </td>
+                    }
+                }
+            </tr>
+        }
+
+    </table>
+}

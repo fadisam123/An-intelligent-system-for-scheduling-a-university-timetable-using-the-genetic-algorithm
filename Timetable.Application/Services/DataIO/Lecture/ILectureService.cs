@@ -7,6 +7,7 @@
         public IEnumerable<Lecture> GenerateTheorySchedule(Semester semester);
         public IEnumerable<Lecture> GenerateLabSchedule();
         public IEnumerable<Lecture> GetTheorySchedule(Semester semester, Year year);
+        public IEnumerable<Lecture> GetScheduleOfTeacher(User teacher, Semester semester);
         public IEnumerable<Lecture> GetLabSchedule();
     }
 }

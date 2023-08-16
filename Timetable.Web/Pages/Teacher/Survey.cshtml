@@ -3,41 +3,47 @@
 @{
 }
 
-<style>
-    tr td:not(:last-child) {
-        cursor: pointer;
-    }
 
-        tr td:not(:last-child):hover {
-            background-color: lightgreen;
+@if (@Model.IsSurveyAllowed)
+{
+    <style>
+        tr td:not(:last-child) {
+            cursor: pointer;
         }
 
-    .selected {
-        color: black;
-        background-color: yellow;
-    }
-</style>
+    </style>
+    <div>
+        <h5><span class="text-info">اضغط على الوقت المفضل للإضافة والحذف</span></h5>
+        <p class="text-black">اللون <span class="text-danger">الأحمر</span> يدل على أن الكثير من المدرسين اختاروا هذا التوقيت، <span class="text-primary">الأزرق</span> موصى باختياره</p>
+    </div>
+    <div id="addPreferrenceForm" class="d-none">
+        <form asp-page-handler="create" method="post">
+            @*اليوم*@
+            <input name="dayId" id="dayIdInput" value="" hidden />
 
-<div id="addPreferrenceForm" class="d-none">
-    <form asp-page-handler="create" method="post">
-        @*اليوم*@
-        <input name="dayId" id="dayIdInput" value="" hidden />
+            @*الوقت*@
+            <input name="timeId" id="timeIdInput" value="" hidden />
 
-        @*الوقت*@
-        <input name="timeId" id="timeIdInput" value="" hidden />
+            <button id="addBtn" hidden type="submit">حفظ</button>
+        </form>
 
-        <button id="addBtn" hidden type="submit">حفظ</button>
-    </form>
+        <form asp-page-handler="delete" method="post">
+            @*معرف المحاضرة*@
+            <input name="preferrenceId" id="preferrenceIdInput" value="" hidden />
 
-    <form asp-page-handler="delete" method="post">
-        @*معرف المحاضرة*@
-        <input name="preferrenceId" id="preferrenceIdInput" value="" hidden />
+            <button id="deleteBtn" hidden type="submit"></button>
+        </form>
+    </div>
+}
+else
+{
+    <div>
+        <h5><span class="text-danger">لا يمكنك أختيار أوقات المحاضرات المفضلة الآن، الاستبيان مغلق حالياً انتظر حتى يتم فتح الاستبيان</span></h5>
+    </div>
+}
 
-        <button id="deleteBtn" hidden type="submit"></button>
-    </form>
-</div>
 
-<button id="printButton">Print Schedule</button>
+
 <table id="myTable">
 
 
@@ -57,7 +63,7 @@
             @*---- أعمدة  ----*@
             @for (int j = 0; j < Model.Days.Count; j++)
             {
-                var dayTimeSelectedNum = @Model.allPreferences.Where(p => p.day.DayNo == @Model.Days[i].DayNo && p.time.Id == @Model.Times[j].Id).Count();
+                var dayTimeSelectedNum = @Model.allPreferences.Where(p => p.day.DayNo == @Model.Days[j].DayNo && p.time.Id == @Model.Times[i].Id).Count();
                 var preferrence = @Model?.TeacherPreferrences?.FirstOrDefault(p => p.time.Id == Model.Times[i].Id && p.day.DayNo == Model.Days[j].DayNo);
 
                 if (dayTimeSelectedNum > 5)
@@ -71,7 +77,6 @@
                     else
                     {
                         <td data-dayId="@Model?.Days[j]?.DayNo" data-timeId="@Model?.Times[i]?.Id" class="text-bg-danger bg-danger bg-opacity-100">
-                            @dayTimeSelectedNum
                         </td>
                     }
 
@@ -89,7 +94,6 @@
                     else
                     {
                         <td data-dayId="@Model?.Days[j]?.DayNo" data-timeId="@Model?.Times[i]?.Id" class="text-bg-danger bg-danger bg-opacity-75">
-                            @dayTimeSelectedNum
                         </td>
                     }
 
@@ -105,7 +109,6 @@
                     else
                     {
                         <td data-dayId="@Model?.Days[j]?.DayNo" data-timeId="@Model?.Times[i]?.Id" class="text-bg-danger bg-danger bg-opacity-50">
-                            @dayTimeSelectedNum
                         </td>
                     }
                 }
@@ -121,7 +124,6 @@
                     else
                     {
                         <td data-dayId="@Model?.Days[j]?.DayNo" data-timeId="@Model?.Times[i]?.Id" class="text-bg-danger bg-danger bg-opacity-25">
-                            @dayTimeSelectedNum
                         </td>
                     }
 
@@ -138,7 +140,6 @@
                     else
                     {
                         <td data-dayId="@Model?.Days[j]?.DayNo" data-timeId="@Model?.Times[i]?.Id" class="text-bg-primary bg-primary bg-opacity-25">
-                            @dayTimeSelectedNum
                         </td>
                     }
 
@@ -177,13 +178,6 @@
 
 @section Scripts {
     <script>
-        $(document).ready(function () {
-            $('#printButton').click(function () {
-                console.log("Print button clicked."); // Check if this message appears when the button is clicked
-                window.print(); // Open print dialog
-            });
-        });
-
         var table = document.getElementById("myTable");
         var cells = table.getElementsByTagName("td");
         console.log(cells);

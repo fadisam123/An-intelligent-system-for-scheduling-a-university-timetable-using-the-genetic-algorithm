@@ -26,12 +26,13 @@ namespace Timetable.Application.Services.DataIO.DayTime
                         tournamentSize: 5,
                         crossoverRate: 0.7,
                         mutationRate: 0.01,
+
                         semester,
                         Uow
                         );
             var result = ga.Run();
 
-            ProcessTimetable(result, Uow);
+            //ProcessTimetable(result, Uow);
 
             Uow.LectureRepository.RemoveRange(Uow.LectureRepository.Find(l => l.Type == LectureTypeEnum.TheoryLecture && l.course.semester.SemesterNo == semester.SemesterNo));
             Uow.LectureRepository.AddRange(result.Lectures);
@@ -251,6 +252,11 @@ namespace Timetable.Application.Services.DataIO.DayTime
                 Uow.LectureRepository.Remove(l);
                 Uow.SaveChanges();
             }
+        }
+
+        public IEnumerable<Lecture> GetScheduleOfTeacher(User teacher, Semester semester)
+        {
+            return Uow.LectureRepository.GetAll().Where(l => l.course.semester.SemesterNo == semester.SemesterNo && l.course.user.Id == teacher.Id);
         }
     }
 }

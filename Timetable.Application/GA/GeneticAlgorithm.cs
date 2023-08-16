@@ -219,8 +219,8 @@ namespace Timetable.Application.GA
             // from 300 (Total = 300)
             //double fitness = ((Math.Log(Math.Pow(conflict, -1)) + 0.1) * 1000) + (preferredDayTime * 100) + (preferredRoom * 100);
 
-            double fitness = ((Math.Log(Math.Pow(conflict, -1)) + 0.1) * 1000) * Math.Exp((/*preferredRoom +*/ preferredDayTime /*+ noBreakBetweenLecture*/) * 10);
-            Console.WriteLine(fitness + "\t" + conflict + "\t" + preferredDayTime + "\t" + preferredRoom + "\t" + noBreakBetweenLecture);
+            double fitness = ((Math.Log(Math.Pow(conflict, -1)) + 0.1) * 1000) * Math.Exp((preferredDayTime + preferredRoom /*+ noBreakBetweenLecture*/) * 10);
+            Console.WriteLine(fitness + "\t" + (conflict-1) + "\t" + preferredDayTime*100 + "%\t" + preferredRoom*100 + "%\t" + noBreakBetweenLecture * 100 + "%");
             return fitness;
         }
 

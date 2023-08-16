@@ -36,6 +36,10 @@ namespace Timetable.RazorWeb.Pages.Teacher
             courseOutputModel = new CourseOutputModel();
             var user = await _userManager.GetUserAsync(User);
             Semester semester = _courseService.getSemester(SelectedSemesterInput);
+            if (semester == null)
+            {
+                return;
+            }
             foreach (var Course in _courseService.getAllTeacherSemesterCourses(user, semester).ToList())
             {
                 CourseView courseView = new CourseView

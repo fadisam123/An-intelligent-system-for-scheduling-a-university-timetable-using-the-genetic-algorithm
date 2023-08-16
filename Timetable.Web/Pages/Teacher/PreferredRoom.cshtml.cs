@@ -72,5 +72,15 @@ namespace Timetable.RazorWeb.Pages.Teacher
             ModelState.Clear();
             await OnGet();
         }
+
+        public async Task OnPostDelete(string courseId)
+        {
+            Course course = _courseService.getCourseById(new Guid(courseId));
+            _ = course.TeacherpreferredRoom;
+            course.TeacherpreferredRoom = null;
+            _courseService.Update(course);
+            ModelState.Clear();
+            await OnGet();
+        }
     }
 }

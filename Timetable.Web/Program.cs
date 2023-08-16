@@ -34,10 +34,10 @@ builder.Services.AddValidatorServices();
 builder.Services.AddRazorPages().AddRazorPagesOptions(options =>
 {
     // The default page when app start
-    options.Conventions.AddPageRoute("/Admin/schedule", "");
-    //options.Conventions.AuthorizeFolder(folderPath: "/Admin", policy: "Admin");
-    //options.Conventions.AuthorizeFolder(folderPath: "/Teacher", policy: "Teacher");
-    //options.Conventions.AllowAnonymousToFolder("/Account");
+    options.Conventions.AddPageRoute("/Account/Login", "");
+    options.Conventions.AuthorizeFolder(folderPath: "/Admin", policy: "Admin");
+    options.Conventions.AuthorizeFolder(folderPath: "/Teacher", policy: "Teacher");
+    options.Conventions.AllowAnonymousToFolder("/Account");
 });
 
 

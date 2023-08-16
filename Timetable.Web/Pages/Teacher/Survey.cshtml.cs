@@ -21,6 +21,7 @@ namespace Timetable.RazorWeb.Pages.Teacher
         public List<Time> Times { set; get; } = null!;
         public List<TeacherPreferenceDayTime> TeacherPreferrences { set; get; } = null!;
         public List<TeacherPreferenceDayTime> allPreferences { set; get; } = null!;
+        public bool IsSurveyAllowed { set; get; } = false;
 
         [DisplayName("الفصل")]
         [BindProperty]
@@ -43,41 +44,43 @@ namespace Timetable.RazorWeb.Pages.Teacher
         public async Task OnGet()
         {
             var teacher = await _userManager.GetUserAsync(User);
-            TeacherPreferrences = teacher.Preferences.OrderByDescending(p => p.day.DayNo).ThenByDescending(p => p.time.Start).ToList();
+            TeacherPreferrences = teacher?.Preferences?.OrderByDescending(p => p.day.DayNo).ThenByDescending(p => p.time.Start).ToList();
             Days = _dayTimeService.GetAllDays().OrderByDescending(d => d.DayNo).ToList();
             Times = _dayTimeService.GetAllTimes().OrderBy(t => t.Start).ToList();
             allPreferences = _surveyService.GetAllPreferences().ToList();
 
-            for (int i = 0; i < Times.Count; i++)
-            {
-
-                for (int j = 0; j < Days.Count; j++)
-                {
-                    
-
-                }
-
-            }
+            IsSurveyAllowed = _surveyService.IsAllowedTakeingSurvay(teacher);
         }
 
         public async Task OnPostCreate(string dayId, string timeId)
         {
-            //Lecture newLecture = new Lecture
-            //{
-            //    course = _courseService.getCourseById(CourseId),
-            //    day = _dayTimeService.GetDayById(int.Parse(dayId)),
-            //    Room = _roomService.getRoomById(RoomId),
-            //    Time = _dayTimeService.GetTimeById(new Guid(timeId)),
-            //    Type = LectureTypeEnum.TheoryLecture
-            //};
-            //_lectureService.AddLecture(newLecture);
+            User teacher = await _userManager.GetUserAsync(User);
+            if (teacher.Preferences.Where(p => p.day.DayNo == int.Parse(dayId) && p.time.Id == new Guid(timeId)).Any())
+            {
+                await OnGet();
+                return;
+            }
+            Day day = _dayTimeService.GetDayById(int.Parse(dayId));
+            Time time = _dayTimeService.GetTimeById(new Guid(timeId));
+            _surveyService.AddPreferrenceToTeacher(teacher, day, time);
             await OnGet();
         }
 
         public async Task OnPostDelete(string preferrenceId)
         {
-            //_lectureService.DeleteLectureById(new Guid(luctureId));
-            await OnGet();
+            Guid Id;
+            bool result = Guid.TryParse(preferrenceId, out Id);
+            if (result)
+            {
+                User teacher = await _userManager.GetUserAsync(User);
+                TeacherPreferenceDayTime? preferrence = teacher.Preferences.Where(p => p.Id == Id).FirstOrDefault();
+                if (preferrence != null)
+                {
+                    _surveyService.DeletePreferrence(preferrence);
+                }
+                await OnGet();
+            }
+
         }
     }
 }

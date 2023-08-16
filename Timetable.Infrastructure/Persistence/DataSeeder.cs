@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Spectre.Console;
 using System;
 using System.Linq;
+using System.Security.Principal;
 using Timetable.Domain.Entities;
 using Timetable.Domain.Enums;
 using Timetable.Domain.Enums.EntitiesEnums;
@@ -22,8 +23,9 @@ namespace Timetable.Infrastructure.Persistence
             }
 
             await SeedRolesAsync(roleManager);
-            await SeedUsersAsync(userManager);
+            await SeedAdminUserAsync(userManager);
 
+            await SeedTeachersAsync(userManager);
             await SeedYearsAsync(dbContext);
             await SeedSemestersAsync(dbContext);
             await SeedDaysAsync(dbContext);
@@ -34,6 +36,7 @@ namespace Timetable.Infrastructure.Persistence
 
             await SeedTeacherPreferenceDayTimeAsync(dbContext);
             await SeedTeacherPreferenceRoomAsync(dbContext);
+            await SeedSurveyTimes(dbContext);
         }
 
         private static async Task SeedRolesAsync(RoleManager<Role> roleManager)
@@ -48,15 +51,14 @@ namespace Timetable.Infrastructure.Persistence
                 }
             }
         }
-
-        private static async Task SeedUsersAsync(UserManager<User> userManager)
+        private static async Task SeedAdminUserAsync(UserManager<User> userManager)
         {
-            if (!userManager.Users.Any())
+            if (!userManager.Users.Any(u => u.Type == UserTypeEnum.Admin))
             {
                 // seed admin user
                 var adminUser = new User { Name = "المدير", UserName = "admin", Email = "admin@admin.com", Type = UserTypeEnum.Admin };
 
-                var userPassword = "admin123"; // Replace this with a strong password for the user.
+                var userPassword = "aaaaaa"; // Replace this with a strong password for the user.
 
 
                 var result = await userManager.CreateAsync(adminUser, userPassword);
@@ -64,15 +66,21 @@ namespace Timetable.Infrastructure.Persistence
                 {
                     await userManager.AddToRoleAsync(adminUser, RoleEnum.Admin.ToString());
                 }
+            }
+        }
 
-
+        private static async Task SeedTeachersAsync(UserManager<User> userManager)
+        {
+            IdentityResult result;
+            if (!userManager.Users.Any(u => u.Type != UserTypeEnum.Admin))
+            {
                 // seed all teachers
                 User[] DepartmentHead = {
                 new User{ Name = "محمد", UserName = "u1", Email = "u1@users.com", Type = UserTypeEnum.DepartmentHead },
                 new User{ Name = "أحمد", UserName = "u2", Email = "u1@users.com", Type = UserTypeEnum.DepartmentHead },
                 new User{ Name = "خالد", UserName = "u3", Email = "u1@users.com", Type = UserTypeEnum.DepartmentHead },
                 };
-                var DepartmentHeadPassword = "user123";
+                var DepartmentHeadPassword = "111111";
 
                 for (int i = 0; i < DepartmentHead.Length; i++)
                 {
@@ -92,7 +100,7 @@ namespace Timetable.Infrastructure.Persistence
                 new User{ Name = "محمود", UserName = "u9", Email = "u1@users.com", Type = UserTypeEnum.Professor },
                 new User{ Name = "بشرى", UserName = "u10", Email = "u1@users.com", Type = UserTypeEnum.Professor },
                 };
-                var ProfessorPassword = "user123";
+                var ProfessorPassword = "111111";
 
                 for (int i = 0; i < Professor.Length; i++)
                 {
@@ -114,7 +122,7 @@ namespace Timetable.Infrastructure.Persistence
                 new User{ Name = "سوسن", UserName = "u18", Email = "u1@users.com", Type = UserTypeEnum.LapTeacher },
                 new User{ Name = "جودت", UserName = "u19", Email = "u1@users.com", Type = UserTypeEnum.LapTeacher },
                 };
-                var TeacherPassword = "user123";
+                var TeacherPassword = "111111";
 
                 for (int i = 0; i < Teacher.Length; i++)
                 {
@@ -1467,7 +1475,7 @@ namespace Timetable.Infrastructure.Persistence
                     var courses = teacher.Courses.Where(c => c.semester.SemesterNo == 1);
                     foreach (var course in courses)
                     {
-                        int repeate = _random.Next(1,3);
+                        int repeate = _random.Next(1, 3);
                         for (int i = 0; i < repeate; i++)
                         {
                             var Days = dbContext.Days.ToList();
@@ -1487,7 +1495,7 @@ namespace Timetable.Infrastructure.Persistence
                             };
 
                             await dbContext.TeacherPreferenceDayTimes.AddAsync(tpdt);
-                            await dbContext.SaveChangesAsync(); 
+                            await dbContext.SaveChangesAsync();
                         }
                     }
                 }
@@ -1513,6 +1521,39 @@ namespace Timetable.Infrastructure.Persistence
                         await dbContext.SaveChangesAsync();
                     }
                 }
+            }
+        }
+
+        private static async Task SeedSurveyTimes(AppDbContext dbContext)
+        {
+            if (!dbContext.TakingSurveyAllowedPeriods.Any())
+            {
+                TakingSurveyAllowedPeriod temp = new TakingSurveyAllowedPeriod
+                {
+                    Start = DateTime.Now,
+                    End = DateTime.Now.AddDays(100),
+                    role = dbContext.Roles.Where(r => r.Name.ToUpper() == RoleEnum.DepartmentHead.ToString().ToUpper()).First()
+                };
+                dbContext.Add(temp);
+                dbContext.SaveChanges();
+
+                temp = new TakingSurveyAllowedPeriod
+                {
+                    Start = DateTime.Now,
+                    End = DateTime.Now.AddDays(100),
+                    role = dbContext.Roles.Where(r => r.Name.ToUpper() == RoleEnum.Professor.ToString().ToUpper()).First()
+                };
+                dbContext.Add(temp);
+                dbContext.SaveChanges();
+
+                temp = new TakingSurveyAllowedPeriod
+                {
+                    Start = DateTime.Now,
+                    End = DateTime.Now.AddDays(100),
+                    role = dbContext.Roles.Where(r => r.Name.ToUpper() == RoleEnum.LapTeacher.ToString().ToUpper()).First()
+                };
+                dbContext.Add(temp);
+                dbContext.SaveChanges();
             }
         }
     }

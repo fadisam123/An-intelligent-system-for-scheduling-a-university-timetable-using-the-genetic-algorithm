@@ -15,11 +15,66 @@
         color: black;
         background-color: yellow;
     }
+
+    #year {
+        display: none;
+    }
 </style>
 
+<style media="print">
+    /* Hide unnecessary elements from printing */
+    #header, #footer, .buttons, form, .sidebar, .container, a {
+        display: none !important;
+    }
+
+    #yearSemester {
+        display: block !important;
+    }
+
+    /* Adjust fonts and colors for printing */
+    body {
+        font-family: Arial, sans-serif !important;
+        font-size: 12pt !important;
+        color: black !important;
+    }
+
+    /* Optimize layout for printing */
+    .timetable, table {
+        width: 100% !important;
+        margin: auto !important;
+        border-collapse: collapse !important;
+    }
+
+        .timetable th, .timetable td {
+            border: 1px solid #ccc !important;
+            padding: 8px !important;
+            text-align: center !important;
+        }
+
+        table th, table td {
+            border: 1px solid #ccc !important;
+            padding: 8px !important;
+            text-align: center !important;
+            font-size: 1.3rem !important;
+        }
+
+        table th {
+            font: bold !important;
+            color: #ccc !important;
+        }
+
+        table th, table td:last-child {
+            font: bold !important;
+            color: #ccc !important;
+            font-size: 1.5rem !important;
+        }
+</style>
+
+
+
+
+
 <div class="container">
-
-
 
     @if (Model?.Semesters?.Count is null || Model?.Semesters?.Count == 0)
     {
@@ -29,11 +84,11 @@
     }
     else
     {
-        
+
         <form asp-page-handler="generate" method="post">
-            
-           <div class="form-group">
-                           <button onclick="return confirm('سيتم حذف برنامج الدوام القديم واستبداله بالبرنامج المولد، هل أنت متأكد من المتابعة؟')" class="edit-save-button generate" type="submit">توليد</button>
+
+            <div class="form-group">
+                <button onclick="return confirm('سيتم حذف برنامج الدوام القديم واستبداله بالبرنامج المولد، هل أنت متأكد من المتابعة؟')" class="edit-save-button generate" type="submit">توليد</button>
 
             </div>
             <div class="form-group">
@@ -46,11 +101,13 @@
                 </select>
             </div>
 
-       </form>
-       
-       }
-                <form id="yearChangedForm" asp-page-handler="x" method="post">
-        
+        </form>
+
+    }
+    <div class="d-flex justify-content-center align-items-center">
+        <button style="height: fit-content;" id="printButton">طباعة</button>
+        <form class="mx-4" id="yearChangedForm" asp-page-handler="x" method="post">
+
             <div class="form-group">
                 @if (Model?.Years?.Count is null || Model?.Years?.Count == 0)
                 {
@@ -82,7 +139,8 @@
                 }
             </div>
         </form>
-    
+    </div>
+
 </div>
 <div id="addLectureForm" class="d-none">
 
@@ -145,6 +203,9 @@
 
 @if (Model.Days is not null && Model.Times is not null)
 {
+    <div id="yearSemester">
+        <h2>السنة @Model.SelectedYearInput / فصل @Model.SelectedSemesterInput</h2>
+    </div>
     <table id="myTable">
 
 
@@ -170,7 +231,7 @@
                         <td data-luctureId="@lucture.Id">
                             @lucture?.course.Name <br>
                             @lucture?.Room.Name <br>
-                            د. @lucture?.course?.user.Name?
+                            د. @lucture?.course?.user.Name
                         </td>
                     }
                     else
@@ -198,67 +259,71 @@
 
 
 
-<script>
 
-
-
-   
-
-
-    var table = document.getElementById("myTable");
-    var cells = table.getElementsByTagName("td");
-    console.log(cells);
-    for (var i = 0; i < cells.length; i++) {
-        if (cells[i].getAttribute("data-luctureId") || cells[i].getAttribute("data-dayId")) {
-
-            cells[i].addEventListener("click", function (event) {
-                var isSelected = event.target.classList.contains("selected");
-
-                // Remove the "selected" class from any previously selected cells
-                var selectedCells = document.querySelectorAll(".selected");
-                selectedCells.forEach(function (cell) {
-                    cell.classList.remove("selected");
-                });
-
-                // If the clicked cell was not selected, add the "selected" class
-                if (!isSelected) {
-                    event.target.classList.add("selected");
-                    $("#addLectureForm").removeClass("d-none");
-                }
-                else {
-                    $("#addLectureForm").addClass("d-none");
-                }
-
-
-                // Retrieve the data-* attribute value from the clicked cell
-                if (event.target.getAttribute("data-luctureId")) {
-                    //console.log("luctureId = " + event.target.getAttribute("data-luctureId"));
-                    let luctureId = event.target.getAttribute("data-luctureId");
-                    $("#luctureIdInput").val(luctureId);
-                    $("#deleteBtn").click();
-                    console.log("luctureId = " + luctureId);
-
-                } else {
-                    //console.log("dayId = " + event.target.getAttribute("data-dayId"));
-
-                    //$("#addLectureForm").toggleClass("d-none");
-
-                    let dayId = event.target.getAttribute("data-dayId");
-                    let timeId = event.target.getAttribute("data-timeId");
-                    $("#dayIdInput").val(dayId);
-                    $("#timeIdInput").val(timeId);
-                    console.log("day = " + dayId + ", time = " + timeId);
-                }
-            });
-
-        }
-
-    }
-
-    
-</script>
 
 
 @section Scripts {
     <script type="text/javascript" src="~/js/Admin/schedule.js"></script>
-    }
+
+    <script>
+        $(document).ready(function () {
+            $('#printButton').click(function () {
+                window.print(); // Open print dialog
+            });
+
+
+            var table = document.getElementById("myTable");
+            var cells = table.getElementsByTagName("td");
+            console.log(cells);
+            for (var i = 0; i < cells.length; i++) {
+                if (cells[i].getAttribute("data-luctureId") || cells[i].getAttribute("data-dayId")) {
+
+                    cells[i].addEventListener("click", function (event) {
+                        var isSelected = event.target.classList.contains("selected");
+
+                        // Remove the "selected" class from any previously selected cells
+                        var selectedCells = document.querySelectorAll(".selected");
+                        selectedCells.forEach(function (cell) {
+                            cell.classList.remove("selected");
+                        });
+
+                        // If the clicked cell was not selected, add the "selected" class
+                        if (!isSelected && !event.target.getAttribute("data-luctureId")) {
+                            event.target.classList.add("selected");
+                            $("#addLectureForm").removeClass("d-none");
+                        }
+                        else {
+                            $("#addLectureForm").addClass("d-none");
+                        }
+
+
+                        // Retrieve the data-* attribute value from the clicked cell
+                        if (event.target.getAttribute("data-luctureId")) {
+                            //console.log("luctureId = " + event.target.getAttribute("data-luctureId"));
+                            let luctureId = event.target.getAttribute("data-luctureId");
+                            $("#luctureIdInput").val(luctureId);
+                            $("#deleteBtn").click();
+                            console.log("luctureId = " + luctureId);
+
+                        } else {
+                            //console.log("dayId = " + event.target.getAttribute("data-dayId"));
+
+                            //$("#addLectureForm").toggleClass("d-none");
+
+                            let dayId = event.target.getAttribute("data-dayId");
+                            let timeId = event.target.getAttribute("data-timeId");
+                            $("#dayIdInput").val(dayId);
+                            $("#timeIdInput").val(timeId);
+                            console.log("day = " + dayId + ", time = " + timeId);
+                        }
+                    });
+                }
+            }
+
+
+
+
+        });
+
+    </script>
+}
