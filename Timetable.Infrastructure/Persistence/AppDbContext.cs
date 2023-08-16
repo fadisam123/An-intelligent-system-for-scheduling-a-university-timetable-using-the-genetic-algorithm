@@ -54,12 +54,6 @@ namespace Timetable.Infrastructure.Persistence
             modelBuilder.Entity<Year>().Property(y => y.YearNo).ValueGeneratedNever();
             modelBuilder.Entity<Group>().Property(g => g.GroupNo).ValueGeneratedNever();
             modelBuilder.Entity<Semester>().Property(s => s.SemesterNo).ValueGeneratedNever();
-
-            // Set cascading delete behavior to Restrict for all relationships
-            foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
-            {
-                relationship.DeleteBehavior = DeleteBehavior.Restrict;
-            }
         }
 
         protected override void ConfigureConventions(ModelConfigurationBuilder builder)

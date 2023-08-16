@@ -26,5 +26,6 @@
         public void AssignTeacherPreferredRoom(Course TeacherCourse, Room PreferredRoom);
         public bool CheckCoursesExistWithAssignedUsers();
         public void DeleteCourseById(Guid courseId);
+        public void Update(Course course);
     }
 }

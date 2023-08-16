@@ -7,7 +7,7 @@
         cursor: pointer;
     }
 
-    tr td:not(:last-child):hover {
+        tr td:not(:last-child):hover {
             background-color: lightgreen;
         }
 
@@ -30,15 +30,11 @@
     else
     {
         <form asp-page-handler="generate" method="post">
-           <div class="form-group">
-                           <button id="printButton" >طباعة</button>
-
-           </div>
             
            <div class="form-group">
                            <button onclick="return confirm('سيتم حذف برنامج الدوام القديم واستبداله بالبرنامج المولد، هل أنت متأكد من المتابعة؟')" class="edit-save-button generate" type="submit">توليد</button>
 
-           </div>
+            </div>
             <div class="form-group">
                 <label dir="rtl" asp-for="@Model.SelectedSemester" class="control-label ms-5"></label>
                 <select dir="rtl" asp-for="@Model.SelectedSemester" class="form-select">
@@ -48,49 +44,49 @@
                     }
                 </select>
             </div>
-    
 
-@*    <form id="yearChangedForm" asp-page-handler="x" method="post">
-*@
-        <div class="form-group">
-            @if (Model?.Years?.Count is null || Model?.Years?.Count == 0)
-            {
 
-            }
-            else
-            {
-                <label dir="rtl" asp-for="@Model.SelectedYearInput" class="control-label"></label>
-                <select dir="rtl" onchange="$('#yearChangedForm').submit()" asp-for="@Model.SelectedYearInput" class="form-select">
-                    @foreach (var item in Model?.Years)
-                    {
-                        <option value="@item.YearNo">@item.YearNo</option>
-                    }
-                </select>
-            }
+            @*    <form id="yearChangedForm" asp-page-handler="x" method="post">
+        *@
+            <div class="form-group">
+                @if (Model?.Years?.Count is null || Model?.Years?.Count == 0)
+                {
+
+                }
+                else
+                {
+                    <label dir="rtl" asp-for="@Model.SelectedYearInput" class="control-label"></label>
+                    <select dir="rtl" onchange="$('#yearChangedForm').submit()" asp-for="@Model.SelectedYearInput" class="form-select">
+                        @foreach (var item in Model?.Years)
+                        {
+                            <option value="@item.YearNo">@item.YearNo</option>
+                        }
+                    </select>
+                }
             </div>
             <div class="form-group">
-            @if (Model?.Semesters?.Count is null || Model?.Semesters?.Count == 0)
-            {
+                @if (Model?.Semesters?.Count is null || Model?.Semesters?.Count == 0)
+                {
 
-            }
-            else
-            {
-                <label dir="rtl" asp-for="@Model.SelectedSemesterInput" class="control-label"></label>
-                <select dir="rtl" onchange="$('#yearChangedForm').submit()" asp-for="@Model.SelectedSemesterInput" class="form-select">
-                    @foreach (var item in Model?.Semesters)
-                    {
-                        <option value="@item.SemesterNo">@item.SemesterNo</option>
-                    }
-                </select>
-            }
-        </div>
-    </form>
+                }
+                else
+                {
+                    <label dir="rtl" asp-for="@Model.SelectedSemesterInput" class="control-label"></label>
+                    <select dir="rtl" onchange="$('#yearChangedForm').submit()" asp-for="@Model.SelectedSemesterInput" class="form-select">
+                        @foreach (var item in Model?.Semesters)
+                        {
+                            <option value="@item.SemesterNo">@item.SemesterNo</option>
+                        }
+                    </select>
+                }
+            </div>
+        </form>
     }
 </div>
 <div id="addLectureForm" class="d-none">
 
     <form asp-page-handler="create" method="post">
-                    <button class="me-4" type="submit">حفظ</button>
+        <button class="me-4" type="submit">حفظ</button>
 
         @*اليوم*@
         <input name="dayId" id="dayIdInput" value="" hidden />
@@ -228,8 +224,7 @@
                     event.target.classList.add("selected");
                     $("#addLectureForm").removeClass("d-none");
                 }
-                else
-                {
+                else {
                     $("#addLectureForm").addClass("d-none");
                 }
 
