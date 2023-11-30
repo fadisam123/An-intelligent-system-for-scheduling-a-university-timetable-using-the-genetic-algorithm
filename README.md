@@ -1,6 +1,6 @@
 ## An Intelligent System for Scheduling a University Timetable Using the Genetic Algorithm
 
-###Overview
+### Overview
 
 - This is a web-based application with dumy data in the database. You can clear the data and edit it as you want.
 
@@ -15,20 +15,20 @@
 - Login is through a username and password. Below are the usernames and passwords for each type :
 
 #### Login data
-#####Admin
+##### Admin
 User Name: `admin`.
 Password: `aaaaaa`.
-#####Head of Department
+##### Head of Department
 User Name: `u1` --> `u3` (i.e. you can pick any one: u1, u2 or u3).
 Password: `111111`.
-#####Professor
+##### Professor
 User Name: `u4` --> `u10`.
 Password: `111111`.
-#####Teacher
+##### Teacher
 User Name: `u11` --> `u19`.
 Password: `111111`.
 
-###Roles
+### Roles
 - Teachers of all types (department head, professor, teacher) can choose their preferred times to teach their assigned courses and can choose their preferred rooms as well.
 
 - Some of the Admin privileges are:
@@ -59,6 +59,7 @@ Password: `111111`.
 <p align="center">
  <img src="https://github.com/fadisam123/An-intelligent-system-for-scheduling-a-university-timetable-using-the-genetic-algorithm/blob/master/Attachments/readme_imgs/5.png?raw=true" alt="image"/>
 </p>
+
 
 #### Web-Based Program
 
@@ -94,6 +95,7 @@ Password: `111111`.
  <img src="https://github.com/fadisam123/An-intelligent-system-for-scheduling-a-university-timetable-using-the-genetic-algorithm/blob/master/Attachments/readme_imgs/88.png?raw=true" alt="image"/>
 </p>
 
+
 ### Contact Me
 
-- Email: [ahmadkurdi09@gmail.com](mailto:ahmadkurdi09@gmail.com?subject=GitHub Message)
+- Email: <a href="mailto:ahmadkurdi09@gmail.com?subject=GitHub Message">ahmadkurdi09@gmail.com</a>
