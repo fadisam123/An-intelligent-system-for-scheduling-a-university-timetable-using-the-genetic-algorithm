@@ -4,15 +4,15 @@
 
 ## Table of Contents
 
-<a href="https://github.com/fadisam123/An-intelligent-system-for-scheduling-a-university-timetable-using-the-genetic-algorithm/blob/master/README.md#overview">Overview</a>
+<a href="https://github.com/fadisam123/An-intelligent-system-for-scheduling-a-university-timetable-using-the-genetic-algorithm#overview">Overview</a>
 
-<a href="https://github.com/fadisam123/An-intelligent-system-for-scheduling-a-university-timetable-using-the-genetic-algorithm/blob/master/README.md#login-data">Login Data</a>
+<a href="https://github.com/fadisam123/An-intelligent-system-for-scheduling-a-university-timetable-using-the-genetic-algorithm#login-data">Login Data</a>
 
-<a href="https://github.com/fadisam123/An-intelligent-system-for-scheduling-a-university-timetable-using-the-genetic-algorithm/blob/master/README.md#roles">Roles</a>
+<a href="https://github.com/fadisam123/An-intelligent-system-for-scheduling-a-university-timetable-using-the-genetic-algorithm#roles">Roles</a>
 
-<a href="https://github.com/fadisam123/An-intelligent-system-for-scheduling-a-university-timetable-using-the-genetic-algorithm/blob/master/README.md#photo-gallery">Photo Gellary</a>
+<a href="https://github.com/fadisam123/An-intelligent-system-for-scheduling-a-university-timetable-using-the-genetic-algorithm#photo-gallery">Photo Gellary</a>
 
-<a href="https://github.com/fadisam123/An-intelligent-system-for-scheduling-a-university-timetable-using-the-genetic-algorithm/blob/master/README.md#contact-me">Contact Me</a>
+<a href="https://github.com/fadisam123/An-intelligent-system-for-scheduling-a-university-timetable-using-the-genetic-algorithm#contact-me">Contact Me</a>
 
 ***
 
