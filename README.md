@@ -16,16 +16,16 @@
 
 #### Login data
 ##### Admin
-User Name: `admin`.
+User Name: `admin`.</br>
 Password: `aaaaaa`.
 ##### Head of Department
-User Name: `u1` --> `u3` (i.e. you can pick any one: u1, u2 or u3).
+User Name: `u1` --> `u3` (i.e. you can pick any one: u1, u2 or u3).</br>
 Password: `111111`.
 ##### Professor
-User Name: `u4` --> `u10`.
+User Name: `u4` --> `u10`.</br>
 Password: `111111`.
 ##### Teacher
-User Name: `u11` --> `u19`.
+User Name: `u11` --> `u19`.</br>
 Password: `111111`.
 
 ### Roles
