@@ -58,7 +58,7 @@ namespace Timetable.Infrastructure.Persistence
                 // seed admin user
                 var adminUser = new User { Name = "المدير", UserName = "admin", Email = "admin@admin.com", Type = UserTypeEnum.Admin };
 
-                var userPassword = "aaaaaa"; // Replace this with a strong password for the user.
+                var userPassword = "aaaaaa";
 
 
                 var result = await userManager.CreateAsync(adminUser, userPassword);
